@@ -1,0 +1,100 @@
+<meta charset="utf-8">
+高德地图API
+<a href="http://lbs.amap.com/api/javascript-api/reference/location">http://lbs.amap.com/api/javascript-api/reference/location</a>
+<!--mapObj = new AMap.Map('iCenter');
+mapObj.plugin('AMap.Geolocation', function () {
+    geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+        timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+        maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+        convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+        showButton: true,        //显示定位按钮，默认：true
+        buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+        buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+        showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+        showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+        panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+        zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+    });
+    mapObj.addControl(geolocation);
+    geolocation.getCurrentPosition();
+    AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+});-->
+
+<meta charset="UTF-8" />
+<pre>
+状态:<span id="status"></span> <span id="info"></span>
+<table border="" cellspacing="0" cellpadding="10">
+	<tr>
+		<td id='td1'>Header</td>
+		<td id='td2'>Header</td>
+		<td id='td3'>Header</td>
+		<td id='td4'>Header</td>
+		<td id='td5'>Header</td>
+		<td id='td6'>Header</td>
+		<td id='td7'>Header</td>
+		<td id='td8'>Header</td>
+		<td id='td9'>Header</td>
+		<td id='td10'>Header</td>
+		<td id='td11'>Header</td>
+		<td id='td12'>Header</td>
+	</tr>
+</table>
+地址：<span id="dw"></span>
+isConverted：<span id="isConverted"></span>
+定位方式：<span id="location_type"></span>
+状态：<span id="message"></span>
+M:<span id="M"></span>  O:<span id="O"></span>  lat:<span id="lat"></span>  lng:<span id="lng"></span>
+<pre>
+<!--异步加载 高德地图JSAPI ，注意 callback 参数-->
+<script src="//webapi.amap.com/maps?v=1.3&key=d45da4806161a64c6cc5e5cdca785b60&callback=my_init"></script>
+
+<!--引入UI组件库异步版本main-async.js（1.0版本） -->
+<script src="//webapi.amap.com/ui/1.0/main-async.js"></script>
+
+<script type="text/javascript">
+//JSAPI回调入口
+function my_init() {
+		initAMapUI(); //这里调用initAMapUI初始化
+		//其他逻辑
+		mapObj = new AMap.Map('iCenter');
+		mapObj.plugin('AMap.Geolocation', function () {
+		geolocation = new AMap.Geolocation({
+        enableHighAccuracy: true,//是否使用高精度定位，默认:true
+        timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+    });
+    mapObj.addControl(geolocation);
+    geolocation.getCurrentPosition();
+    AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+    AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+});
+   //解析定位结果
+    function onComplete(data) {
+       console.log(data);
+       document.getElementById("status").innerHTML=data.status;
+       document.getElementById("td1").innerHTML=data.addressComponent.adcode;
+       document.getElementById("td2").innerHTML=data.addressComponent.building;
+       document.getElementById("td3").innerHTML=data.addressComponent.buildingType;
+       document.getElementById("td4").innerHTML=data.addressComponent.city;
+       document.getElementById("td5").innerHTML=data.addressComponent.citycode;
+       document.getElementById("td6").innerHTML=data.addressComponent.district;
+       document.getElementById("td7").innerHTML=data.addressComponent.neighborhood;
+       document.getElementById("td8").innerHTML=data.addressComponent.neighborhoodType;
+       document.getElementById("td9").innerHTML=data.addressComponent.province;
+       document.getElementById("td10").innerHTML=data.addressComponent.street;
+       document.getElementById("td11").innerHTML=data.addressComponent.streetNumber;
+       document.getElementById("td12").innerHTML=data.addressComponent.township;
+       document.getElementById("info").innerHTML=data.info;
+       document.getElementById("isConverted").innerHTML=data.isConverted;
+       document.getElementById("location_type").innerHTML=data.location_type;
+        document.getElementById("message").innerHTML=data.message;
+        
+         document.getElementById("M").innerHTML=data.position.M;
+          document.getElementById("O").innerHTML=data.position.O;
+           document.getElementById("lat").innerHTML=data.position.lat;
+            document.getElementById("lng").innerHTML=data.position.lng;
+       document.getElementById("dw").innerHTML=data.formattedAddress;
+    }
+}
+</script>

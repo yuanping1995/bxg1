@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <title>保单详情</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+		
+	</head>
+
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>保单详情</h2>
+			</div>
+		</header>
+		<section class="insurance">
+			<div class="i_policy">
+				<div class="i_p_title clear">
+					<div>
+						<b><i class="i_p_icon"></i>百信购账户安全险</b>
+						<span>No.11111111111111</span>
+						<span>由人保财险担保</span>
+					</div>
+					<div></div>
+				</div>
+				<div class="i_info">
+					<ul>
+						<li><span>被保险人</span>XXX</li>
+						<li><span>保障额度</span>100万</li>
+						<li><span>可赔次数</span>无限次</li>
+						<li><span>保险费用</span>2元</li>
+						<li><span>保障期限</span>2017-04-07至2018-04-07</li>
+						<li><span>查看条款</span><a href="/" title="">《保险条款》</a></li>
+					</ul>
+					<div class="i_foot clear">
+						<div>
+							<a href="{:url('user/report')}">
+								<span class="i_f_1"></span>
+								申请理赔
+							</a>
+							
+						</div>
+						<div>
+							<a href="/">
+								<span class="i_f_2"></span>
+								更多保障
+							</a>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="i_p_list">
+				<ul>
+					<li>
+						<div class="i_theme">到期自动续签服务<i class="down"></i><span>已开启</span></div>
+						<div class="show_i">
+							<div class="show_i_title clear">
+								<span class="list_txt">到期自动续签服务</span>
+	       						<span class="list_btn btn_open"><i class="close_btn"></i></span>
+							</div>
+							<div class="s_agree">同意<a href="/">《代扣协议》</a><a href="/">《到期自动续签保险条款》</a></div>
+							<div class="show_tip">保费高于<span>3元</span>将不再自动续签</div>
+							<div class="s_agree">提醒：在保障到期前3天，保险公司会根据您的账户情况进行重新定价并扣收保护费，下一年的保费可能会有轻微上下浮动。</div>
+						</div>
+					</li>
+					<li>
+						<div class="i_theme">理赔流程<i class="down"></i></div>
+						<div class="show_i">
+							<ul>
+								<li>
+									<div>第一步：在线报案</div>
+									<div>如果您的资金不幸被盗，请在保险详情页面在线申请理赔，十分钟完成报案</div>
+								</li>
+								<li>
+									<div>第二步：审核材料</div>
+									<div>一对一人工服务协助您准备理赔材料，提交保险公司审核</div>
+								</li>
+								<li>
+									<div>第三步：赔付完成</div>
+									<div>保险公司审核通过后，1个工作日内完成赔付</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<div class="i_theme">常见问题<i class="down"></i></div>
+						<div class="show_i">
+							<ul>
+								<li>
+									<div>问题一：什么是账户安全险？保障范围是什么？</div>
+									<div>账户安全险是保障用户支付宝账户 (快捷支付、余额)因被他人盗用而导致的资金损失</div>
+								</li>
+								<li>
+									<div>问题二：手机丢失资金被盗赔吗？</div>
+									<div>赔！手机丢失造成的直接损失全额赔付</div>
+								</li>
+								<li>
+									<div>账户安全险能赔几次啊？能赔多少呢?</div>
+									<div>账户安全险赔付次数，保障期内，无限次赔付，全年累积最高可赔100万</div>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</section>
+		<section class="public-pop" style="margin-left:-25%;width:50%;height:30px;line-height: 30px;font-size:12px;"></section>
+
+		<script type="text/javascript">
+			$(function(){
+				$('.i_theme').click(function(){
+					if($(this).parent().find('.show_i').css('display') == 'none'){
+						$(this).parent().find('.show_i').show();
+						$(this).find('i').removeClass('down').addClass('up');
+					}else{
+						$(this).parent().find('.show_i').hide();
+						$(this).find('i').removeClass('up').addClass('down');
+					}
+				});
+				var flag = true;
+       			
+       			$('.list_btn').bind('click',function(){
+       				if(flag){
+       					$('.close_btn').animate({'marginLeft':0},100);
+       					$('.list_btn').removeClass('btn_open').addClass('btn_close');
+       					flag = false;
+       				}else{
+       					$('.close_btn').animate({'marginLeft':'30px'},100);
+       					$('.list_btn').removeClass('btn_close').addClass('btn_open');
+       					flag = true;
+       				}
+       				$.ajax({
+       					type:"post",
+       					data:{flag:flag},
+       					url:"",
+       					success:function(data){
+       						var dataJson=eval(data);
+       						if(dataJson.msg){
+       							$('.public-pop').html('已开启自动续签服务').show();
+			       				setTimeout(function(){
+			       					$('.public-pop').hide();
+			       				},1000);
+       						}else{
+       							$('.public-pop').html('已取消自动续签服务').show();
+			       				setTimeout(function(){
+			       					$('.public-pop').hide();
+			       				},1000);
+       						}
+       					}
+       				});
+       			});
+			})
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>

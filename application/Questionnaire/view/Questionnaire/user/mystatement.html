@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		{if condition="$type eq 1"}
+		<title> 推荐明细</title>
+		{else/}
+	    <title> 账户明细</title>
+	    {/if}
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/mystatement.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<body>
+
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2><span class="state_list">全部</span></h2>
+		        <div class="mx"><a href="#script" title="">?</a></div>
+            </div>
+            <div class="s_list">
+            	<div></div>
+            	<ul>
+            		<li>全部</li>
+            		<li>支出</li>
+            		<li>收入</li>
+            	</ul>
+            </div>
+		</header>
+       	<section class="statement">
+       		<ul>
+       			
+       		</ul>
+       		<div class="getmore"></div>
+			<div class="search_empty">没有更多了</div>
+       	</section>
+		<script type="text/javascript">
+			var index = 0;
+			var pageId = 1;
+			var ajaxFlag = true;
+
+			$(function(){
+				function upRefresh(){
+					if(ajaxFlag){
+						$('.getmore').show();
+						var type={$type};
+						if (type!==0) {
+							
+							$.ajax({
+							type: "get",
+							url: "{$Think.__APPROOT__}/index/user/ajax_mx/index/"+index+"/pageid/"+pageId+"/type/"+type,
+							async: false,  //同步等待结果的返回
+							success: function(data) {
+								if(data){
+									$('.statement>ul').append(data);
+									pageId++;
+									$('.search_empty').hide();
+									ajaxFlag = true;
+								}else{
+									$('.search_empty').show();
+									ajaxFlag = false;
+								}
+								$('.getmore').hide();
+							}
+						});
+						}else{
+							$.ajax({
+							type: "get",
+							url: "{$Think.__APPROOT__}/index/user/ajax_mx/index/"+index+"/pageid/"+pageId,
+							async: false,  //同步等待结果的返回
+							success: function(data) {
+								if(data){
+									$('.statement>ul').append(data);
+									pageId++;
+									$('.search_empty').hide();
+									ajaxFlag = true;
+								}else{
+									$('.search_empty').show();
+									ajaxFlag = false;
+								}
+								$('.getmore').hide();
+							}
+						});
+						}
+						
+					}
+						
+				}
+				$('.state_list').click(function(){
+					$('.s_list').fadeIn();
+				});
+				$('.shade').click(function(){
+					$('.s_list').fadeOut();
+				});
+				$('.s_list ul li').click(function(){
+					index = $(this).index();
+					pageId = 1;
+					$('.statement>ul').html('');
+					
+					$('.state_list').text($(this).text());
+					$('.s_list').fadeOut();
+					ajaxFlag= true;
+					//调用ajax
+					upRefresh();
+				});
+	            upRefresh();
+				$(window).scroll(function() {
+					if($(document).scrollTop() >= $(document).height() - $(window).height()) {
+						upRefresh();
+					}
+					
+				});
+				
+			});
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

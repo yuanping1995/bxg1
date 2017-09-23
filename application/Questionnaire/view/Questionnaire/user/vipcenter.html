@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>会员升级</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/vipcenter.css" />
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+		
+	</head>
+	<body>
+		<header>		  
+                <div class="h_style3 clear">
+					<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+					<h2>会员升级</h2>
+				</div>
+                <div class="vip_grade">
+                        <ul class="clear">
+                            
+                              <li class="font_b">
+                                    <i class="v_2"></i>
+                                    <div class="cir big"><img src="{$user.icon}{:config('images')}"/></div>
+                                    VIP会员
+                              </li>
+                             
+                        </ul>
+                        <div class="g_tra"></div>
+                  </div>
+       	</header>
+       	
+       	<section class="grade_intro">
+       		
+       		<ul class="clear">
+       			
+       			<!--vip会员介绍-->
+       			<li>
+       				<div class="vip_intro">
+                <div class="vip_head">
+                  <div>VIP会员</div>
+                </div>
+                <div class="border_bg bg_1 clear">
+                  <div class="monkey"></div>
+                  <div class="tip">
+                    购物优惠2%-4%（交易成功后优惠金额立即返还到百信购账户）
+                  </div>
+                </div>
+                <div class="border_bg bg_2  clear">
+                  <div class="monkey"></div>
+                  <div class="tip">
+                    返商品原价的36%-38%（每天0.05%返还）
+                  </div>
+                </div>
+                <div class="border_bg bg_3 clear">
+                  <div class="monkey"></div>
+                  <div class="tip">
+                    1.推荐VIP会员，提会员费的25%即5元（立即返还到百信购账户）<br>
+                    2.推荐50人以上，提会员费的50%即10元（立即返还到百信购账户）<br>
+                    3.推荐200人以上，提会员费的75%即15元（立即返还到百信购账户）<br>
+                    4.提被推荐所有会员消费金额的1%（确认收货后立即返还到百信购账户）
+                  </div>
+                </div>
+              </div>
+               <a href="/" title="" class="upgrade">升级</a> 
+       			</li>
+       			
+       		</ul>
+       	</section>
+            <div class="zs-layer-box" id="identity_vip">
+                <div class="identity_div">
+                  {switch name="$user.qid"}
+                      {case value="8"}
+                          <div class="gradetip">
+                                <div>温馨提示</div>
+                                <div>您已是VIP会员，可以选择升级为<br>代理合伙人！</div>
+                          </div>
+                          <a href="{:url('user/vipupgrade',array('type'=>1))}" class="grade_url">升级为合伙人</a>
+                          <span class="noupgrade">暂不升级</span>
+                      {/case}
+                      {case value="7"}
+                            <div class="gradetip">
+                                <div>温馨提示</div>
+                                <div>您已是最高会员等级</div>
+                            </div>
+                            <span class="noupgrade" style="float:none;margin:0 auto;">关闭</span>
+                      {/case}
+                  {/switch}
+                </div>
+
+            </div>
+       	
+
+       	<script type="text/javascript">
+       		$(function(){
+				
+       			gradeMove();
+            $('.g_tra').css('left',($(window).width()-$('.g_tra').outerWidth())/2+'px');
+            var traLeft = ($(window).width()-$('.vip_grade>ul').width())/2+26;
+            var traCen = ($(window).width()-6)/2;
+            function gradeMove(){
+              $('.vip_grade ul li:even').bind('click',function(){
+                $(window).scrollTop(0);
+              });
+            
+            }
+       			
+				//等级介绍			
+       			$('.grade_intro>ul>li').width($('.grade_intro>ul').width()/3);
+
+                var vipgrade = '{$user.qid}';
+                // 如果用户已是VIP会员
+                $(".upgrade:first").click(function(){
+                  // alert(vipgrade);
+                      if(vipgrade == 7){
+                         $("#identity_vip").show();
+                         $(this).attr('href',"javascript:void(0)");
+                      }else{
+                         $(this).attr('href',"{:url('user/vipupgrade',array('type','0'))}");
+                      }
+                });
+                
+                $(".noupgrade").click(function(){
+                       $("#identity_vip").hide();
+                });
+               
+
+       		});
+       	</script>
+        <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+   统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

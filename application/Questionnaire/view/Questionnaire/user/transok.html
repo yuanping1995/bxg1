@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>我的钱包</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/transfer.css" />
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<body style="background: #f1f1f1;">
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>转账详情</h2>
+			</div>
+		</header>
+		<section class="transfer-ok">
+			<div class="trans clear">
+				<div class="transImg"><img src="{$uicon}{:config('images')}"></div>
+				<div class="transline"><img src="{$Think.__APPROOT__}/static/img/user/point.png"></div>
+				<div class="transImg"><img src="{$bicon}{:config('images')}"></div>
+			</div>
+			
+			<ul>
+				<li>收款人：{$user}</li>
+				<li>账&nbsp;&nbsp;&nbsp;&nbsp;号：{$tel}</li>
+				<li>金&nbsp;&nbsp;&nbsp;&nbsp;额：{$money}元</li>
+			</ul>
+			<div class="transtatu">转账成功</div>
+			<!-- <div class="transtatu">转账失败</div> -->
+		</section>
+		<div class="transBtn clear">
+			<span><a href="{$Think.__APPROOT__}/index/user/mywallet">继续转账</a></span>
+			<span><a href="{$Think.__APPROOT__}/index/index/index">返回首页</a></span>
+		</div>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

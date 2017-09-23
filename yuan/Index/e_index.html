@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><{$Think.config.seo_etitle}></title>
+    <meta name="keywords" content="<{$Think.config.seo_ekeywords}>" />
+    <meta name="description" content="<{$Think.config.seo_edescription}>" />
+    <include file='Public:file'/>
+  </head>
+<body>
+
+<include file='Public:e_head'/>
+
+    <!-- main -->
+    <div class="container-fluid">    
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="index_product">
+                    <p class="pro_p">FEATURED</p>
+                    <h1 class="pro_h1 epro_h1">THE BEST PRODUCTS</h1>
+                    <p class="line_black"></p>
+                    <{:W('List',array('table'=>'Product','bid'=>1,'id'=>1,'lang'=>'e'))}>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="aboutus" style="background: url(__ROOT__/Uploads/bg_paralax.jpg) no-repeat center center; background-size: cover;background-attachment: fixed;">
+        <h2>Welcome To Our Website</h2>
+        <p><{:W('About',array('id'=>25,'len'=>1200,'lang'=>'e'))}></p>
+        <a href="<{:W('Listhref',array('id'=>25,'lang'=>'e'))}>" class="btn btn-info view-all" role="button"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;VIEW ALL</a>
+    </div>
+
+    <div class="container">    
+        <div class="row">
+
+            <div class="left_nav index_left_nav" id="categories">
+                <h1 class="left_h1">CATEGORIES</h1>
+                <{:W('Left',array('id'=>1,'type'=>'product','lang'=>'e'))}>
+            </div>
+
+            <div class="col-xs-12 col-sm-8 col-md-7">
+                <div class="news_box">
+                    <h1 class="title_h1">NEWS CENTER</h1>
+                    <{:W('List',array('table'=>'New','bid'=>2,'id'=>2,'lang'=>'e'))}>
+
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-5">    
+                <include file='Public:e_contact'/>
+                <{:W('Link')}>
+                <{:W('Tags',array('lang'=>'e'))}>
+            </div>
+
+        </div>
+    </div>
+     
+    <include file='Public:e_foot'/>
+
+  </body>
+</html>

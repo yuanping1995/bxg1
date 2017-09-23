@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>新增收货地址</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />
+        <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+
+        <script type="text/javascript">
+          $(function(){
+            if(getCookie('addressid') != ''){
+                  $("h2").html('编辑收货地址');
+                  $("title").html("编辑收货地址");
+                }
+          })
+        </script>
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>新建收货地址</h2>
+			</div>
+		</header>
+       	<div id="add_address">
+          <section class="add_a">
+            <form>
+              <ul>
+                <li><span>收货人</span><input name="sname" type="text" placeholder="请输入收货人姓名"/></li>
+                <li><span>手机号码</span><input name="tel" type="tel" placeholder="请输入手机号"/></li>
+                <li><span>所在地区</span><input name="area" type="text" value=''  onfocus='this.blur()' onclick="location.href='{$Think.__APPROOT__}/index/user/selcity'"/><i class="r_b"></i></li>
+                <li><span>详细地址</span><input name="detailAddress" type="text" placeholder="请输入详细地址"/></li>
+              </ul>
+            </form>
+            
+          </section>
+          <div class="Next">保存</div>
+        </div>
+        <section class="public-pop" style="width:60%;margin-left:-30%;height:30px;line-height:30px;font-size:12px;z-index: 999;"></section>
+        <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/public.js"></script>
+        <script type="text/javascript">
+            $(function(){
+              $("input[name='sname']").blur(function(){
+                setCookie("add_sname",$(this).val(),1);
+              });
+              $("input[name='tel']").blur(function(){
+                if($(this).val().match(/1[3-8]+\d{9}/)){
+                  setCookie("add_stel",$("input[name='tel']").val(),1);
+                }else{
+                  $(".public-pop").html("手机号格式不正确！").fadeIn();
+                  setTimeout(function(){
+                    $(".public-pop").fadeOut();
+                  },2000);
+                }
+                
+              });
+              $("input[name='detailAddress']").blur(function(){
+                 setCookie("add_detail",$("input[name='detailAddress']").val(),1);
+              });
+
+              $("input[name='area']").val(getCookie('add_province')+getCookie('add_city')+getCookie('add_area'));
+              $("input[name='tel']").val(getCookie('add_stel'));
+              $("input[name='sname']").val(getCookie('add_sname'));
+              $("input[name='detailAddress']").val(getCookie('add_detail'));
+            
+              $('.Next').bind('click',function(){
+                var name = $('.add_a input[name="sname"]').val();
+                var mobileNum = $('.add_a input[name="tel"]').val();
+                var address = $('.add_a input[name="area"]').val()+$('.add_a input[name="detailAddress"]').val();
+                if(name==''||mobileNum==''||address==''){
+                  $(".public-pop").html("信息填写不完整！").fadeIn();
+                  setTimeout(function(){
+                    $(".public-pop").fadeOut();
+                  },2000);
+                }else{
+                  if(getCookie('addressid') != ''){
+                    $.ajax({
+                      type:"get",
+                      data:{addressid:getCookie('addressid'),add_sname:getCookie('add_sname'),add_stel:getCookie('add_stel'),add_province:getCookie('add_province'),add_city:getCookie('add_city'),add_area:getCookie('add_area'),add_detail:getCookie('add_detail')},
+                      url:"{$Think.__APPROOT__}/index/user/updateAddress",
+                      success:function(data){
+                        var dataJson = eval(data);
+                        if(dataJson.flag){
+                          window.location = "{$Think.__APPROOT__}/index/user/shippingaddress";
+                        }else{
+                          $(".public-pop").html(dataJson.msg).fadeIn();
+                          setTimeout(function(){
+                            $(".public-pop").fadeOut();
+                          },2000);
+                        }
+                      },
+                      error:function(){
+                        alert("编辑");
+                        $(".public-pop").html("服务器异常！").fadeIn();
+                          setTimeout(function(){
+                            $(".public-pop").fadeOut();
+                          },2000);
+                      }
+
+                    });
+                  }else{
+                    $.ajax({
+                      type:"get",
+                      data:{add_sname:getCookie('add_sname'),add_stel:getCookie('add_stel'),add_province:getCookie('add_province'),add_city:getCookie('add_city'),add_area:getCookie('add_area'),add_detail:getCookie('add_detail')},
+                      url:"{$Think.__APPROOT__}/index/user/newaddress",
+                      success:function(data){
+                        var dataJson = eval(data);
+                        if(dataJson.flag){
+                          window.location = "{$Think.__APPROOT__}/index/user/shippingaddress";
+                        }else{
+                          $(".public-pop").html("地址添加失败，请重试！").fadeIn();
+                          setTimeout(function(){
+                            $(".public-pop").fadeOut();
+                          },2000);
+                        }
+                      },
+                      error:function(){
+                        $(".public-pop").html("服务器异常！").fadeIn();
+                          setTimeout(function(){
+                            $(".public-pop").fadeOut();
+                          },2000);
+                      }
+
+                    });
+                  }
+                   
+                }
+               
+              });
+
+
+            })
+        </script>
+        <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+   统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script> 
+	</body>
+</html>

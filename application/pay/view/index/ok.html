@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>百信购</title>
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/style.css" />
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/paystatus.css">
+
+</head>
+<body>
+	<header>		   
+	<!--头部标题-->
+        <div class="new-header">
+        	<a href="http://m.bxgogo.com/index.php/index/user/index.html" class="new-a-back">返回</a>
+	    <h2>支付中心</h2>
+        <div class="move"></div>
+            <ul class="list">
+	          <li><a href="/" title="首页">首页</a></li>
+	          <li><a href="http://m.bxgogo.com/index.php/index/search/index" title="搜索">搜索</a></li>
+	          <li><a href="http://m.bxgogo.com/index.php/index/cart/index" title="购物车">购物车</a></li>
+	          <li><a href="http://m.bxgogo.com/index.php/index/user/index" title="我的百信">我的百信</a></li>
+	        </ul>
+        </div>
+   </header>
+	<!--中间提示-->
+	{foreach name="data" key="key" itemn="value"}
+	<div class="middle">
+		<img src="img/paystatus/correct-pic.gif" />
+		<h1>恭喜你，支付成功啦！</h1>
+		<p>您已成功支付<span>{$value.price}</span>元</p>
+	</div>
+	<div class="lower-middle">
+		<div class="left">
+			<ul class="column1">
+			    <li>
+				    <span>订单编号：</span>
+				    <span>{$value.oid}</span>
+			    </li>
+			    <li>
+				    <span>所购商品：</span>
+				    <span>{$value.sname}</span>
+			    </li>
+			    <li>
+				    <span>支付时间：</span>
+				    <span>{$value.wtime}</span>
+			    </li>
+			    <li>
+				    <span>支付方式：</span> 
+				    <span>{$value.paytey}</span>
+			    </li>
+		    </ul>
+		</div>
+	</div>
+	{/foreach}
+	<div class="bot">
+		<a href="http://m.bxgogo.com/index.php/index/user/index.html">返回首页</a><a href="http://m.bxgogo.com/index.php/index/user/myorderdetails/oid/{$data.oid}.html">订单详情</a>
+	</div>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript">
+			$(function() {
+				//头部点击下拉菜单
+				$('.new-header .move').bind('click', function() {
+					$('.new-header .list').slideToggle();
+				});
+
+				$('.new-header .list li').click(function() {
+					$('.new-header .list').slideUp();
+				});
+			});
+		</script>
+</body>
+</html>

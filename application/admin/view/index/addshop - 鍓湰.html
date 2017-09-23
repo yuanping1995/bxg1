@@ -1,0 +1,453 @@
+{include file="/public/header"}
+<link rel="stylesheet" type="text/css" href="{$Think.__APPROOT__}/static/admin/css/webuploader.css?v=0.1.5" media="all">
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/admin/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/admin/ueditor/ueditor.all.min.js"></script>
+<!--<link rel="stylesheet" href="{$Think.__APPROOT__}/static/admin/ueditor/themes/default/ueditor.css"/>-->
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/admin/js/jquery.min.js"></script>
+<body>
+<div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <section class="panel panel-padding">
+                    <form id="form1" class="layui-form layui-form-pane" action="{:url('index/shopisadd')}">
+					<div class="layui-form-item">
+							<label class="layui-form-label">选择分类</label>
+							<div class="layui-input-inline">
+								<select lay-filter="yi">
+								 <option value="">选择分类</option>
+									{foreach name="channel" key="key" item="value"}
+							       <option value="{$value.id}">{$value.pname}</option>
+                                 {/foreach}
+								</select>
+							</div>
+							<div class="layui-input-inline">
+								<select lay-filter="er" id="er">
+							       <option value="">请先选择前提</option>
+								</select>
+							</div>
+							<div class="layui-input-inline">
+								<select lay-filter="san" name="level" id="san" required jq-verify="required">
+							       <option value="">请先选择前提</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item ">
+                           <div class="layui-form-item">
+                            <label class="layui-form-label">商品品牌</label>
+                            <div class="layui-input-inline">
+                                <select id="brand" name="goods(11)">
+                                    <option value="">请选择品牌</option>
+								
+                                 
+                                </select>
+                            </div>
+                        </div>   
+                        </div>
+						<!--<div class="layui-form-item">
+                            <label class="layui-form-label">商品类型</label>
+                            <div class="layui-input-inline">
+                                <select name="goods_type" >
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>-->
+                       <div class="layui-form-item">
+                            <label class="layui-form-label">商家ID</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="seller_id" required jq-verify="required" jq-error="请输入商家ID" placeholder="请输入商家ID" autocomplete="off" class="layui-input" id="seller_id" >
+							</div>
+							<div class="layui-inline">
+							  <label class="layui-form-label">查询商家</label>
+							  <i id="tipaaa"></i>
+							  <div class="layui-input-inline">
+								<input type="text" id="seller_name" placeholder="根据名字查手机号可不填" autocomplete="off" class="layui-input">
+							  </div>
+							  <label class="layui-form-label" id="seller_cx">点击查询</label>
+							</div>
+                             <span style="color: red; display: none;" id="err">商家信息不存在</span>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">商品名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goods(1)" required jq-verify="required" jq-error="请输入商品名称" placeholder="请输入商品名称" autocomplete="off" class="layui-input ">
+                            </div>
+                        </div>
+
+                       
+                        <div class="layui-form-item ">
+                            <label class="layui-form-label">商品条码</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goods(3)" class="layui-input"  placeholder="请输入商品条码" autocomplete="off" onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                            </div>
+                        </div>
+                        <div class="layui-form-item ">
+                            <label class="layui-form-label">商品库存</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goods(4)" required jq-verify="required|number" jq-error="请输入商品库存" placeholder="请输入商品库存" autocomplete="off" class="layui-input"   onkeyup="this.value=this.value.replace(/[^\d.]/g,'')" onpaste="this.value=this.value.replace(/[^\d.]/g,'')">
+                            </div>
+                        </div>
+						
+					 <!--<div class="layui-form-item ">
+                            <label class="layui-form-label">商品扣点</label>
+							 <span class="left-icon"><i class="iconfont">&#xe690;</i></span>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goods(10)" placeholder="请输入商品扣点" autocomplete="off" class="layui-input">
+                            </div><span class="left-icon"> &nbsp;百分比(请仔细核对是否正确)</span>
+                             
+                        </div>-->
+						
+						
+                        <div class="layui-form-item ">
+
+                            <label class="layui-form-label">市场价</label>
+                            <span class="left-icon"><i class="iconfont">&#xe690;</i></span>
+                            <div class="layui-input-inline">
+                                <input type="text" name="goods(12)" required jq-verify="required" autocomplete="off" class="layui-input">
+                            </div>
+
+                        </div>
+						
+						 <div class="layui-form-item">
+                            <label class="layui-form-label">上传主图</label>
+                            <div class="layui-input-block">
+                                <input type="file" name="file" class="layui-upload-file">
+                                
+                                <p id="img-error" class="error"></p>
+                            </div>
+                            <input type="hidden" id="url" name="goods_img" />
+                        </div>
+						<div class="layui-form-item">
+                            <label class="layui-form-label">上架</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="g15" title="是" value="1" checked />
+                                <input type="radio" name="g15" title="否" value="0"  />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">上新</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="g17" title="是" value="1"/>
+                                <input type="radio" name="g17" title="否" value="0"  checked  />
+                            </div>
+                        </div>
+						<div class="layui-form-item">
+                            <label class="layui-form-label">热卖</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="is_hot" title="是" value="1"  />
+                                <input type="radio" name="is_hot" title="否" value="0" checked />
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">首页推荐</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="g16" title="是" value="1"  />
+                                <input type="radio" name="g16" title="否" value="0" checked />
+                            </div>
+                        </div>
+						
+						<div class="layui-form-item ">
+                            <label class="layui-form-label">商品关键词</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="goods(18)" required jq-verify="required" jq-error="请输入商品关键词" placeholder="请输入商品关键词" autocomplete="off" class="layui-input">用空格分隔
+                            </div>
+                        </div>
+						<div class="layui-form-item ">
+                            <label class="layui-form-label">商品卖点</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="goods(19)" placeholder="请输入商品卖点" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+						<div class="layui-form-item ">
+                            <label class="layui-form-label">商品简介</label>
+                            <div class="layui-input-block">
+                                <textarea name="goods(2)" required jq-verify="required" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+						<div class="layui-form-item">
+                            <label class="layui-form-label">商品相册</label>
+                            <div class="layui-input-block">
+                                <div id="uploader" class="wu-example">
+                                    <div class="queueList">
+                                        <div id="dndArea" class="placeholder">
+                                            <div id="filePicker"></div>
+                                            <p>或将照片拖到这里，单次最多可选300张</p>
+                                        </div>
+                                    </div>
+                                    <div class="statusBar" style="display:none;" >
+                                        <div class="progress">
+                                            <span class="text">0%</span>
+                                            <span class="percentage"></span>
+                                        </div>
+                                        <div class="info"></div>
+                                        <div class="btns">
+                                            <div id="filePicker2"></div>
+                                            <div class="uploadBtn">开始上传</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <div id="goodsimg">
+						<div id="upyanzheng" ><input type="text" disabled placeholder="请先上传成功商品轮转图"  required jq-verify="required" class="layui-input"></div>
+						</div>
+                      
+                         <div class="layui-form-item ">
+                            <label class="layui-form-label">商品参数</label>
+                            <div class="layui-input-block">
+							  <!--<script   type="text/plain" style="width:1024px;height:500px;"></script>-->
+							  <textarea name="goods(20)" id="editor1"></textarea>
+                            </div>
+                        </div>
+                        
+                         
+                         <div class="layui-form-item ">
+                            <label class="layui-form-label">商品详情描述</label>
+                            
+                            <div class="layui-input-block">
+                               <!--<script id="editor"  type="text/plain" style="width:1024px;height:500px;"></script>--> 
+                               <textarea name="goods(21)" id="editor"></textarea>
+                            </div>
+                            
+                        </div>
+
+                
+
+						
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">商品规格</label>
+                            <div class="layui-input-inline">
+                                <select name="goods_type" lay-filter="guige" id="spec_type" required jq-verify=''>
+ <option value="">请选择规格</option>								
+                               {foreach name="goodsType" key="k" item="vo"}
+                                <option value="{$vo['id']}"{if condition='$goodsInfo["type_id"] eq $vo["id"]' } selected="selected"{/if}>{$vo["pname"]}</option>
+                               {/foreach}
+                                </select>
+                            </div> 
+							<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+							
+
+  <legend>请选择规格组合</legend>
+</fieldset>  
+ 
+<table id="guigerable" class="layui-table" lay-even="" lay-skin="nob">
+  <colgroup>
+    <!--<col width="150">
+    <col width="150">
+    <col width="200">
+    <col>-->
+  </colgroup>
+  <thead>
+    <tr>
+      <th>组合</th>
+      <th>组合选择</th>
+
+    </tr> 
+  </thead>
+  <tbody id="geugecontent">
+    <tr>
+      <td>组合必选</td>
+      <td>请先选择规格</td>
+    </tr>
+
+  </tbody>
+</table>
+<div class="layui-form-item">
+<br/><br/><br/>
+							<label class="layui-form-label">关联图片</label>
+							 <div id="bangding">如果选择关联务必请先上传图片</div>
+</div>
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>组合配置</legend>
+</fieldset>  
+ 
+
+
+<div id="zuhe"></div>
+
+<div id="neirong"><input type="text" disabled placeholder="请先选择规格组合配置" required jq-verify="required" class="layui-input"></div>   
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+								<button class="layui-btn" jq-submit data-ajax="true" lay-filter="submit">立即提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    
+</body>
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+$('#seller_cx').click(function(){
+
+		
+			 $.ajax({  
+                type:'post',  
+                url:'/admin/index/getsellername.html',  
+                dataType:'json',  
+                data:{sellername:$('#seller_name').val()},  
+               success:function(json){ 
+					$('#tipaaa').html('');			   
+                    $('#tipaaa').append(json.str);
+                }  
+        });
+				
+});
+    	layui.use(['layedit', 'form', 'product', 'upload', 'tags', 'laydate',"myform"], function() {
+    		var form = layui.form(),
+			laydate = layui.laydate,
+			$ = layui.jquery,
+			tags = layui.tags,
+			upload = layui.upload,
+			layedit = layui.layedit;
+		var laydate = layui.laydate;
+layui.upload({
+			url: "/Admin/Upload/uploadimg",
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#url').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+		});
+
+			form.on('select(yi)', function(data) {
+				
+				var url = "/admin/index/liandong/id/"+data.value;
+				$.get(url, function(data, status) {
+				$('#er').html('<option value="">子类目</option>');
+				$('#san').html('<option value="">请选择子类</option>');
+				$.each(data, function(no, items) {
+					console.log(items);
+					$('#er').append('<option value="' + items.id + '">' + items.pname + '</option>');
+				});
+				form.render();
+				});
+				
+				var url = "/admin/index/getLiandongbrand/id/"+data.value;
+				$.get(url, function(data, status) {
+				$('#brand').html('<option value="">请先选择分类</option>');	
+				$.each(data, function(no, items) {
+					console.log(items);
+					$('#brand').append('<option value="' + items.brand_id + '">' + items.ppname + '</option>');
+				});
+				form.render();
+				});
+			});
+			form.on('select(er)', function(data) {
+							var url = "/admin/index/liandong/id/"+data.value;
+							$.get(url, function(data, status) {
+							$('#san').html('<option value="">请选择子类</option>');
+							$.each(data, function(no, items) {
+								console.log(items);
+								$('#san').append('<option value="' + items.id + '">' + items.pname + '</option>');
+							});
+							form.render();
+							});
+				});
+				
+				form.on('select(guige)', function(data) {
+					var url = "/admin/index/getShopspec/id/"+data.value;
+							$.get(url, function(data, status) {
+							$('#geugecontent').html('');
+							
+							$.each(data, function(no, items) {
+//								console.log(items);
+								var strguige =  '<tr>'+'<td>'+no+'</td>'+'<td><div  layui-form-item"><div class="layui-input-block">';
+								$.each(items, function(no1, items1) {
+								strguige += '<input type="checkbox" lay-filter="guigexuanze" guigename="'+no+'" myid="'+items1.id+'" sid="'+items1.spec_id+'" title="'+items1.item+'">';
+						
+							});
+							 strguige += '</div> </div></td>'+'</tr>';
+								$('#geugecontent').append(strguige);
+							});
+								$("#zuhe").html('');
+								$("#neirong").html('');
+							form.render();
+							});
+			});
+			guanliani=0;
+				form.on('checkbox(guigexuanze)', function(data){
+				
+				
+				if(data.elem.checked==false)
+					{
+						$("#neirong").find('input[value="'+$(data.elem).attr('myid')+'"]').remove();
+						$("#bangding").find('div[name='+$(data.elem).attr('myid')+']').remove();
+					}else{
+						var str = '<input type="hidden" name="spec_arr['+$(data.elem).attr('sid')+'][]" value="'+$(data.elem).attr('myid')+'" />';
+						$('#neirong').append(str);
+						var str1 ='<div name="'+$(data.elem).attr('myid')+'" class="layui-input-inline"><select lay-filter="guanlian" name="guanlian['+$(data.elem).attr('myid')+']"><option value="">'+$(data.elem).attr('title')+'不关联图片</option>';
+						var i=1;
+						str1 +='<option value="">'+$(data.elem).attr('title')+'不关联图片</option>';
+						$('#goodsimg').find('input[type=hidden]').each(function(){
+						str1 +='<option value="'+$(this).val()+'">'+$(data.elem).attr('title')+'  =>  关联图'+i+'</option>';
+						i++;
+					  });
+						str1 +='</select></div>';
+						$("#bangding").append(str1);
+						form.render();
+
+						
+					}
+			   value='';
+				$("#neirong input[type='hidden']").each(function(){
+				//alert($(this).val());
+				value += $(this).attr('name')+'='+$(this).val()+'&';
+	
+				}); 
+				
+				 $.ajax({  
+                type:'post',  
+                url:'/admin/index/ajaxGetSpecInput.html',  
+               // dataType:'json',  
+                data:value,  
+                success:function(data){  
+					$("#zuhe").html(data);
+
+					
+                }  
+					});  
+				
+			    });
+ });
+  $('#seller_id').blur(function(){
+    	var seller_id=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxseller",
+             data: {seller_id:seller_id},
+             success:function(data){
+             	if(data==2){
+                 $('#err').css("display","block");	
+             	}else{
+                 $('#err').css("display","none");	
+             	}
+             }
+          });
+             
+    });
+			</script>
+			<script type="text/javascript">
+
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+    var ue1 = UE.getEditor('editor1');
+</script>
+</html>

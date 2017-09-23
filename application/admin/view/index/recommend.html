@@ -1,0 +1,191 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/findtixian.html">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <!--<button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delseller.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>-->
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+     <div class="add-subcat">
+       
+        {$aa}
+      
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getrecommend","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even" lay-even="" lay-skin="nob">
+        <thead>
+            <tr>
+                <th width="50">用户ID</th>
+				 <th>用户名称</th>
+                 <th>推荐用户</th>
+                 <th>是否兑换</th>
+                 <th>操作</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td>{{item.uid}}</td>
+                <td>{{item.uname}}</td>
+                 <td>{{item.count}}</td>
+           	    <td>
+				{{# if(item.is_duihuan==1){ }}
+				<button class="layui-btn layui-btn-mini layui-btn-normal modal-catch" modal-bind="1" id="is_duihuan" onclick="zh({{item.uid}})">已兑换</button>
+				{{# } }}
+				{{# if(item.count>=10&&item.is_duihuan==null){ }}
+				<button class="layui-btn layui-btn-mini layui-btn-danger ajax" modal-bind="1" id="is_duihuan" onclick="zh({{item.uid}})" style="background: red;">可兑换</button>
+				{{# } }}
+                {{# if(item.count < 10 && item.is_duihuan==null){ }}
+                <button class="layui-btn layui-btn-mini layui-btn-danger ajax" modal-bind="1"  id="is_duihuan" style="background: #ccc;">待兑换</button>
+                {{# } }}
+				</td>
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-iframe" data-params='{"content": "/admin/index/tuijian/uid/{{ item.uid}}.html", "title": "编辑商品","full":"true"}'>
+                        <i class="iconfont">&#xe653;</i>查看详细推荐
+                    </button>
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+	function zh(id){
+		$.ajax({
+			type:"post",
+			url:"/admin/index/ajaxrestatus",
+			data:{id:id},
+			success:function(data){
+				history.go(0);
+			}
+		});
+	}
+    layui.use(['list','form'],function(){
+    	    layui.upload({
+			url: "/Admin/Upload/images",
+			elem: '.layui-upload-file_chaxun',
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#img').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				}else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+
+		});
+		
+		
+		 layui.upload({
+			url: "/Admin/Upload/images",
+			elem: '.layui-upload-file',
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#url').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+
+		});
+		
+    });
+    $('#seller_id').blur(function(){
+    	var bid=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxslide",
+             data: {bid:bid},
+             success:function(data){
+             	if(data==2){
+                 $('#err').css("display","none");                
+             	}else{
+             	  $("#seller_id").val("");
+                 $('#err').css("display","block");
+                  
+             	}
+             }
+          });
+             
+    });
+     
+
+    function strRepeat(str, count) {
+        var ret = "";
+        for (var i = 0; i < count; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+
+
+</script>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+     统计
+  */
+  _paq.push(['trackPageView']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+</html>

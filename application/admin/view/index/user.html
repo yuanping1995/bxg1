@@ -1,0 +1,767 @@
+{include file="/public/header"}
+
+<body>
+
+    <div class="container-fluid larry-wrapper">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+
+                <!--头部搜索-->
+
+                <section class="panel panel-padding">
+
+                    <form class="layui-form" action="/admin/index/finduser.html">
+
+                        <div class="layui-form">
+
+                            <div class="layui-inline">
+
+                                <div class="layui-input-inline">
+
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+
+                                </div>
+
+                            </div>
+
+                            <div class="layui-inline">
+
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+                 
+                    <form class="layui-form" action="/admin/index/findtuiguang.html">
+
+                        <div class="layui-form">
+
+                            <div class="layui-inline">
+
+                                <div class="layui-input-inline">
+
+                                    <input class="layui-input" name="keyword" type="hidden" placeholder="关键字">
+
+                                </div>
+
+                            </div>
+
+                            <div class="layui-inline">
+
+                                <button lay-submit class="layui-btn" lay-filter="search">查找全部推广</button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                   <br>
+
+                    <form class="layui-form" action="/admin/index/findyuan.html">
+
+                        <div class="layui-form">
+
+                            <div class="layui-inline">
+
+                                <div class="layui-input-inline">
+
+                                    <input class="layui-input" name="keyword" type="hidden" placeholder="关键字">
+
+                                </div>
+
+                            </div>
+
+                            <div class="layui-inline">
+
+                                <button lay-submit class="layui-btn" lay-filter="search">查看所有员工</button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+
+
+                <!--列表-->
+
+                <section class="panel panel-padding">
+
+                    <div class="group-button">
+
+                        <!--<button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delseller.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+
+                            <i class="iconfont">&#xe626;</i> 删除
+
+                        </button>-->
+
+                    </div>
+
+                    <div id="list" class="layui-form"></div>
+
+
+
+                    <div class="text-right" id="page"></div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+
+   <!-- 充值 -->
+
+ <div class="chongzhi " style="display: none;">
+
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleuserchong.html">
+
+            <div class="layui-form-item">
+
+                <label class="layui-form-label">用户ID</label>
+
+                <!--<input type="text" lay-verify="required|phone|number">-->
+
+                <div class="layui-input-block">
+
+                    <input type="text" name="uid" required jq-verify="required|phone" jq-error="请输入用户ID" placeholder="请输入用户ID"  autocomplete="off" class="layui-input" id="seller_id">
+
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <label class="layui-form-label">充值金额</label>
+
+                <div class="layui-input-block">
+
+                    <input type="text" name="qian" required jq-verify="required" jq-error="请输入用户名称" placeholder="请输入充值金额" autocomplete="off" class="layui-input">
+
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <div class="layui-input-block">
+
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button><button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+    <div class="add-subcat" style="display: none;">
+
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleuser.html">
+
+            <div class="layui-form-item">
+
+                <label class="layui-form-label">用户ID</label>
+
+                <!--<input type="text" lay-verify="required|phone|number">-->
+
+                <div class="layui-input-block">
+
+                    <input type="text" name="uid" required jq-verify="required|phone" jq-error="请输入用户ID" placeholder="请输入用户ID"  autocomplete="off" class="layui-input" id="seller_id">
+
+                </div>
+
+                <span style="color: red; display: none;" id="err">用户信息已经存在</span>
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <label class="layui-form-label">用户名称</label>
+
+                <div class="layui-input-block">
+
+                    <input type="text" name="uname" required jq-verify="required" jq-error="请输入用户名称" placeholder="请输入用户名称" autocomplete="off" class="layui-input">
+
+                </div>
+
+            </div>
+
+             <div class="layui-form-item">
+
+                <label class="layui-form-label">用户头像</label>
+
+                <div class="layui-input-block">
+
+                    <input type="file" name="file" class="layui-upload-file_chaxun">
+
+                    <input type="hidden" jq-error="请上传用户头像" error-id="img-error">
+
+                    <p id="img-error" class="error"></p>
+
+                     <!--<input type="file" id="img" name="img1" />-->
+
+                     <input type="hidden" id="img" name="icon" />
+
+                </div>
+
+                   
+
+            </div>
+
+             <div class="layui-form-item">
+
+                <label class="layui-form-label">用户类型</label>
+
+                <div class="layui-input-block">
+
+                    <input type="text" name="qid" required jq-verify="required" jq-error="请输入用户类型" placeholder="请输入用户类型" autocomplete="off" class="layui-input">
+
+                </div>
+
+            </div>
+
+            <div class="layui-form-item">
+
+                <div class="layui-input-block">
+
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button><button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getuser","pageid":"#page"}'>
+
+    <table id="example" class="layui-table lay-even">
+
+        <thead>
+
+            <tr>
+
+                <th width="20"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+
+
+
+                <th width="50">用户ID</th>
+
+                <th width="150">用户名称</th>
+
+                <th width="150">用户头像</th>
+
+                <th width="150">手机号码</th>
+
+                <th>账户余额</th>
+
+                <th>订单总数</th>
+
+                <th>订单总额</th>
+
+                <th>用户类型</th>
+
+                <th>最后登陆时间</th>
+
+				<th>推荐权限</th>
+
+                <td>操作</td>
+
+                <th>充值</th>
+                <th>设置内部员工</th>
+
+            </tr>
+
+        </thead>
+
+      
+
+        <tbody>
+
+            {{# layui.each(d.list, function(index, item){ }}
+
+            <tr>
+
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+
+                <td>{{ item.uid}}</td>
+
+                <td>{{ item.uname}}</td>
+
+                <td><img src="{{item.icon}}" width="30" height="30"/></td>
+
+                <td>{{item.mobile}}</td>
+
+                <td>{{item.usertotal}}</td>
+
+                <td>{{item.ordercount}}</td>
+
+                <td>{{item.ordertotal}}</td>
+
+                <td>{{item.qid}}</td>
+
+                <td>{{item.logintime}}</td>
+
+				<td id='tuijian_q'>
+
+				{{#  if(item.tuijian_q == '2'){ }}
+
+				<button class="layui-btn layui-btn-mini layui-btn-danger " onclick='tuijiana($(this))' ui='{{ item.uid}}' q='1'>
+
+                       取消
+
+                </button>
+
+				<button class="layui-btn layui-btn-mini layui-btn-normal" onclick='tuijiana($(this))' ui='{{ item.uid}}' q='3'>
+
+                       设置学生
+
+                </button>
+
+				{{# }else if(item.tuijian_q == '3'){ }}
+
+				<button class="layui-btn layui-btn-mini layui-btn-danger" onclick='tuijiana($(this))' ui='{{ item.uid}}' q='1'>
+
+                      取消
+
+                </button>
+
+				<button class="layui-btn layui-btn-mini " onclick='tuijiana($(this))' ui='{{ item.uid}}' q='2'>
+
+                      设置员工
+
+                </button>
+
+				{{# }else { }}
+
+				<button class="layui-btn layui-btn-mini " onclick='tuijiana($(this))' ui='{{ item.uid}}' q='2'>
+
+                       设置员工
+
+                </button>
+                <br>
+				<button class="layui-btn layui-btn-mini layui-btn-normal " onclick='tuijiana($(this))' ui='{{ item.uid}}' q='3'>
+
+                       设置学生
+
+                </button>
+                <br>
+
+				{{# } }}</td>
+
+                <td>
+
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"900,1000","title":"编辑{{ item.sname}}","data":"id=1&uid={{item.uid}}&uname={{item.uname}}&icon={{item.icon}}&qid={{item.qid}}&did={{item.did}}","type":"1"}'>
+
+                        <i class="iconfont">&#xe653;</i>编辑
+
+                    </button>
+
+                    <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/repassuser.html","data":"id={{ item.id}}&seller_id={{item.seller_id}}"}'>
+
+                        <i class="iconfont">&#xe626;</i>重置密码
+
+                    </button>-->
+
+                     <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/delseller.html","data":"id={{ item.id}}"}'>
+
+                        <i class="iconfont">&#xe626;</i>删除
+
+                    </button>-->
+
+                </td>
+
+                <td>
+
+                <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".chongzhi","area":"900,1000","title":"充值:{{ item.uname}}","data":"id=1&uid={{item.uid}}","type":"1"}'>
+
+                        <i class="iconfont">&#xe653;</i>充值
+
+                    </button>
+
+                </td>
+                <td>
+
+                {{# if(item.is_bxg==0){ }}
+
+                <button class="layui-btn layui-btn-mini layui-btn-normal modal-catch" modal-bind="1" id="status" onclick="zh({{item.uid}})">设置内部员工</button>
+
+                {{# } }}
+
+                {{# if(item.is_bxg==1){ }}
+
+                <button class="layui-btn layui-btn-mini layui-btn-danger ajax" modal-bind="1" id="status" onclick="za({{item.uid}})">取消</button>
+
+                {{# } }}
+
+                </td>
+
+            </tr>
+
+            {{# }); }}
+
+        </tbody>
+
+
+
+    </table>
+
+</script>
+
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+
+{include file="/public/version"}
+
+<script>
+
+function zh(id){
+
+        $.ajax({
+            type:"post",
+            url:"/admin/index/ajaxbxstatus",
+            data:{id:id},
+            success:function(data){
+
+                history.go(0);
+
+            }
+        });
+
+    }
+function za(id){
+
+        $.ajax({
+            type:"post",
+            url:"/admin/index/ajaxbxstatus",
+            data:{id:id,pid:1},
+
+            success:function(data){
+
+                history.go(0);
+
+            }
+        });
+
+    }
+
+
+	function tuijiana($zz){
+
+	$.ajax({
+
+									 type: "post",
+
+									 url: "/admin/index/settuijian_q/uid/"+$zz.attr('ui')+'/q/'+$zz.attr('q'),
+
+									 success: function(data){
+
+										layer.msg('设置成功', {icon: 1});
+
+										 $zz.unbind();
+
+									 }
+
+									 });
+
+
+
+}
+
+    layui.use(['list','form'],function(){
+
+    	    layui.upload({
+
+			url: "/Admin/Upload/images",
+
+			elem: '.layui-upload-file_chaxun',
+
+			before: function(input) {
+
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+
+				if(box.next('div').length > 0) {
+
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+
+				} else {
+
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+
+				}
+
+			},
+
+			success: function(res) {
+
+				if(res.status == 200) {
+
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+
+					$('#img').val(res.url);
+
+					form.check(box.find('input[type=hidden]'));
+
+					alert(1);
+
+				} else {
+
+					box.next('div').find('p').html('上传失败...')
+
+				}
+
+			}
+
+
+
+		});
+
+		
+
+		
+
+		 layui.upload({
+
+			url: "/Admin/Upload/images",
+
+			elem: '.layui-upload-file',
+
+			before: function(input) {
+
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+
+				if(box.next('div').length > 0) {
+
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+
+				} else {
+
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+
+				}
+
+			},
+
+			success: function(res) {
+
+				if(res.status == 200) {
+
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+
+					$('#url').val(res.url);
+
+					form.check(box.find('input[type=hidden]'));
+
+					alert(1);
+
+				} else {
+
+					box.next('div').find('p').html('上传失败...')
+
+				}
+
+			}
+
+
+
+		});
+
+	
+
+		
+
+    });
+
+    $('#seller_id').blur(function(){
+
+    	var uid=$(this).val();
+
+    	  $.ajax({
+
+             type: "post",
+
+             url: "/admin/index/ajaxuser",
+
+             data: {uid:uid},
+
+             success:function(data){
+
+             	if(data==2){
+
+                 $('#err').css("display","none");                
+
+             	}else{
+
+             	  $("#seller_id").val("");
+
+                 $('#err').css("display","block");
+
+                  
+
+             	}
+
+             }
+
+          });
+
+             
+
+    });
+
+    $('#yprice').blur(function(){
+
+    	$yprice=$(this).val();
+
+    	  $.ajax({
+
+             type: "post",
+
+             url: "/admin/index/ajaxseller1",
+
+             data: {price:$yprice},
+
+             success:function(data){
+
+             	if(data==2){
+
+                 $('#shu').css("display","block");	
+
+             	}else{
+
+                 $('#shu').css("display","none");	
+
+             	}
+
+             }
+
+          });
+
+             
+
+    });
+
+    $('#xprice').blur(function(){
+
+    	$yprice=$(this).val();
+
+    	  $.ajax({
+
+             type: "post",
+
+             url: "/admin/index/ajaxseller1",
+
+             data: {price:$yprice},
+
+             success:function(data){
+
+             	if(data==2){
+
+                 $('#xiao').css("display","block");	
+
+             	}else{
+
+                 $('#xiao').css("display","none");	
+
+             	}
+
+             }
+
+          });
+
+             
+
+    });
+
+   
+
+    function strRepeat(str, count) {
+
+        var ret = "";
+
+        for (var i = 0; i < count; i++) {
+
+            ret += str;
+
+        }
+
+        return ret;
+
+    }
+
+function clickk(){
+
+// $('.chongzhi').blur(function(){
+
+
+
+                            var $zz= document.getElementsByName('chongzhi');
+
+                           console.log($zz);
+
+
+
+                                //询问框
+
+                                layer.confirm('确定给该账户充值吗', {
+
+                                  btn: ['确定','关闭'] //按钮
+
+                                }, function(){
+
+                                
+
+                                    $.ajax({
+
+                                     type: "post",
+
+                                     url: "/admin/index/setgongzi/jiesuan/"+$zz.attr('z')+'/zhou/'+$zz.attr('zhou'),
+
+                                     success: function(data){
+
+                                        layer.msg('设置成功', {icon: 1});
+
+                                         $zz.unbind();
+
+                                        $zz.html('已结算');
+
+                                     }
+
+                                     });
+
+                                  
+
+                                });
+
+                                // })
+
+}
+
+
+
+
+
+</script>
+
+
+
+</html>

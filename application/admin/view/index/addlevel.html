@@ -1,0 +1,209 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/findlevel">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delLevel.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>
+
+                        <button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/handleLevel.html","data":"id=1&name=hao&checkbox=6,9,0&va=23"}'>
+                            <i class="layui-icon">&#x1005;</i> 状态
+                        </button>
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":".add-subcat","confirm":"true", "title":"添加顶级分类","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleLevel.html">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="pname" required jq-verify="required" jq-error="请输入分类名称" placeholder="请输入分类名称" autocomplete="off" class="layui-input " id="level">
+                </div>
+                 <span style="color: red; display: none;" id="err">分类名称已存在</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">扣点</label>
+                <div class="layui-input-block">
+                    <input type="text" name="points" required jq-verify="required" jq-error="请输入扣点" placeholder="请输入扣点" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">连接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="link" required jq-verify="required" jq-error="请输入连接" placeholder="请输入连接" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">上传图片</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" class="layui-upload-file">
+                    	 <!--jq-verify="required"-->
+                  
+                    <p id="img-error" class="error"></p>
+                </div>
+
+            </div>
+            <!--<div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" required jq-verify="number" value="100" jq-error="排序必须为数字" placeholder="分类排序" autocomplete="off" class="layui-input ">
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="issork" title="启用" value="1" checked />
+                    <input type="radio" name="issork" title="禁用" value="0" />
+                </div>
+            </div>
+			 <input type="hidden" name="level"  value="1" />
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getLevel.html","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+            <tr>
+                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <th width="60">序号</th>
+                <th>名称</th>
+                <th>图片</th>
+                <th width="70">扣点</th>
+                <th width="80">状态</th>
+                <th width="240">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{ item.id}}</td>
+                <td>{{# if(item.level>2){ }} &nbsp; &nbsp; &nbsp; {{# } }} {{# if(item.level>1){ }} &nbsp; &nbsp; &nbsp; ├├&nbsp; {{# } }} {{ item.pname}}</td>
+                 <td><img src="{{ item.pic}}" width="100px" height="30px"></td>
+                <td><input type="text" class="layui-input ajax-blur" name="points" value="{{ item.points}}" data-params='{"url":"/admin/index/handleLevel.html","data":"id={{ item.id }}"}'> </td>
+                <td><input type="checkbox" name="issork" lay-skin="switch" lay-text="ON|OFF" {{#if (item.issork==1){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"/admin/index/handleLevel.html","data":"id={{ item.id}}"}'> </td>
+                <td>
+				{{# if(item.level!=3){ }}
+				<button class="layui-btn layui-btn-mini layui-btn-normal modal-catch" data-params='{"content":".add-subcat","area":"auto,auto","title":"添加{{ item.pname}}的子分类","type":"1","data":"pid={{ item.id}}&level={{ item.level+1}}"}'>
+                        <i class="iconfont">&#xe649;</i>添加子分类
+                    </button>
+				{{# } }}
+                    
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"auto,auto","title":"编辑{{ item.pname}}分类","data":"id={{ item.id}}&link={{ item.link}}&level={{ item.level}}&pname={{ item.pname}}&issork={{ item.issork}}&points={{ item.points}}","type":"1"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                    <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax"  data-params='{"url": "/admin/index/delLevel.html","confirm":"true","data":"id={{ item.id}}"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>-->
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="__PUBLIC__/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+    layui.use('list',function(){
+		layui.upload({
+				url: "/Admin/Upload/levelimg",
+				elem: '.layui-upload-file',
+				before: function(input) {
+					box = $(input).parent('form').parent('div').parent('.layui-input-block');
+					if(box.next('div').length > 0) {
+						box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+					} else {
+						box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+					}
+				},
+				success: function(res) {
+					if(res.status == 200) {
+						box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail"><input type="hidden" name="pic" value="'+ res.url+'">');
+						$('#img').val(res.url);
+						form.check(box.find('input[type=hidden]'));
+						alert(1);
+					} else {
+						box.next('div').find('p').html('上传失败...')
+					}
+				}
+
+			});
+	});
+
+    function strRepeat(str, count) {
+        var ret = "";
+        for (var i = 0; i < count; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+     $('#level').blur(function(){
+    	var level=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxlevel",
+             data: {level:level},
+             success:function(data){
+             	if(data==2){
+                 $('#err').css("display","none");	
+             	}else{
+                 $('#err').css("display","block");	
+             	}
+             }
+          });
+             
+    });
+</script>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+     统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>个人中心</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--<base href="{$Think.__APPROOT__}/" />-->
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- 不让百度转码 -->
+		<meta name="description" content="" />
+		<meta name="Keywords" content="" />
+		<link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png" />
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<!--公共样式表-->
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/user.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/layer/mobile/layer.js"></script>
+	</head>
+	<body>
+		<!--个人头部<-->
+		<section class="head_img clear">
+			<div class="perName">
+				<a href="{:url('user/aboutMe')}">
+					<div class="per"><img src="{$user.icon}{:config('images')}" /></div>
+					<span>{$user.uname}</span>
+				</a>
+			</div>
+			<div class="per_set">
+				<a href="{:url('user/myset')}">设置</a>
+			</div>
+		</section>
+		<!--我的订单-->
+		<section class="main_nav myOrder_content">
+			<div class="content_title">
+				<a href="{:url('user/myorder',['typeid'=>0])}" class="orderClick">我的订单<span>查看更多订单</span></a>
+			</div>
+			<ul>
+				<li>
+					<a href="{:url('user/myorder',['typeid'=>1])}" class="orderClick"><span class="nav_1"></span>待付款</a><span class="my-count">{$order1}</span>
+				</li>
+				<li>
+					<a href="{:url('user/myorder',['typeid'=>2])}" class="orderClick"><span class="nav_2"></span>待发货</a><span class="my-count">{$order2}</span>
+				</li>
+				<li>
+					<a href="{:url('user/myorder',['typeid'=>3])}" class="orderClick"><span class="nav_3"></span>待收货</a><span class="my-count">{$order3}</span>
+				</li>
+				<li>
+					<a href="{:url('user/myorder',['typeid'=>4])}" class="orderClick"><span class="nav_4"></span>待评价</a><span class="my-count">{$order4}</span>
+				</li>
+				<li>
+					<a href="{:url('user/returns')}"><span class="nav_5"></span>退货/返修</a><span class="my-count">{$order5}</span>
+				</li>
+			</ul>
+		</section>
+		<!--必备工具-->
+		<section class="main_nav per_tool">
+			<div class="content_title">
+				 <a href="{:url('user/moretool')}">必备工具<span>查看全部工具</span></a> 
+			</div>
+			<ul>
+				<!-- <li>
+					<a href="{:url('user/mybalance')}"><span class="nav_1"></span>余额</a>
+				</li> -->
+				<li>
+					<a href="{:url('user/mywallet')}"><span class="nav_2"></span>我的钱包</a>
+				</li>
+				{if condition="$user.qid eq 1 "}
+				<li><a href="{:url('user/vipcenter')}"><span class="nav_3"></span>会员升级</a></li>
+				{else/}<li><a href="javascript:void(0);" onclick="viptip()"><span class="nav_3"></span>会员升级</a></li>
+				{/if}
+				
+   		        <li><a href="{:url('user/vipprivilege')}"><span class="nav_4"></span>会员特权</a></li> 
+				<li><a href="{:url('user/footprint')}"><span class="nav_5"></span>我的足迹</a></li>
+				<li><a href="{:url('user/focushop')}"><span class="nav_6"></span>关注店铺</a></li>
+				<li><a href="{:url('user/focusware')}"><span class="nav_7"></span>我的收藏</a></li>
+				<li id="mycode" class="my_code"><a href="{:url('index/user/recommend')}"><span class="nav_8"></span>我的推荐码</a></li>
+				<li><a href="{:url('user/coupon')}"><span class="nav_9"></span>代金券</a></li> 
+			</ul>
+		</section>
+		<!--为您推荐-->
+		<section class="recommend">
+			<div class="recom-bar">为您推荐</div>
+			<div class="recom-list">
+				<ul>
+					<!--ssssss-->
+				</ul>
+				<div class="getmore"></div>
+				<div class="search_empty">没有更多了</div>
+			</div>
+		</section>
+		<section class="mycode">
+			<i class="close_b"></i>
+			<img src="/index.php/index/user/qr" />
+		</section>
+		<section class="vip-tip">
+			<div>温馨提示</div>
+			<div>您已是<strong>VIP会员</strong>!</div>
+			<div class="tipclose">知道了</div>
+		</section>
+		<div class="shade"></div>
+		{include file="public/footer_nav" /}
+		<section class="public-pop"></section>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/public.js"></script>
+		<script type="text/javascript">
+		 //底部提示
+  			function viptip(){
+				$(".vip-tip").show();
+			}
+			var pageId = 1;
+			
+			$(function() {
+				$(".tipclose").click(function(){
+					$(".vip-tip").hide();
+				});
+				$.ajax({
+					type: "get",
+					url: "{$Think.__APPROOT__}/index.php/index/cart/ajaxcount",
+					success: function(data) {
+						var obj = eval(data);
+						$('#cart_quantity').html(obj.num);
+					}
+				});
+
+				//页面上拉加载
+				upRefresh();
+				$(window).scroll(function() {
+					if($(document).scrollTop() >= $(document).height() - $(window).height() - 100) {
+						upRefresh();
+					}
+				});
+
+				function upRefresh() {
+					$('.getmore').show();
+					$.ajax({
+						type: "get",
+						url: "{$Think.__APPROOT__}/index/index/ajaxget/p/" + pageId,
+						success: function(data) {
+							if(data) {
+								$('.getmore').hide();
+								$('.recom-list>ul').append(data);
+								pageId++;
+								$('.search_empty').hide();
+							} else {
+								$('.getmore').hide();
+								$('.search_empty').show();
+							}
+
+						}
+					});
+				}
+				
+//				$('.my_code').click(function(){
+//					$('.shade').show();
+//					$('.mycode').show();
+//					$.ajax({
+//						type:"get",
+//						url:"",
+//						success:function(data){
+//							var dataJson = eval(data);
+//							if(dataJson.flag){
+//								$(".mycode img").attr('src',dataJson.src);
+//							}
+//						}
+//					});
+//				});
+				$(".close_b").click(function(){
+					$('.shade').hide();
+					$('.mycode').hide();
+				});
+			});
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>

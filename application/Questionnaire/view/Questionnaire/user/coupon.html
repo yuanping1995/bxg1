@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)http://b2b2c.shopnctest.com/dema/wap/tmpl/member/voucher_list.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
+<title>我的代金券</title>
+<link rel="stylesheet" type="text/css" href="{$Think.__APPROOT__}/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="{$Think.__APPROOT__}/static/css/nctouch_member.css">
+<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+</head>
+<body mycollectionplug="bind">
+<header id="header">
+  <div class="header-wrap">
+    <div class="h_style3 clear"><a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn"></i></a>
+    <h2>我的代金券</h2>
+    </div>
+    
+    <div class="header-r"> <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a> </div>
+  </div>
+  <div class="nctouch-nav-layout">
+  </div>
+</header>
+<div class="nctouch-main-layout">
+  <div class="nctouch-voucher-list">
+  {if condition="empty($coupon)"}
+   <div class="nctouch-norecord voucher">
+		<div class="norecord-ico"><i></i></div>
+		<dl>
+			<dt>您还没有相关的代金券</dt>
+			<dd>店铺代金券可享受商品折扣</dd>
+		</dl>
+	</div>
+  {else/}
+     <ul class="nctouch-tickets" id="voucher-list">
+    {foreach  name="coupon" item="value"}
+	<li class="ticket-item normal">	
+		<div class="border-left"></div>
+		<div class="block-center">
+			<div class="store-info">
+				<div class="store-avatar"><img src="{$value['logo']}"></div>
+				<dl>
+					<dt class="store-name">{$value['seller_id']}</dt>
+					<dd>有效期至：{$value['d_time']}</dd>
+				</dl>
+			</div>
+			<div class="ticket-info">
+				<div class="bg-ico"></div>
+				<dl>
+				<dt>￥{$value['money']}.00</dt>
+				<dd>满{$value['lower']}.00使用</dd>
+				</dl>
+			</div>
+		</div>
+		<div class="border-right"></div>
+	</li>
+	{/foreach}
+
+</ul>
+  {/if}
+
+  </div>
+</div>
+<div class="fix-block-r"> <a href="javascript:void(0);" class="gotop-btn gotop hide" id="goTopBtn"><i></i></a> </div>
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/config.js"></script> 
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/zepto.min.js"></script> 
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/template.js"></script> 
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/common.js"></script> 
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/ncscroll-load.js"></script> 
+<script>
+	function showSpacing(){
+		$('.spacing-div').remove();
+		$('.invalid').first().before('<div class="spacing-div"><span>已失效的券</span></div>');
+	}
+	$(function(){
+		var key = getCookie('key');
+		if (!key) {
+			//window.location.href = WapSiteUrl+'/tmpl/member/login.html';
+			return;
+		}
+		//渲染list
+		var load_class = new ncScrollLoad();
+		load_class.loadInit({
+			'url':ApiUrl + '/index.php?act=member_voucher&op=voucher_list',
+			'getparam':{'key':key},
+			'tmplid':'voucher-list-tmpl',
+			'containerobj':$("#voucher-list"),
+			'iIntervalId':true,
+			'callback':showSpacing,
+			'data':{WapSiteUrl:WapSiteUrl}
+		});
+	});
+</script>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+
+<div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src=""></iframe></div></body></html>

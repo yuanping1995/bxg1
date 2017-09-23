@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/que/css/index.css">
+    <script type="text/javascript" src="http://m.bxgogo.com/static/js/jquery.min.js" ></script>
+    <script src="js/index.js"></script>
+    <title>消费者购物偏好调查问卷</title>
+</head>
+<body>
+    <!-- 整个页面 -->
+    <div class="center">
+        <!-- 标题 -->
+        <h2>消费者购物偏好调查问卷</h2>
+        <!-- 内容 -->
+        <div class="content">
+            <div>如今网络越来越发达，电子商务已经成为人们生活中重要的一部分。本地化电子商务平台已经成为消费者必选的趋势。我公司特做此次调查，占用您宝贵的几分钟填写以下问卷，本问卷调查结果仅用于学术用途，感谢您的参与！</div>
+           
+            <p>1.您的年龄是多少：</p>
+	            <div>
+					<input type="radio" class="age" name="asda" value="A" id="age1" />
+	            	<label for="age1">A.18岁以下</label>
+	            </div>
+				<div>
+					<input type="radio" class="age" name="asda" value="B" id="age2" />
+	            	<label for="age2">B.18-25岁</label>
+	            </div>
+	         	<div>
+	         		 <input type="radio" class="age"  name="asda" value="C" id="age3"/>
+	         		 <label for="age3">C.26-35岁</label>
+	         	</div>
+	         	<div>
+	         		 <input type="radio" class="age"  name="asda" value="D" id="age4"/>
+	         		 <label for="age4">D.35岁以上</label>
+	         	</div>
+                  
+            <p>2.性别：</p>
+	            <div>
+					<input type="radio" name="Gender" value="A" id="male"/>
+					<label for="male">男</label>
+	            </div>
+	            <div>
+					<input type="radio" name="Gender" value="B" id="female"/>
+					<label for="female">女</label>
+	            </div>
+
+            <p>3.您经常网购吗：</p>
+				
+				<div>
+					<input type="radio" name="shopping" value="A" id="shopping1"/>
+					<label for="shopping1">A.经常</label>
+				</div>
+				<div>
+					<input type="radio" name="shopping" value="B" id="shopping2"/>
+					<label for="shopping2">B.一般</label>
+				</div>
+				<div>
+					<input type="radio" name="shopping" value="C" id="shopping3"/>
+                    <label for="shopping3">C.偶尔</label>   
+				</div>
+				<div>
+					<input type="radio" name="shopping" value="D" id="shopping4"/>
+                    <label for="shopping4">D.几乎不网购</label>   
+				</div>
+                
+            <p>4. 什么产品您会重复购买</p>
+            	<div>
+					<input type="radio" name="repeat" value="A" id="repeat1"/>
+					<label for="repeat1">A.服装类</label>
+            	</div>
+				<div>
+					<input type="radio" name="repeat" value="B" id="repeat2"/>
+					<label for="repeat2">B.家居</label>
+            	</div>
+            	<div>
+					<input type="radio" name="repeat" value="C" id="repeat3"/>
+					<label for="repeat3">C.母婴</label>
+            	</div>
+            	<div>
+					<input type="radio" name="repeat" value="D" id="repeat4"/>
+					<label for="repeat4">D.其他</label>
+            	</div>
+
+            <p>5.您比较喜欢什么颜色</p>
+				<div>
+					 <input type="radio" name="colour" value="A" id="color1"/>
+					 <label for="color1">A.暖色调红、黄、橙</label>
+				</div>
+				<div>
+					 <input type="radio" name="colour" value="B" id="color2"/>
+					 <label for="color2">B.冷色调青、蓝、紫</label>
+				</div>
+				<div>
+					 <input type="radio" name="colour" value="C" id="color3"/>
+					 <label for="color3">C中间色系黑、白、灰</label>
+				</div>
+				<div>
+					 <input type="radio" name="colour" value="D" id="color4"/>
+					 <label for="color4">D.其他 </label>
+				</div>
+
+            <p>6.对于网购您关注的是什么</p>
+				<div>
+					 <input type="radio" name="follow" value="A" id="follow1" />
+					 <label for="follow1">A.比较关注价格</label>
+				</div>
+				<div>
+					 <input type="radio" name="follow" value="B" id="follow2" />
+					 <label for="follow2">B.比较关注品质与样式</label>
+				</div>
+				<div>
+					 <input type="radio" name="follow" value="C" id="follow3" />
+					 <label for="follow3">C.物流速度</label>
+				</div>
+				<div>
+					 <input type="radio" name="follow" value="D" id="follow4" />
+					 <label for="follow4">D.其他</label>
+				</div>
+              
+            <p>7.一般您比较喜欢在什么时间购物</p>
+
+				<div>
+					<input type="radio" name="time" value="A" id="time1" />
+					<label for="time1">A.白天的工作时间</label>
+				</div>
+				<div>
+					<input type="radio" name="time" value="B" id="time2" />
+					<label for="time2">B.晚上7、8点以后</label>
+				</div>
+				<div>
+					<input type="radio" name="time" value="C" id="time3" />
+					<label for="time3">C.中午时间</label>
+				</div>
+				<div>
+					<input type="radio" name="time" value="D" id="time4" />
+					<label for="time4">D.其他时间</label>
+				</div>
+
+            <p>8.网购你能接受的价格在什么范围</p>
+            	<div>
+					<input type="radio" name="Price" value="A" id="price1" />
+					<label for="price1">A.100以内</label>
+            	</div>
+            	<div>
+					<input type="radio" name="Price" value="B" id="price2" />
+					<label for="price2">B.100-300之间</label>
+            	</div>
+            	<div>
+					<input type="radio" name="Price" value="C" id="price3" />
+					<label for="price3">C.300-500之间</label>
+            	</div>
+            	<div>
+					<input type="radio" name="Price" value="D" id="price4" />
+					<label for="price4">D.500以上</label>
+            	</div>
+                
+            <p>9.平时您喜欢关注哪方面的信息（可多选）</p>
+            	<div>
+					<input type="checkbox" name="infor"  value="A" id="infor1" />
+					<label for="infor1">A.八卦方面</label>
+            	</div>
+            	<div>
+					<input type="checkbox" name="infor" value="B" id="infor2" />
+					<label for="infor2">B.正能量的文章</label>
+            	</div>
+				<div>
+					<input type="checkbox" name="infor" value="C" id="infor3" />
+					<label for="infor3">C.新闻方面</label>
+            	</div>
+            	<div>
+					<input type="checkbox" name="infor" value="D" id="infor4" />
+					<label for="infor4">D.情感类</label>
+            	</div>
+				<div>
+					<input type="checkbox" name="infor" value="E" id="infor5" />
+					<label for="infor5">E.美容、服装搭配</label>
+            	</div>
+            	<div>
+					<input type="checkbox" name="infor" value="F" id="infor6" />
+					<label for="infor6">F.健康、养生类</label>
+            	</div>
+
+            <p>10.假如你不喜欢网络购物，主要原因是（可多选）</p>
+				<div>
+					<input type="checkbox" name="mode" value="A" id="mode1"/>
+					<label for="mode1">A.网上支付太麻烦</label>
+				</div>
+				<div>
+					<input type="checkbox" name="mode" value="B" id="mode2"/>
+					<label for="mode2">B.不信任网站，怕受骗</label>
+				</div>
+				<div>
+					<input type="checkbox" name="mode" value="C" id="mode3"/>
+					<label for="mode3">C.担心商品品质有问题</label>
+				</div>
+				<div>
+					<input type="checkbox" name="mode" value="D" id="mode4"/>
+					<label for="mode4">D.担心商品配送有问题</label>
+				</div>
+               	<div>
+					<input type="checkbox" name="mode" value="E" id="mode5"/>
+					<label for="mode5">E.不了解如何购买</label>
+				</div>
+				<div>
+					<input type="checkbox" name="mode" value="F" id="mode6"/>
+					<label for="mode6">F.觉得售后麻烦</label>
+				</div>
+				<div>
+					<input type="checkbox" name="mode" value="G" id="mode7"/>
+					<label for="mode7">G.其他</label>
+				</div>
+
+             <input id="asd" type="button" value="做完了，我要去注册啦">
+
+
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $("#asd").click(function () {
+            //console.log($("input[name='infor']").eq(0).is(':checked'));
+       a =  $("input[name='infor']");
+      var ba = $("input[name='mode']");
+      for (j=0;j<ba.length;j++){
+          if($("input[name='mode']").eq(j).is(':checked')) {
+              mode=$("input[name='mode']").eq(j).val();
+              $.ajax({
+                  url: "http://bxgogo.com/index/Questionnaire/addque2",
+                  type: "post",
+                  data: {mode: mode,name:"mode"},
+                  success: function (data) {
+                      // window.location.href = "http://login.bxgogo.com?qer=1";
+                      console.log(data);
+                  },
+                  error: function (e) {
+                      alert("请你填写完整！谢谢合作！");
+                      window.clearInterval(timer);
+                  }
+              });
+          }
+      }
+//        console.log(ba.length);
+       for(var i=0;i<a.length;i++){
+            if($("input[name='infor']").eq(i).is(':checked')){
+                infor=$("input[name='infor']").eq(i).val();
+                $.ajax({
+                    url:"http://bxgogo.com/index/Questionnaire/addque2",
+                    type:"post",
+                    data:{infor:infor,name:"infor"},
+                    success:function(data){
+                        console.log(data);//window.location.href="http://login.bxgogo.com?qer=1" ;
+                    }
+                });
+            }
+       };
+
+
+            age= $("input[name='asda']:checked").val();
+            Gender= $("input[name='Gender']:checked").val();
+            shopping= $("input[name='shopping']:checked").val();
+            repeat= $("input[name='repeat']:checked").val();
+            colour= $("input[name='colour']:checked").val();
+            follow= $("input[name='follow']:checked").val();
+            time= $("input[name='time']:checked").val();
+            Price= $("input[name='Price']:checked").val();
+            infor= $("input[name='infor']:checked").val();
+        	mode= $("input[name='mode']:checked").val();
+            $.ajax({
+                url:"http://bxgogo.com/index/Questionnaire/addque",
+                type:"post",
+                data:{age:age,Gender:Gender,shopping:shopping,repeat:repeat,colour:colour,follow:follow,time:time,Price:Price,infor:infor,mode:mode},
+                success:function(data){
+                    window.location.href="http://login.bxgogo.com?qer=1" ;
+                },
+                error:function(e){
+                    alert("请你填写完整！谢谢合作！");
+
+                }
+            });
+        }
+    )
+
+</script>

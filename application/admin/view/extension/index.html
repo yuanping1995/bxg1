@@ -1,0 +1,154 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/php/data.php">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <button class="layui-btn layui-btn-small layui-btn-danger ajax-all"   data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>
+                        <button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/php/test.php","data":"id=1&name=hao&checkbox=6,9,0&va=23"}'>
+                            <i class="layui-icon">&#x1005;</i> 状态
+                        </button>
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":".add-subcat", "title":"添加顶级分类","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="add-subcat">
+        <form id="form" class="layui-form layui-form-pane" data-name="articleCatData" data-tpl="list-tpl" data-render="true" action="./slideHandle.html" method="GET">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="hname" required jq-verify="required" jq-error="请输入标题" placeholder="请输入标题" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">上传图片</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" class="layui-upload-file">
+                    <input type="hidden" name="img" jq-verify="required" jq-error="请上传图片" error-id="img-error">
+                    <p id="img-error" class="error"></p>
+                </div>
+            </div>
+            
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">跳转</label>
+                <div class="layui-input-block">
+                    <input type="text" name="blink" required jq-verify="required" jq-error="请输入跳转地址" placeholder="请输跳转地址" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">背景色</label>
+                <div class="layui-input-block">
+                    <input type="text" name="imgb" required jq-verify="required" jq-error="请输入背景色" placeholder="请输入背景色" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            <!--<div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="order" required jq-verify="number" value="100" jq-error="排序必须为数字" placeholder="分类排序" autocomplete="off" class="layui-input ">
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否手机</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="ismobile" title="是" value="1" checked />
+                    <input type="radio" name="ismobile" title="否" value="0" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"./getSlide.html","dataName":"articleCatData","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even" data-name="articleCatData" data-tplid="list-tpl">
+        <thead>
+            <tr>
+                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <th width="80">序号
+                    <div class="order-box">
+                        <a href="javascript:;" class="sort" data-filed="id" data-asc="true"><i class="iconfont" >&#xe615;</i></a>
+                        <a href="javascript:;" class="sort down" data-filed="id"><i class="iconfont">&#xe647;</i></a>
+                    </div>
+                </th>
+                <th>名称</th>
+                <th>图片</th>
+                <th width="70">连接</th>
+                <th width="100">背景</th>
+                <th width="90">是否手机</th>
+                <th width="240">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{ item.id}}</td>
+                <td class="edit" data-list='{"key":"id={{ item.id}}","filed":"title","render":"true"}' data-params='{"url":"./data/success.json","data":"id={{ item.id}}"}'>{{ item.hname}}</td>
+                <td>
+                    <div class="img"> <img src="{{ item.bimg}}" alt="..." class="img-thumbnail"> </div>
+                </td>
+                <td class="edit" data-list='{"key":"id={{ item.id}}","filed":"title","render":"true"}' data-params='{"url":"./data/success.json","data":"id={{ item.id}}"}'>{{ item.blink}}</td>
+                <td class="edit" data-list='{"key":"id={{ item.id}}","filed":"title","render":"true"}' data-params='{"url":"./data/success.json","data":"id={{ item.id}}"}'>{{ item.imgb}}</td>
+                <td><input type="checkbox" name="switch" lay-skin="switch" lay-text="是|否" {{#if ( item.ismobile==1){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"./data/test.json","data":"id={{ item.id}}&name=paco"}'> </td>
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"600px,1000px","title":"编辑{{ item.title}}分类","key":"id={{ item.id }}","type":"1"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                     <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-list='{"key":"id={{ item.id}}","msg":true,"render":"true","action":"del"}' data-params='{"url": "./data/success.json","confirm":"true","data":"id=1&name=ni"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="__PUBLIC__/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+    layui.use('list');
+
+    function strRepeat(str, count) {
+        var ret = "";
+        for (var i = 0; i < count; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+</script>
+
+</html>

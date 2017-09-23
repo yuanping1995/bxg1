@@ -1,0 +1,43 @@
+.center{
+    width: 100%;
+    background-color: white;
+    margin: 0 auto;
+    overflow: hidden;
+}
+h1{
+    text-align: center;
+    font-weight: 400;
+}
+
+input{
+    border: none;
+    border-bottom: 1px solid black;
+}
+.over-flow{
+    overflow: auto; 
+    zoom: 1; //处理兼容性问题
+}
+.one{
+    width: 30%;
+    height: 10%;
+    float: left;
+}
+.two{
+    width: 30%;
+    height: 10%;
+    float: left;
+}
+.three{
+    width: 25%;
+    height: 10%;
+    float: left;
+}
+.four{
+    width: 23%;
+    height: 10%;
+    float: left;
+}
+.dibu{
+    display: block;
+    margin-top: 20px;
+}

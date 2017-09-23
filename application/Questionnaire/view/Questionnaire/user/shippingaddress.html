@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>收货地址</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />
+		
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+		
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="window.location.href='{:url('index/index')}'" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>收货地址</h2>
+				<div class="addRess"><a href="{:url('user/newaddress',['type'=>0])}">+</a></div>
+			</div>
+		</header>
+		
+       	<section class="setList ship_address">
+       		<div class="setList_cont">
+       			<ul>
+       			{foreach name="delivery" item="val" key="key"}
+	       			<li onclick="editadress(this)" addressid="{$val.id}">
+	       			<a href="#script">
+	       					<div class="clear"><span class="ad_name" surname="{$val.surname}">{$val.surname}</span><span class="mobile" mobile="{$val.mobile}">{$val.mobile}</span></div>
+	       					<div class="address" province="{$val.province}" city="{$val.city}" area="{$val.county}" detailed="{$val.detailed}">{$val.province}{$val.city}{$val.county}{$val.detailed}</div>
+	       				</a>
+	       			</li>
+	       			{/foreach}
+	       		</ul>
+       		</div>
+       	</section>
+       	
+       	<section class="tool_tip">
+			<button class="delete">删除</button>
+			<button class="edit">编辑</button>
+       	</section>
+       	
+       	<section class="public-pop" style="font-size:12px;height:30px;line-height:30px;"></section>
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/public.js"></script>
+       	<script type="text/javascript">
+       	    // 编辑地址
+			function editadress(obj){
+
+       	    	$(".tool_tip").show();
+       	    	setTimeout(function(){
+       	    		$(".tool_tip").hide();
+       	    	},3000);
+       	    	$(".delete").click(function(){
+       	    		$.ajax({
+       	    			type:"post",
+       	    			data:{addressid:$(obj).attr("addressid")},
+       	    			url:"{$Think.__APPROOT__}/index/user/deleteAddress",
+       	    			success:function(data){
+       	    				if(data){
+       	    					$(".tool_tip").hide();
+       	    					$(obj).hide();
+       	    					$(".public-pop").html("删除成功！").show();
+       	    					setTimeout(function(){
+       	    						$(".public-pop").hide();
+       	    					},2000);
+       	    				}else{
+       	    					$(".tool_tip").hide();
+       	    					$(".public-pop").html("删除失败！").show();
+       	    					setTimeout(function(){
+       	    						$(".public-pop").hide();
+       	    					},2000);
+       	    					
+       	    				}
+       	    				
+       	    			}
+       	    		});
+       	    	});
+       	    	$(".edit").click(function(){
+       	    		setCookie("addressid",$(obj).attr("addressid"),1);
+       	    		setCookie("add_sname",$(obj).find(".ad_name").attr("surname"),1);
+	       	    	setCookie("add_stel",$(obj).find(".mobile").attr("mobile"),1);
+	       	    	setCookie("add_province",$(obj).find(".address").attr("province"),1);
+	       	    	setCookie("add_city",$(obj).find(".address").attr("city"),1);
+	       	    	setCookie("add_area",$(obj).find(".address").attr("area"),1);
+	       	    	setCookie("add_detail",$(obj).find(".address").attr("detailed"),1);
+       	    		window.location = "{$Think.__APPROOT__}/index/user/newaddress";
+       	    		$(".tool_tip").hide();
+       	    	});
+       	    }
+
+       		$(function(){
+       			// 点击加号，添加新地址
+				$(".addRess").click(function(){
+					clearCookie("addressid",'',-1);
+					clearCookie("add_sname",'',-1);
+					clearCookie("add_stel",'',-1);
+					clearCookie("add_detail",'',-1);
+					clearCookie("add_province",'',-1);
+					clearCookie("add_city",'',-1);
+					clearCookie("add_area",'',-1);
+				});
+				
+       		})
+       	</script>
+              <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+        统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

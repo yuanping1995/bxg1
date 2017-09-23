@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>用户调查</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+		
+       <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+		
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>用户调查</h2>
+			</div>
+		</header>
+       	<section class="question">
+       		<div class="greet">
+       			亲爱的百信购用户：<br />
+       			为了更好地改进我们的服务，提升用户体验，我们希望了解您的意见和建议。
+       		</div>
+       		
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>您会把<span>百信购</span>推荐给您的朋友吗？</div>
+       				<div class="q_note"><span>(“0到10分”，0代表非常不愿意，10代表非常愿意)</span></div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<ul>
+       				<form><input name="ques_1" type='hidden' val=""/></form>
+       				<li><span></span>0</li>
+       				<li><span></span>1</li>
+       				<li><span></span>2</li>
+       				<li><span></span>3</li>
+       				<li><span></span>4</li>
+       				<li><span></span>5</li>
+       				<li><span></span>6</li>
+       				<li><span></span>7</li>
+       				<li><span></span>8</li>
+       				<li><span></span>9</li>
+       				<li><span></span>10</li>
+       			</ul>
+       			<div class="sel_ques">
+       				<div class="q_theme">
+	       				<div>请简要描述您刚才的评分依据</div>
+	       				<div class="q_note"><span>(选填，告诉我们，你愿意或不愿意推荐的<span>最主要原因</span>吧)</span></div>
+	       			</div>
+	       			<textarea></textarea>
+       			</div>
+       		</div>
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>您第一次使用<span>百信购</span>的时间大概是？</div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<ul>
+       				<form><input name="ques_2" type='hidden' val=""/></form>
+       				<li><span></span>2017年5月</li>
+       				<li><span></span>2017年4月</li>
+       				<li><span></span>2017年3月</li>
+       				<li><span></span>2017年2月</li>
+       				<li><span></span>2017年1月</li>
+       				<li><span></span>或更早</li>
+       			</ul>
+       		</div>
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>最近三个月，在<span>百信购</span>上，您大概多久下一次单呢？</div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<ul>
+       				<form><input name="ques_3" type='hidden' val=""/></form>
+       				
+       				<li><span></span>每天都买</li>
+       				<li><span></span>两到三天</li>
+       				<li><span></span>一周左右</li>
+       				<li><span></span>二到三周</li>
+       				<li><span></span>一个月</li>
+       				<li><span></span>两到三个月</li>
+       				<li><span></span>近三个月都没有买了</li>
+       			</ul>
+       		</div>
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>您的性别：</div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<ul>
+       				<form><input name="ques_4" type='hidden' val=""/></form>
+       				<li><span></span>女</li>
+       				<li><span></span>男</li>
+       			</ul>
+       		</div>
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>您的年龄：</div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<div>
+       				<form><input name="ques_5" type="hidden" val=""/></form>
+       				<input type="text" placeholder="点击填写"/>
+       			</div>
+       		</div>
+       		<div class="ques">
+       			<div class="q_theme">
+       				<div><span>*</span>您的职业：</div>
+       				<div class="tip">本题必答</div>
+       			</div>
+       			<ul>
+       				<form><input name="ques_6" type='hidden' val=""/></form>
+       				<li><span></span>学生</li>
+       				<li><span></span>专业人士(律师、医生、老师、记者等)</li>
+       				<li><span></span>公务员/事业单位人员</li>
+       				<li><span></span>企业/公司一般职员</li>
+       				<li><span></span>企业/公司管理者(基层、中高层)</li>
+       				<li><span></span>工人(如工厂工人、体力劳动者等)</li>
+       				<li><span></span>服务业从业者(如快递员、服务员等)</li>
+       				<li><span></span>农民</li>
+       				<li><span></span>个体经营者</li>
+       				<li><span></span>自由职业者</li>
+       				<li><span></span>家庭主妇</li>
+       				<li><span></span>无业/下岗/待业</li>
+       				<li><span></span>退休</li>
+       				<li><span></span>其他:<input type="text" placeholder="点击填写" val=""/></li>
+       			</ul>
+       		</div>
+       		<div class="Next" id="next">提交</div>
+       	</section>
+            <!--提示-->
+            <section class="public-pop" style="z-index:100;left:50%;margin-left:-25%;width:50%;height:30px;line-height:30px;font-size:12px;"></section>
+
+       	<script type="text/javascript">
+       		$(function(){
+       			$('.ques ul li').click(function(){
+       				$(this).find('span').addClass('ques_sel');
+       				$(this).siblings('li').find('span').removeClass('ques_sel');
+       				var hidden = $(this).parent().find('input[type="hidden"]');
+       				var txt = $(this).text();
+       				hidden.val(txt);
+       			});
+       			$('textarea').blur(function(){
+       				var parentHidden = $(this).parent().parent().find('input[type="hidden"]');
+       				parentHidden.val(parentHidden.val()+'原因：'+$(this).val());
+       			});
+       			$('input[type="text"]').blur(function(){
+       				var parentHidden = $(this).parent().find('input[type="hidden"]');
+       				if(parentHidden.html() == undefined){
+       					parentHidden = $(this).parent().parent().find('input[type="hidden"]');
+       					parentHidden.val(parentHidden.val()+$(this).val());
+       				}else{
+       					parentHidden.val($(this).val());
+       				}
+       			});
+       			
+       			
+       			$('.Next').click(function(){
+       				var flag = 0;
+					$('form').each(function(){
+						if($(this).find(':hidden').val() == ''){
+							$(this).parent().parent().find('.tip').show();
+						}else{
+							$(this).parent().parent().find('.tip').hide();
+								flag++;
+						}	
+					});
+					var params = $('form').serialize();
+						params = decodeURIComponent(params,true);
+					if(flag == $('input[type="hidden"]').length){
+						var params = $('form').serialize();
+						params = decodeURIComponent(params,true);
+                                         // alert(params);
+						$.ajax({
+							type:"get",
+							data:{data:params},
+							url:"{$Think.__APPROOT__}/index/user/userSurvey",
+							success:function(data){
+								var dataJson = eval(data);
+                                                if(dataJson.flag){
+                                                      $(".public-pop").html(dataJson.msg).show();
+                                                            setTimeout(function(){
+                                                            $(".public-pop").hide();
+                                                      },2000);
+                                                }else{
+                                                      $(".public-pop").html(dataJson.msg).show();
+                                                      setTimeout(function(){
+                                                            $(".public-pop").hide();
+                                                      },2000);
+                                                }
+							}
+						});
+					}
+       			});
+			});
+       	</script>
+            <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+       统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+       	
+	</body>
+</html>

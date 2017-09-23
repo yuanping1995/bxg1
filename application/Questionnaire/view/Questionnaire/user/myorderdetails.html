@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html>
+
+	<meta charset="utf-8">
+
+	    <title>订单详情</title>
+
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	    <meta name="format-detection" content="telephone=no">
+
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+
+	    <meta name="description" content="" />
+
+	    <meta name="Keywords" content="" />
+
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myorderdetails.css" />
+
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+
+		
+
+	</head>
+
+
+
+	<body>
+
+		<header>
+
+			<!--头部标题-->
+
+			<div class="h_style3 clear">
+
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+
+				<h2>百信·订单详情</h2>
+
+				<div class="menuList"><i class="list-icon"></i></div>
+
+				<ul class="list">
+
+					<li>
+
+						<a href="/" title="首页">首页</a>
+
+					</li>
+
+					<li>
+
+						<a href="{:url('category/index')}" title="搜索">搜索</a>
+
+					</li>
+
+					<li>
+
+						<a href="{:url('cart/index')}" title="购物车">购物车</a>
+
+					</li>
+
+					<li>
+
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+
+					</li>
+
+				</ul>
+
+			</div>
+
+		</header>
+
+       {volist name="shoplist" id="vo" length='1'}
+
+		<!--订单号、客户信息-->
+
+		<section class="client">
+
+			<div class="c_mes clear">
+
+				<div>
+
+					<i class="pos_icon"></i>
+
+				</div>
+
+				<div>
+
+					<div class="clear">收货人：<span>{$vo.0.surname}</span><span class="tel">{$vo.0.mobile}</span></div>
+
+					<div>收货地址：<span>{$vo.0.area}</span></div>
+
+				</div>				
+
+				
+
+			</div>
+
+		</section>
+
+
+
+		<!--买家留言-->
+
+		<section class="guest_word">
+
+			<div class="g_word">
+
+				<span>买家留言</span>
+
+				<span>{$vo.0.user_note}</span>
+
+			</div>
+
+		</section>
+
+		
+
+		<!--订单详情-->
+
+		<section class="or_list">
+
+		{foreach name="shoplist" item="vp" key="t"}
+
+			<div class="or_store_name clear">
+
+				<a href="{$Think.__APPROOT__}/index/store/index/seller_id/{$t}">
+
+					<div class="logo"><img src="{$vp.0.logo}{:config('images')}"/></div>
+
+					<span>{$vp.0.seller_name}</span>
+
+				</a>
+
+				<span class="trade_hour">{:date("Y-m-d H:i:s",$vp.0.otime)}</span>
+
+			</div>
+
+			<div class="or_pro">
+
+				<ul>
+
+				{foreach name="vp" item="vl" key="p"}
+
+					<li>
+
+						<a href="{$Think.__APPROOT__}/index/goods/index/id/{$vl.goods_id}" title="{$vl.pname}" class="clear">
+
+							<div class="pro">
+
+								<img src="{$vl.pic}{:config('images')}" alt="{$vl.pname}" />
+
+							</div>
+
+							<div class="pro_intro">
+
+								<div class="txt">{$vl.pname}</div>
+
+								<div class="style">
+
+									数量：<span class="num">{$vl.num}</span>&nbsp;{$vl.spec_key_name}</div>
+
+								<div class="price_num"><span>￥{$vl.price}×{$vl.num}</span></div>
+
+								<div class="cash_back">收益<span>￥{$vl.total+$vl.draw}</span></div>
+
+							</div>
+
+							<div class="trade_states">
+
+								{switch name="vl.status" } 
+
+								    {case value="3"}待付款{/case}
+
+								    {case value="1"}待发货{/case}
+
+								    {case value="2"}待收货{/case}
+
+								    {case value="8"}待评价{/case}
+
+								    {case value="9"}交易成功{/case}
+
+								    {case value="6"}退货中{/case}
+
+								    {case value="7"}已退货{/case}
+
+								    {case value="5"}已失效{/case}
+
+								    {case value="4"}交易关闭{/case}
+
+								{/switch}
+
+							</div> 
+
+						</a>
+
+					</li>
+
+					{/foreach}
+
+				</ul>
+
+			</div>
+
+			{/foreach}
+
+		</section>
+
+		
+
+		<section class="pro_pay">
+
+			<ul> 
+
+				<li>运费<span>￥{:number_format($vo.0.yunprice,2)}</span></li>
+
+				<li>实付款(含运费)<span>￥{:number_format($vo.0.payprice,2)}</span></li>
+
+			</ul>
+
+		</section>
+
+		<!--订单编号、时间-->
+
+		<section class="order_mes">
+
+			<ul> 
+
+				<li>订单编号：<span>{$vo.0.oid}</span></li>
+
+				<li>交易方式：<span>{$vo.0.payfangshi}</span></li>
+
+				<li>创建时间：<span>{:date("Y-m-d H:i:s",$vo.0.otime)}</span></li>
+
+<!-- 				<li>付款时间：<span>{:date("Y-m-d h:i:s",$vo.0.wtime)}</span></li>
+
+				<li>发货时间：<span>{:date("Y-m-d h:i:s",$vo.0.otime)}</span></li> -->
+
+				<!-- <li>成交时间：<span>{:date("Y-m-d h:i:s",$vo.0.wtime)}</span></li> -->
+
+			</ul>
+
+		</section>
+
+		{/volist}
+
+
+
+		<script type="text/javascript">
+
+			$(function(){
+
+		
+
+				//头部点击下拉列表
+
+				$('.menuList').bind('click', function() {
+
+					$('.h_style3 .list').slideToggle();
+
+				});
+
+				$('.h_style3 .list li').click(function() {
+
+					$('.h_style3 .list').slideUp();
+
+				});
+
+
+
+			});
+
+		</script>
+
+		<script type="text/javascript">
+
+  var _paq = _paq || [];
+
+  /*
+
+	 统计
+
+  */
+
+  _paq.push(['trackPageView']);
+
+  _paq.push(['enableLinkTracking']);
+
+  (function() {
+
+    var u="http://m.bxgogo.com/";
+
+    _paq.push(['setTrackerUrl', u+'count.php']);
+
+    _paq.push(['setSiteId', '1']);
+
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+
+  })();
+
+</script>
+
+	</body>
+
+
+
+</html>

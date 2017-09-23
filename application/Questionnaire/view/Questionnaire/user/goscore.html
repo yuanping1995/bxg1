@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>评分</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+        
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>评分</h2>
+				
+			</div>
+		</header>
+       	<section class="setList">
+			<div class="greet">
+       			亲爱的百信购用户：<br />
+       			为了更好地改进我们的服务，提升用户体验，我们希望了解您的意见和建议。
+       		</div>
+			<div class="score">
+				<form name="score">
+					<ul>
+						<li>
+							<b>服务态度：</b>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<input type='hidden' name="serve" val=''/>
+						</li>
+						<li>
+							<b>访问速度：</b>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<input type='hidden' name="visit" val=''/>
+						</li>
+					</ul>
+				</form>
+				
+			</div>
+			<div class="Next next_bg">提交</div>
+			
+       	</section>
+		<section class="public-pop" style="margin-left:-30%;width:60%;height:30px;line-height: 30px;font-size: 12px;"></section>
+       	<script type="text/javascript">
+       		$(function(){
+       			$('.score ul li>span').on('touchstart',function(){
+       				$(this).addClass('star_bg');
+       				
+       			});
+       			$('.score ul li>span').on('touchend',function(){
+       				var num = $(this).index();
+       				$(this).parent().find('input[type="hidden"]').val(num);
+       				$(this).parent().find('span').each(function(index){
+       					if(index<num){
+       						$(this).parent().find('span').eq(index).addClass('star_bg');
+       					}else{
+       						$(this).parent().find('span').eq(index).removeClass('star_bg');
+       						
+       					}
+       					
+       				});
+       			});
+				$('.Next').bind('click',function(){
+					var flag=0;
+					$('input[type="hidden"]').each(function(){
+						if($(this).val() == ''){
+							var tipTxt = $(this).parent().find('b').text();
+							tipTxt = tipTxt.substr(0,tipTxt.length-1);
+							$('.public-pop').text('请您给“'+tipTxt+'”评分').show();
+							setTimeout(function(){
+								$('.public-pop').hide();
+							},1500);
+							return false;
+						}else{
+							flag ++;
+						}
+					});
+					if(flag == $('input[type="hidden"]').length){
+						var score = $('form[name="score"]').serialize();
+						$.ajax({
+							type:"get",
+							url:"{$Think.__APPROOT__}/index.php/index/user/goScore?"+score,
+							success:function(data){
+								var dataJson = eval(data);
+								if(dataJson.flag){
+									$('.public-pop').html(dataJson.msg).show();
+									setTimeout(function(){
+										$('.public-pop').hide();
+									},1500);
+								}else{
+									$('.public-pop').html(dataJson.msg).show();
+									setTimeout(function(){
+										$('.public-pop').hide();
+									},1500);
+								}
+								
+							}
+						});
+					}
+					
+				});
+
+       		});
+       	</script>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

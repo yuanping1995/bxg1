@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+
+            <title>会员特权</title>
+
+            <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+            <meta name="apple-mobile-web-app-capable" content="yes">
+
+            <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+            <meta name="format-detection" content="telephone=no">
+
+            <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+
+            <meta name="description" content="" />
+
+            <meta name="Keywords" content="" />
+
+            <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+
+            <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+
+            <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+
+		    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/vipprivilege.css" />
+
+		    
+
+       		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+
+		    
+
+	</head>
+
+	<body>
+
+		<header>		  
+
+            <div class="h_style3 clear">
+
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+
+				<h2>会员特权</h2>
+
+			</div>
+
+       	</header>
+
+       	
+
+       	<section class="myPri">
+
+       		<div class="now_grade">
+
+       			<div class="avatar">
+
+				   <img src="{$user.icon}{:config('images')}"/>
+
+				</div>
+
+       			<div class="ranking">当前排名：<span>1.3亿</span></div>
+
+       			<div>每月1日更新等级</div>
+
+       		</div>
+
+       		<ul class="grade clear">
+
+       			<li style="margin:0 auto;width:30px;float: none;">
+
+       				<div class="cir c_1"></div>
+
+       				<div class="g_txt">
+
+       					<span>普通会员</span>
+
+       				</div>
+
+       				<div class="tria"></div>
+
+       			</li>
+
+       			 <li class="line"></li>
+
+       			<li>
+
+       				<div class="cir c_2"></div>
+
+       				<div class="g_txt">
+
+       					<span>VIP会员</span>
+
+       				</div>
+
+       				<div class="tria"></div>
+
+       			</li> 
+
+       		</ul>
+
+       	</section>
+
+       	<section class="pri_type">
+
+       		<style>
+
+                        
+
+                  </style>
+
+                  
+
+                  <ul>
+
+                        <li>
+
+                              <div class="type_t">普通会员特权</div>
+
+                              <ul class="clear">
+
+                                    <li>
+
+                                          <a href="{:url('user/privilegedetails',['privid'=>0])}">
+
+                                                <div class="pri_icon p_1"></div>
+
+                                                购物优惠
+
+                                          </a>
+
+                                          
+
+                                    </li>
+
+                              </ul>
+
+                        </li>
+
+                        <li>
+
+                              <div class="type_t">VIP会员特权</div>
+
+                              <ul class="clear">
+
+                                    <li>
+
+                                          <a href="{:url('user/privilegedetails',['privid'=>0])}">
+
+                                                <div class="no_pri_icon p_1"></div>
+
+                                                购物优惠
+
+                                          </a>
+
+                                    </li>
+
+                                    <li>
+
+                                          <a href="{:url('user/privilegedetails',['privid'=>1])}">
+
+                                                <div class="no_pri_icon p_2"></div>
+
+                                                商品返现
+
+                                          </a>
+
+                                    </li>
+
+                                    <li>
+
+                                          <a href="{:url('user/privilegedetails',['privid'=>2])}">
+
+                                                <div class="no_pri_icon p_3"></div>
+
+                                                推荐会员
+
+                                          </a>
+
+                                    </li>
+
+                              </ul>
+
+                        </li>
+
+                        
+
+                  </ul>
+
+       	</section>
+
+
+
+       	<script type="text/javascript">
+
+       		//会员特权等级（普通会员：0；VIP会员：2）
+
+                  // var myPri = "{$user_qid}"; 
+                  var myPri = 0;
+
+                  // if(myPri === '1'){
+
+                  //       myPri = 0;
+
+                  // }else{
+
+                  //       myPri = 2;
+
+                  // }                
+
+                  $(function(){
+
+                        $(window).bind('resize',function(){
+
+                              $('.line').width(($('.myPri>ul').width()-$('.cir').outerWidth()*2));
+
+                        });
+
+
+
+                        $('.line').width(($('.myPri>ul').width()-$('.cir').outerWidth()*2));
+
+                        $('.pri_type ul li').eq(myPri).show();
+
+                        $('.myPri ul li').eq(myPri).find('.tria').show();
+
+                        $('.myPri ul li:even').bind('click',function(){
+
+                              myPri = $(this).index();
+
+                              $(this).find('.tria').show();
+
+                              $(this).siblings('li').find('.tria').hide();
+
+                              $('.pri_type>ul>li').eq(myPri/2).show().siblings('li').hide();
+
+                        });
+
+                        selGrade();
+
+                        function selGrade(){
+
+                              $('.pri_type>ul>li').eq(myPri/2).show().siblings('li').hide();
+
+                              $('.pri_type>ul>li').eq(myPri/2).find('ul').find('div').addClass('pri_icon').removeClass('no_pri_icon');
+
+                              $('.pri_type>ul>li').eq(myPri/2).siblings('li').find('ul').find('div').addClass('no_pri_icon');
+
+                        }
+
+
+
+                  });
+
+       	</script>
+
+            <script type="text/javascript">
+
+  var _paq = _paq || [];
+
+  /*
+
+       统计
+
+  */
+
+  _paq.push(['trackPageView']);
+
+  _paq.push(['enableLinkTracking']);
+
+  (function() {
+
+    var u="http://m.bxgogo.com/";
+
+    _paq.push(['setTrackerUrl', u+'count.php']);
+
+    _paq.push(['setSiteId', '1']);
+
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+
+  })();
+
+</script>
+
+	</body>
+
+</html>
+

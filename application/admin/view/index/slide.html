@@ -1,0 +1,188 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/finduser.html">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                    <!--     <button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delslide.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button> -->
+                    </div>
+                     <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":".add-subcat","confirm":"true", "title":"添加","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                      </button>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleslide.html">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标题内容</label>
+                <!--<input type="text" lay-verify="required|phone|number">-->
+                <div class="layui-input-block">
+                    <input type="text" name="bid" required jq-verify="required" jq-error="请输入标题内容" placeholder="请输入标题内容"  autocomplete="off" class="layui-input" id="seller_id">
+                </div>
+                <span style="color: red; display: none;" id="err">标题内容已经存在</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">幻灯小标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="hname" required jq-verify="required" jq-error="请输入幻灯小标题" placeholder="请输入幻灯小标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">幻灯图片</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" class="layui-upload-file_chaxun">
+                    <input type="hidden" jq-error="请上传用户头像" error-id="img-error">
+                    <p id="img-error" class="error"></p>
+                     <!--<input type="file" id="img" name="img1" />-->
+                     <input type="hidden" id="img" name="bimg" />
+                </div>
+                   
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">幻灯链接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="blink" required jq-verify="required" jq-error="请输入幻灯链接" placeholder="请输入幻灯链接" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">幻灯背景</label>
+                <div class="layui-input-block">
+                    <input type="text" name="imgb" required jq-verify="required" jq-error="请输入幻灯背景" placeholder="请输入幻灯背景" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button><button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getslide","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+            <tr>
+                <th width="20"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+
+                <th width="50">ID</th>
+                <th width="150">标题内容</th>
+                <th width="150">幻灯片小标题</th>
+                <th width="150">幻灯图片</th>
+                <th>幻灯连接</th>
+                <th>幻灯背景</th>
+                <th>是否为手机</th>
+                <td>操作</td>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{ item.id}}</td>
+                <td>{{ item.bid}}</td>
+                <td>{{item.hname}}</td>
+                <td><img src="{{item.bimg}}" width="30" height="30"></td>
+                <td>{{item.blink}}</td>
+                <td>{{item.imgb}}</td>
+                <td><input type="checkbox" name="ismobile" lay-skin="switch" lay-text="ON|OFF" {{#if (item.ismobile==1){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"/admin/index/handleslide.html","data":"id={{item.id}}&p=1"}'> </td>  
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"900,1000","title":"编辑{{ item.sname}}","data":"id={{item.id}}&bid={{item.bid}}&hname={{item.hname}}&bimg={{item.bimg}}&blink={{item.blink}}&imgb={{item.imgb}}","type":"1"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                    <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/repassuser.html","data":"id={{ item.id}}&seller_id={{item.seller_id}}"}'>
+                        <i class="iconfont">&#xe626;</i>重置密码
+                    </button>-->
+                     <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/delslide.html","data":"id={{ item.id}}"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+    layui.use(['list','form'],function(){
+    	    layui.upload({
+			url: "/Admin/Upload/ad",
+			elem: '.layui-upload-file_chaxun',
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#img').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+
+		});		
+    });
+    $('#seller_id').blur(function(){
+    	var bid=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxslide",
+             data: {bid:bid},
+             success:function(data){
+             	if(data==2){
+                 $('#err').css("display","none");                
+             	}else{
+             	  $("#seller_id").val("");
+                 $('#err').css("display","block");
+                  
+             	}
+             }
+          });
+             
+    });
+    function strRepeat(str, count) {
+        var ret = "";
+        for (var i = 0; i < count; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+
+
+</script>
+
+</html>

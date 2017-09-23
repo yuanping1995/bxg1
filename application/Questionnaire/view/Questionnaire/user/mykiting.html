@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <title>提现</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/mykiting.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		
+	</head>
+
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>提现</h2>
+				<div class="mx">
+					<a href="#script" title="">?</a>
+				</div>
+			</div>
+		</header>
+			
+			<section class="kit_to" id="kit_to">
+			  {empty name="$shoplist"}
+				<a href="{:url('user/addkitway')}">
+					<div class="waynull">您还没有添加提现方式,去添加</div>
+				</a>
+			  {else/}
+				<a href="{:url('user/selkitway')}">
+					<div class="way">
+						{switch name="$shoplist.crtype" }
+						    {case value="0"}<i class="i_bank"></i>{/case}
+						    {case value="1"}<i class="i_alipay"></i>{/case}
+						    {case value="2"}<i class="i_wechat"></i>{/case}
+						{/switch}
+						<div>
+							<span class="crname" id="{$shoplist.id}">{$shoplist.crname}</span></span><br />
+	                        {if condition = "$shoplist.crtype eq 0"}
+							<span>尾号：{:substr_replace($shoplist.crid,'',0,15)}</span>
+							{else /}<span>账号：{$shoplist.crid}</span>
+							{/if}
+							<input type="hidden" name="crid" value="{$shoplist.crid}">
+						</div>
+						<i class="r_b"></i>
+					</div>
+				</a>
+			  {/empty}
+			</section>
+
+			<section class="kiting">
+				<div class="kit_t">提现金额</div>
+				<div class="kit_k">
+					<span>￥</span>
+					<input type="number" name="price" value="" onblur="" onfocus="" />
+				</div>
+				<div class="use_y clear">可用余额 <span class="y_e">{:round(rtrim($balance.total,0),2)}</span> 元<button>全部提现</button></div>
+			</section>
+			<section>
+				<div class="Next" id="next">24小时内到账，确认提现</div>
+			</section>
+		
+		<section class="public-pop" style="width:60%;margin-left:-30%;height:30px;line-height:30px;font-size:12px;"></section>
+
+		<script type="text/javascript">
+			$(function() {
+//				提现金额一直光标闪烁
+				// $('.kit_k input[type="price"]').focus();
+
+				function checkKit(flag,obj) {
+					if(flag){
+						
+       					obj.addClass('next_bg');
+       					
+					} else {
+						obj.removeClass('next_bg');
+						obj.bind('click', function() {
+							location.href = 'javascript:void(0);';
+						});
+					}
+				}
+//				点击全部提现
+				$('.use_y button').bind('click', function() {
+					var yMoney = parseFloat($('.y_e').text());
+					if(yMoney){
+						$('.kit_k input[name="price"]').val(yMoney);
+						$('.kit_k input[name="price"]').focus();
+						checkKit(true,$('.Next'));
+					}else{
+						checkKit(false,$('.Next'));
+					}
+					
+				});
+				$('.kit_k input[type="number"]').blur(function(){
+
+					var crid=$('input[name="crid"]').val();
+					var crname=$('.way .crname').text();
+					var id=$('.way .crname').attr("id");
+					$('.Next').bind('click',function(){
+						$('.Next').unbind('click');
+							$(".public-pop").html('已发起提现请求，请耐心等待！').show();
+							setTimeout(function(){
+								$(".public-pop").hide();
+							},1000);
+       						var price=parseFloat($('.kit_k input[name="price"]').val());
+       						if(!price || (price=='')){
+								return false;
+							}else{
+	       						$.ajax({
+	       							type:'post',
+	       							data:{id:id,crid:crid,crname:crname,price:price},
+	       							url:'{$Think.__APPROOT__}/index/user/ajaxmykiting',
+	       							success:function(data){
+	       								var dataJson = eval(data);
+	       								if(dataJson.flag){
+	       									$(".public-pop").html(dataJson.msg).show();
+	       									setTimeout(function(){
+	       										$(".public-pop").hide();
+	       									},2000);
+
+	       									window.location = "{$Think.__APPROOT__}/index/user/index";
+	       								}else{
+	       									$(".public-pop").html(dataJson.msg).show();
+	       									setTimeout(function(){
+	       										$(".public-pop").hide();
+	       									},2000);
+
+	       								}
+	       							}
+	       						});
+	       					}
+       					});
+				});
+				//当input中有值后,按钮变颜色,且可以跳转
+				$('.kit_k input[type="number"]').bind('input propertychange', function() {
+					
+					if($('.kit_k input[type="number"]').val() > 0) {
+						checkKit(true,$('.Next'));
+					} else {
+						checkKit(false,$('.Next'));
+					}
+				});
+
+
+				
+				
+			});
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>

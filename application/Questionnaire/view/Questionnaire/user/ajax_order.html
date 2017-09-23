@@ -1,0 +1,156 @@
+    {foreach name="shoplist" item="val" key="k"}
+     <li>
+	<div class="or_store_name clear">
+		<a href="{:url('store/index',['seller_id'=>$val.0.seller_id])}">
+			<div class="logo"><img src="{$val.0.logo}{:config('images')}"/></div>
+			<span>{$val.0.seller_name}</span>
+		</a>
+		<span class="trade_hour">{:date("Y-m-d H:i:s",$val.0.otime)}</span>
+	</div>
+	<div class="or_pro">
+		<ul>
+		{foreach name="val" item="v" key="t"}
+		   <li>
+			<a href="{:url('goods/index',['id'=>$v.goods_id])}" class="clear">
+				<div class="pro">
+					<img src="{$v.pic}{:config('images')}" />
+				</div>
+				<div class="pro_intro">
+					<div class="txt">{$v.pname}</div>
+					<div class="style">
+						数量：<span class="num">{$v.num}</span>&nbsp;{$v.spec_key_name} <!-- 颜色：
+						<span class="color">浅灰</span>&nbsp; 尺寸：
+						<span class="size">M</span> --></div>
+					<div class="price_num"><span>{:substr(sprintf("%.3f",$v.pricetotal),0,-1);}</span></div>
+				</div>
+				<div class="trade_states">
+					{switch name="v.status" } 
+					    {case value="3"}待付款{/case}
+					    {case value="1"}待发货{/case}
+					    {case value="2"}待收货{/case}
+					    {case value="8"}待评价{/case}
+					    {case value="9"}交易成功{/case}
+					    {case value="6"}退货中{/case}
+					    {case value="7"}已退货{/case}
+					    {case value="5"}已失效{/case}
+					    {case value="4"}交易关闭{/case}
+					{/switch}
+				</div>
+			</a>
+		   </li>
+		   {/foreach}
+		</ul>
+		<div class="or_list_footer clear">
+			<div class="sum">实付款：<strong>￥</strong><strong class="sum_price">{:substr(sprintf("%.3f",$val.0.payprice),0,-1);}</strong></div>
+			<div class="btn clear">
+				{switch name="val.0.status" }
+					{case value="3"}<a href="{:url('orderpay/index',['orderid'=>$k])}">付款</a><a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a><a href="#" id="quxiao" class="quxiao" soid="{$k}">取消订单</a>{/case}
+					{case value="1"}<a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a><a  href="#" id="ordertui" soid="{$k}">退货</a>{/case}
+					{case value="2"}<a  id="orderok" class="orderok" soid="{$k}">确认收货</a><a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a><a href="#" id="ordertui" soid="{$k}">退货</a>{/case}
+					{case value="8"}<a href="{:url('user/evaluate_order',['oid'=>$k])}">评价订单</a><a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a>{/case}
+					{case value="4|5"}<a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a><span class="delorder" soid="{$k}">删除订单</span>{/case}
+					{case value="6|7|9"}<a href="{:url('user/myorderdetails',['oid'=>$k])}">订单详情</a>{/case}
+				{/switch}
+			</div>
+		</div>
+	</div>
+
+</li>
+{/foreach}
+<script type="text/javascript">
+	
+	$(function() {
+        $('.quxiao').bind('click',function(){
+           var orderoid  = $(this).attr("soid");
+               $.ajax({
+                  type : "get",
+                  url : "{$Think.__APPROOT__}/index.php/index/user/quorder",
+                  data : {orderoid:orderoid},
+                  success : function(data) {
+              var obj = eval(data); 
+                  if (obj.flag) {
+                       $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                         window.location.href = "{$Think.__APPROOT__}/index/user/myorder/typeid/0";
+                       },3000);
+                  } else {
+                  $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                       },3000);
+                   }
+                }
+             });                  
+        });
+         $('.delorder').bind('click',function(){
+           var orderoid  = $(this).attr("soid");
+               $.ajax({
+                  type : "get",
+                  url : "{$Think.__APPROOT__}/index.php/index/user/delorder",
+                  data : {orderoid:orderoid},
+                  success : function(data) {
+              var obj = eval(data); 
+                  if (obj.flag) {
+                       $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                         window.location.href = "{$Think.__APPROOT__}/index/user/myorder/typeid/0";
+                       },3000);
+                  } else {
+                  $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                       },3000);
+                   }
+                }
+             });                  
+        });
+          $('.orderok').bind('click',function(){
+           var orderoid  = $(this).attr("soid");
+               $.ajax({
+                  type : "get",
+                  url : "{$Think.__APPROOT__}/index.php/index/user/confirmReceipt",
+                  data : {orderoid:orderoid},
+                  success : function(data) {
+              var obj = eval(data); 
+                  if (obj.flag) {
+                       $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                         window.location.href = "{$Think.__APPROOT__}/index/user/myorder/typeid/0";
+                       },3000);
+                  } else {
+                  $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                       },3000);
+                   }
+                }
+             });                  
+        });
+        $('#ordertui').bind('click',function(){
+           var orderoid  = $(this).attr("soid");
+               $.ajax({
+                  type : "get",
+                  url : "{$Think.__APPROOT__}/index.php/index/user/returnGoods",
+                  data : {oid:orderoid},
+                  success : function(data) {
+                  var obj = eval(data); 
+                  if (obj.flag) {
+                       $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                         window.location.href = "{$Think.__APPROOT__}/index/user/returns";
+                       },3000);
+                  } else {
+                  $('.public-pop').html(obj.msg).show();
+                       setTimeout(function(){
+                         $('.public-pop').hide();
+                       },3000);
+                   }
+                }
+             });                  
+        });
+	});
+</script>

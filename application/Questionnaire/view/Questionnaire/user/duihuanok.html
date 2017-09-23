@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>百信购</title>
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/style.css" />
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/paystatus.css" />
+	<style>
+	.column1 li span{
+	font-size:2vh
+	}
+	#user{
+    float: none;
+    width: auto;
+    margin: 0 1.1rem;
+    padding: 1rem 0;
+    text-align: center;
+    border-radius: 0.6rem;
+    background-color: #f00;
+    font-size: 1.3rem;
+    color: #fff;
+}
+	</style>
+</head>
+<body>
+	<header>		   
+	<!--头部标题-->
+        <div class="new-header">
+        	<a href="http://m.bxgogo.com/index/user/duihuan" class="new-a-back">返回</a>
+	    <h2>兑换中心</h2>
+        <div class="move"></div>
+            <ul class="list">
+	          <li><a href="/" title="首页">首页</a></li>
+	          <li><a href="{:url('search/index')}" title="搜索">搜索</a></li>
+	          <li><a href="#script" title="购物车">购物车</a></li>
+	          <li><a href="#script" title="购物车">我的百信</a></li>
+	        </ul>
+        </div>
+   </header>
+   
+	<!--中间提示-->
+	<div class="middle">
+		<img src="{$Think.__APPROOT__}/static/img/paystatus/correct-pic.gif" />
+		<h1>恭喜你，兑换成功！</h1>
+		<p>您已兑换<span>{$order.remarks}</span></p>
+	</div>
+	<div class="lower-middle">
+		<div class="left">
+			<ul class="column1">
+			    <li>
+				    <span>订单编号：</span>
+				    <span>{$order.oid}</span>
+			    </li>
+			    <li>
+				    <span>兑换礼品：</span>
+				    <span>{$order.remarks}</span>
+			    </li>
+			    <li>
+				    <span>兑换时间：</span>
+				    <span>{:date("Y-m-d H:i:s",$order.wtime)}</span>
+			    </li>
+			   <!-- <li>
+				    <span>兑换方式：</span> 
+				    <span>{$order.oid}</span>
+			    </li>-->
+		    </ul>
+		</div>
+	</div>
+	<div class="bot">
+		<a id="user" href="/index/user/index.html" >返回个人中心</a>
+	</div>
+	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+	<script type="text/javascript">
+			$(function() {
+				//头部点击下拉菜单
+				$('.new-header .move').bind('click', function() {
+					$('.new-header .list').slideToggle();
+				});
+
+				$('.new-header .list li').click(function() {
+					$('.new-header .list').slideUp();
+				});
+			});
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</body>
+</html>

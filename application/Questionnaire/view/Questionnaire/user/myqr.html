@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>开通好友关系</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear" style="background:#30bcaf;">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>我的邀请码</h2>
+				
+			</div>
+		</header>
+		
+       	<section class="myqr">
+		{if condition="isset($uid)"}
+		<img src="http://m.bxgogo.com/index/user/tuijian/usertui/{$uid}" />
+		
+		{else /}
+		<img src="http://m.bxgogo.com/index/user/tuijian" />
+		{/if}
+       	</section>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

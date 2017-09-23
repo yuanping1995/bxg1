@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>更换绑定手机号</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>更换绑定手机号</h2>
+			</div>
+		</header>
+		
+       	<section class="change_content">
+       		<div class="change_tip">请输入你需要绑定的新手机号</div>
+       		<div class="content">
+       			<div>
+       				<span>手机号</span><input type="tel" placeholder="请输入新手机号"/>
+       				<span class="getCode">获取验证码</span>
+       				<span class="Dtime"></span>
+       			</div>
+				<div>
+					<span>验证码</span><input type="number" placeholder="请输入短信验证码"/>
+				</div>
+       		</div>
+       	</section>
+       	
+       	<div class="Next" id="next">确认更换手机号</div>
+        
+       	<section class="public-pop" style="width:70%;font-size:12px;height:30px;line-height:30px;left:50%;margin-left:-35%;"></section>
+       	<script type="text/javascript">
+       		$(function(){
+       			//倒计时方法
+				function Dtimer(){
+					timeNum--;
+					$('.Dtime').html(timeNum + '秒后重新获取');
+					if(!timeNum){
+						clearTimeout(t);
+						$('.Dtime').hide();
+						$('.getCode').show();
+					}else{
+						t = setTimeout(Dtimer,1000);
+					}
+					
+				}
+				var timeNum = 90;
+				var t=null;
+				
+       			$('.getCode').bind('click',function(){
+       				var mobileReg =  /1[3-8]+\d{9}/;
+       				var mobileNum = $('input[type="tel"]').val();
+       				if(mobileNum == ''){
+       					$('.public-pop').text('手机号不能为空！').show();
+       					setTimeout(function(){
+       						$('.public-pop').hide();
+       					},1500);
+       				}else if(!mobileNum.match(mobileReg)){
+       					$('.public-pop').text('您输入的手机号不存在！').show();
+       					setTimeout(function(){
+       						$('.public-pop').hide();
+       					},1500);
+       				}else{
+       					$('.public-pop').text('验证码已发到您的手机，请注意查收！').show();
+       					setTimeout(function(){
+       						$('.public-pop').hide();
+       					},1500);
+       					$('.getCode').hide();
+       					$('.Dtime').show();
+       					
+       					Dtimer();
+       					$.ajax({
+       						type:"get",
+       						data:{mobile:mobileNum},
+       						url:"{$Think.__APPROOT__}/index/send/index",
+       						success:function(){
+       						var dataJSON = eval(data);
+						if (dataJSON.flag) {
+					                t = setTimeout(Dtimer, 1000);
+					            } else {
+					                $(".public-pop").html(dataJSON.msg).show();
+					                setTimeout(function(){
+										$('.public-pop').fadeOut();
+									},2000);
+					            }
+       						}
+       					});
+       				}
+       			});
+				//点击确认更换手机号时,判断
+       			$('.Next').click(function(){
+					var phoneNum = $('input[type="tel"]').val();
+					var codeNum = $('input[type="number"]').val();
+					if(phoneNum == '' || codeNum == ''){
+						$('.public-pop').html('手机号和验证码不能为空！').show();
+						setTimeout(function(){
+							$('.public-pop').fadeOut();
+						},2000);
+						return false;
+					}
+					$.ajax({
+						type:"get",
+						url:"{$Think.__APPROOT__}/index/user/changeMobile",
+						data:{mesCode:codeNum,mesMobile:phoneNum},
+						success : function(data){
+							var dataObj = eval(data);
+							if(dataObj.flag){
+								//手机号和验证码匹配成功
+							$('.public-pop').html(dataObj.msg).show();
+					                setTimeout(function(){
+							$('.public-pop').fadeOut();
+								document.location = '{$Think.__APPROOT__}/index/user/index';
+							},2000);
+							}else{
+								$('.public-pop').html(dataObj.msg).show();
+								setTimeout(function(){
+									$('.public-pop').fadeOut();
+								},2000);
+							}
+						}
+					});
+				});
+       			
+       		});
+       	</script>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

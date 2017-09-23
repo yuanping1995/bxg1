@@ -1,0 +1,211 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/brandfind.html">
+                        <!--<div class="layui-form">
+                            <div class="layui-inline">
+                            </div>
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input start-date" name="start_date" placeholder="入驻时间">
+                                </div>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input end-date" name="end_date" placeholder="入驻时间">
+                                </div>
+                            </div>-->
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <!--<button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delBrand.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>-->
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content": ".add-subcat", "title": "添加品牌","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleBrand.html">
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline">
+                    <select name="One_level" id="One_level" jq-verify="required" jq-error="请输入分类" lay-filter="verify">
+                        <option value=""></option>
+                        {foreach $type as $value}
+                        <option value="{$value.id}">{$value.pname}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">品牌名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ppname" required jq-verify="required" jq-error="请输入品牌名称" placeholder="请输入品牌名称" autocomplete="off" class="layui-input" id="ppname">
+                </div>
+                 <span style="color: red; display: none;" id="err">品牌名称已存在</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">上传图片</label>
+                <div class="layui-input-block">
+                    <input type="file" name="ppic" class="layui-upload-file">
+                    <input type="hidden" name="ppic" error-id="img-error">
+                    <p id="img-error" class="error"></p>
+                    <input type="hidden" name="ppic" id="url" />
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">品牌连接</label>
+                <div class="layui-input-block">
+                    <input type="text" name="pplink" required jq-verify="required" jq-error="请输入品牌连接" placeholder="请输入品牌连接" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getbrand/","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+            <tr>
+                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <th width="60">品牌id</th>
+                <th width="70">品牌图片</th>
+                <th width="100">分类id</th>
+                <th>品牌名称</th>
+                
+                <th width="80">品牌连接</th>
+                <th width="142">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{item.brand_id}}</td>
+                <td>
+                    <div class="img"> <img src="{{item.ppic}}" alt="..." class="img-thumbnail"> </div>
+
+                </td>
+                <td>{{ item.One_level}}</td>
+                <td>{{ item.ppname}}</td>
+                <td>{{ item.pplink}}</td>
+<!--                <td><input type="text" class="layui-input ajax-blur" name="order" value="{{ item.id}}" data-params='{"url":"/php/test.php","data":"id=1&name=paco"}'> </td>-->
+                <!--<td><input type="checkbox" name="switch" lay-skin="switch" lay-text="已审|待审" {{#if (item.switch){ }}checked="checked" {{# } }} lay-filter="ajax" data-params='{"url":"/php/test.php","data":"id={{ item.id}}&name=paco"}'> </td>-->
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat", "title": "编辑{{item.ppname}}","type":"1","data":"brand_id={{item.brand_id}}&ppname={{item.ppname}}&One_level={{item.level_id}}&pplink={{item.pplink}}&ppic={{item.ppic}}"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                    <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/delBrand.html","data":"id={{item.brand_id}}"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>-->
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+  layui.use('list',function(){
+    	    layui.upload({
+			elem: '.layui-upload-file',
+			url: "/Admin/Upload/brandimg",
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#url').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+		});
+    });
+    //判断品牌是否存在
+      $('#ppname').blur(function(){
+    	var ppname=$(this).val();
+    	var selectd=$('#One_level').val();
+    	 if(selectd==""){
+	           	   $('#err').html("请先选择分类");
+	           	   $('#err').css("display","block");
+           	   	   $('#ppname').val("");
+           	   }else{
+           	   	  $.ajax({
+		             type: "post",
+		             url: "/admin/index/ajaxbrand",
+		             data: {ppname:ppname,selectd:selectd},
+		             success:function(data){
+		             	if(data==2){
+		             	  $('#err').css("display","none");	
+		             	}else{
+		                 //显示
+		                    $('#err').css("display","block");
+		                     $('#ppname').val("");
+		                    
+		             	}
+		             }
+               });
+           	   }
+    	
+             
+    });
+</script>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+     统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+</html>

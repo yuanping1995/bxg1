@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>会员个人资料</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/amazeui.min.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/new_file.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />
+		
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	    
+	</head>
+	<body style="background:#f1f1f1;">
+		<div class="shade"></div>
+		<!--头部标题-->
+		<header>
+            <div class="h_style3 clear">
+        	    <a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+	    		<h2 style="margin-top:0;">会员个人资料</h2>
+    	   	</div>
+		</header>
+    
+       	<section class="setList aboutMe">
+       		<div class="setList_cont">
+       			<ul>
+	       			<li class="xg_avater"><a href="#script">百信头像<i class="r_b"></i><img class="avatar" src="{$user.icon}{:config('images')}" /></a></li>
+	       			<li class="vip_name"><a href="#script">账户<span>{$user.uid}<i class="r_b"></i></span></a></li>
+	       			<li class="nickname"><a href="#script">百信昵称<span>{$user.uname}<i class="r_b"></i></span></a></li>
+	       		</ul>
+	       		<ul>
+	       			<li class="xg_sex"><a href="#script">性别<span>
+	       				{if condition="$user.sex eq 1"}男
+						{else /} 女
+						{/if}
+	       			<i class="r_b"></i></span></a></li>
+	       			<li class="xg_email"><a href="#script">邮箱<span>{$user.mail}<i class="r_b"></i></span></a></li>
+	       		</ul>
+       		</div>
+       		
+       	</section>
+       	
+	       	<!--头像修改-->
+	       <!--图片上传框-->
+		<div class="am-modal am-modal-no-btn up-modal-frame" tabindex="-1" id="up-modal-frame">
+			<div class="am-modal-dialog up-frame-parent up-frame-radius">
+				<div class="am-modal-hd up-frame-header">
+					<label>修改头像</label>
+					<a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+				</div>
+				<div class="am-modal-bd  up-frame-body">
+					<div class="am-g am-fl">
+						<div class="am-form-group am-form-file">
+							<div class="am-fl">
+								<button type="button" class="am-btn am-btn-default am-btn-sm">选择要上传的文件</button>
+							</div>
+							<input type="file" class="up-img-file">
+						</div>
+					</div>
+					<div class="am-g am-fl">
+						<div class="up-pre-before up-frame-radius">
+							<img alt="" src="" class="up-img-show" id="up-img-show">
+						</div>
+						<!--<div class="up-pre-after up-frame-radius"></div>-->
+					</div>
+					<div class="am-g am-fl">
+						<div class="up-control-btns">
+							<span id="up-btn-left"></span>
+							<span id="up-btn-right"></span>
+							<!--修改宽高改变向后台传图片的大小 -->
+							<span class="up-btn-ok" url="" parameter="{width:'100',height:'100'}">上传</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--加载框-->
+		<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="up-modal-loading">
+			<div class="am-modal-dialog">
+				<div class="am-modal-hd">正在上传...</div>
+				<div class="am-modal-bd">
+					<span class="am-icon-spinner am-icon-spin"></span>
+				</div>
+			</div>
+		</div>
+		
+		<!--警告框-->
+		<div class="am-modal am-modal-alert" tabindex="-1" id="up-modal-alert">
+			<div class="am-modal-dialog">
+				<div class="am-modal-hd">信息</div>
+				<div class="am-modal-bd" id="alert_content">
+					成功了
+				</div>
+				<div class="am-modal-footer">
+					<span class="am-modal-btn">确定</span>
+				</div>
+			</div>
+		</div>
+		<form name="basicInfo">
+	       	<!--百信昵称修改-->
+	       	<section class="amend amend_nickname">
+	       		<span>修改百信昵称</span>
+	       		<div><input type="text" name="nickname" placeholder="请输入新昵称" value='{$user.uname}' onkeyup="value=value.replace(/\s/g,'')"/></div>
+	       		<div class="Next" id="next">确认修改</div>
+	       	</section>
+	       	<!--性别修改-->
+	       	<section class="amend amend_sex">
+	       		<span>修改性别</span>
+	       		<ul>
+	       			
+	       			{if condition="$user.sex eq 1"}<input type="hidden" name="sex" value="男"/>
+						{else /} <input type="hidden" name="sex" value="女"/>
+						{/if}
+	       			<li>女</li>
+	       			<li>男</li>
+	       		</ul>
+	       	</section>
+	       	<!--邮箱修改-->
+	       	<section class="amend amend_email">
+	       		<span>修改绑定邮箱</span>
+	       		<div><input type="email" name="email" placeholder="请输入邮箱名" value='{$user.mail}'/></div>
+	       		<div class="Next" id="next">确认修改</div>
+	       	</section>
+       	</form>
+       	<!--提示-->
+       	<section class="public-pop" style="z-index:100;left:50%;margin-left:-25%;width:50%;height:30px;line-height:30px;font-size:12px;"></section>
+       	
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/amazeui.min.js"></script>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/cropper.js"></script>
+       	<script type="text/javascript">
+       		$(function(){
+				
+				function showHide(obj,arrObj,show,hide){
+					obj.bind('click',function(){
+						show.show();
+						hide.show();
+					});
+					arrObj.bind('click',function(){
+						show.hide();
+						hide.hide();
+					});
+					hide.bind('click',function(){
+						show.hide();
+						hide.hide();
+					});
+				}
+				//改变头像
+				// $('.amend_avatar>ul li').click(function(){
+				// 	alert($(this).index());
+				// });
+				// showHide($('.xg_avater'),$('.amend_avatar>ul li'),$('.amend_avatar'),$('.shade'));
+				
+				//会员名不可修改
+				$('.vip_name').click(function(){
+					$('.public-pop').text('百信账户作为登录名不可修改!').show();
+					setTimeout(function(){
+						$('.public-pop').hide();
+					},2000);
+				});
+				//修改百信昵称
+				$('.nickname').click(function(){
+					$('.amend_nickname').show();
+					$('.shade').show();
+				});
+				$('.amend_nickname .Next').click(function(){
+					var nick = $('.amend_nickname input').val();
+					if(nick == ''){
+						$('.public-pop').text('请输入新昵称').show();
+						setTimeout(function(){
+							$('.public-pop').hide();
+						},1000);
+					}else{
+
+						$('.nickname span').html(nick+"<i class='r_b'></i>");
+						$('.amend_nickname').hide();
+						$('.shade').hide();
+						infoSave();
+					}
+				});
+				$('.shade').click(function(){
+					$('.amend_nickname').hide();
+					$('.shade').hide();
+				});
+				//修改性别
+				$('.amend_sex>ul li').click(function(){
+					$(this).parent().find('input:hidden').val($(this).text());
+					$('.xg_sex').find('span').html($(this).text()+"<i class='r_b'></i>");
+					infoSave();
+				});
+				showHide($('.xg_sex'),$('.amend_sex>ul li'),$('.amend_sex'),$('.shade'));
+				//修改绑定邮箱
+				$('.xg_email').click(function(){
+					$('.amend_email').show();
+					$('.shade').show();
+				});
+				function checkEmail(email){
+					var reg =  /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+					if(email.match(reg)){
+						return true;
+					}else{
+						return false;
+					}
+				}
+				$('.amend_email .Next').click(function(){
+					var email = $('.amend_email input').val();
+					if(email == ''){
+						$('.public-pop').text('请输入邮箱名称').show();
+						setTimeout(function(){
+							$('.public-pop').hide();
+						},1000);
+					}else if(!checkEmail(email)){
+						$('.public-pop').text('邮箱格式不正确').show();
+						setTimeout(function(){
+							$('.public-pop').hide();
+						},1000);
+					}else{
+						$('.xg_email span').html(email+"<i class='r_b'></i>");
+						$('.amend_email').hide();
+						$('.shade').hide();
+						infoSave();
+					}
+				});
+				$('.shade').click(function(){
+					$('.amend_email').hide();
+					$('.shade').hide();
+				});
+
+				$(".avatar").click(function() {
+				
+					$("#up-modal-frame").modal({});
+				});
+				$(function() {
+				'use strict';
+				var $image = $('#up-img-show');
+				$image.cropper({
+					aspectRatio: '1',
+					autoCropArea: 0.8,
+					preview: '.up-pre-after',
+					responsive: true,
+				});
+				
+				var $inputImage = $('.up-modal-frame .up-img-file');
+				var URL = window.URL || window.webkitURL;
+				var blobURL;
+				
+				if(URL) {
+					$inputImage.change(function() {
+						var files = this.files;
+						var file;
+						
+						if(files && files.length) {
+							file = files[0];
+							if(/^image\/\w+$/.test(file.type)) {
+								blobURL = URL.createObjectURL(file);
+								$image.one('built.cropper', function() {
+									// Revoke when load complete
+									URL.revokeObjectURL(blobURL);
+								}).cropper('reset').cropper('replace', blobURL);
+								$inputImage.val('');
+							} else {
+								window.alert('图片格式错误！');
+							}
+						}
+					});
+				} else {
+					$inputImage.prop('disabled', true).parent().addClass('disabled');
+				}
+				
+				//点击上传按钮
+				$('.up-modal-frame .up-btn-ok').on('click', function() {
+					var $modal_loading = $('#up-modal-loading');
+					var $modal_alert = $('#up-modal-alert');
+					var img_src = $image.attr("src");
+					if(img_src == "") {
+						set_alert_info("请选择图片！");
+						$modal_alert.modal();
+						return false;
+					}
+					
+					$modal_loading.modal();
+					
+					var url = $(this).attr("url");
+					//parameter
+					var parameter = $(this).attr("parameter");
+					//console.log(parameter);
+					var parame_json = eval('(' + parameter + ')');
+					var width = parame_json.width;
+					var height = parame_json.height;
+					//console.log(parame_json.width);
+					//console.log(parame_json.height);
+					
+					var canvas = $image.cropper('getCroppedCanvas', {
+						width: width,
+						height: height
+					});
+					var data = canvas.toDataURL(); //
+					//改变默认头像
+					$(".avatar").attr("src", data);
+					$.ajax({
+						dataType: 'json',
+						type: "POST",
+						data:{
+							"image": data.toString()
+						}, //data.toString()将画布里的选中区域图片转换为Base64格式向后台传输
+						url: "{$Think.__APPROOT__}/index/user/upload_tou",
+						success:function(data, textStatus) {
+							$modal_loading.modal('close');
+							set_alert_info(data.result);
+							$modal_alert.modal();
+							if(data.result == "ok"){
+								
+								$("#up-img-touch img").attr("src", data.file);
+								// var img_name = data.file.split('/')[2];
+								// alert(data.file);
+								//console.log(img_name);
+								// $(".up-img-txt a").text(img_name);
+								$("#up-modal-frame").modal('close');
+
+							}
+						},
+						error: function() {
+							$modal_loading.modal('close');
+							set_alert_info("传输图片失败!");
+							$modal_alert.modal();
+							//console.log('Upload error');
+						}
+					});
+				});
+				
+				//左右旋转图片
+				$('#up-btn-left').on('click', function() {
+					$("#up-img-show").cropper('rotate', 90);
+				});
+				$('#up-btn-right').on('click', function() {
+					$("#up-img-show").cropper('rotate', -90);
+				});
+			});
+			
+			function set_alert_info(content) {
+				$("#alert_content").html(content);
+			}
+
+				 //infoSave();
+				 function infoSave() {
+
+		            var param = $('form[name="basicInfo"]').serialize();
+		            param = decodeURIComponent(param, true);
+		            $.ajax({
+		                type: "post",
+		                data: {
+		                    info: param
+		                },
+		                url: "{$Think.__APPROOT__}/index/user/aboutMe",
+		                success: function(data) {
+		                   var dataJson = eval(data);
+			       			if(dataJson.flag){
+				       			$(".public-pop").html(dataJson.msg).show();
+						       		setTimeout(function(){
+						       		$(".public-pop").hide();
+						       	},2000);
+			       			}else{
+			       				$(".public-pop").html(dataJson.msg).show();
+					       		setTimeout(function(){
+					       			$(".public-pop").hide();
+					       		},2000);
+			       			}
+		                }
+		            });
+		        }	
+       		});
+       	</script>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

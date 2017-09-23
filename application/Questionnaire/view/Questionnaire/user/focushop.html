@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>关注的店铺</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/focus.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<body>]
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>关注的店铺</h2>
+				<div class="menuList"><i class="delete-icon"></i></div>
+				<div class="d_confirm">
+					<div>确认删除所有足迹？</div>
+					<div><span class="d_cancel">取消</span><span class="d_firm">确定</span></div>
+				</div>
+			</div>
+		</header>
+	
+       	
+       	<section>
+       		<div class="common-wrapper">
+       			{if condition="empty($follow) "}
+       				<empty name="list">
+			            <div class="nogoods-wrap"><p>目前没有关注店铺</p><a href="{:url('index/index')}" class="btn-buy">去购物吧~</a></div>
+			        </empty>
+				{else /}
+				<ul class="concern-con">
+						{foreach name="follow" item="val" key="key"}
+			          	<li>
+			            	<a href="{:url('index/store/index',array('seller_id'=>$val.seller_id))}">
+							 	<div class="s-side"><span class="s-img"><img src="{$val.logo}" alt=""></span></div>
+			                 	<div class="s-name">{$val.seller_name}</div>
+			                 	<div class="s-tags">{$val.city}</div>
+								<div class="s-concern">{$val.count}<span>人已关注</span></div>
+			               	</a>
+			               	<div class="list_g" onclick="showList(this)">···</div>
+		       				<div class="list_g_menu">
+		       					<ul>
+		       						<li onclick="deleteOne(this)" data="{$val.seller_id}">删除</li>
+		       						<li>屏蔽动态</li>
+		       					</ul>
+		       				</div>
+			           </li>
+		        {/foreach}
+			      </ul>
+				
+				{/if}
+			        
+
+			</div>
+       	</section>
+       	<include file="public/footer_nav" />
+       	
+       	<script type="text/javascript">
+       	function showList(_this){
+            	if($(_this).parent().find('.list_g_menu').css('display') == 'none'){
+            		$(_this).parent().find('.list_g_menu').show();
+            	}else{
+            		$(_this).parent().find('.list_g_menu').hide();
+            	}
+				
+			}
+            function deleteOne(_this){
+            	var goodsid = $(_this).attr('data');
+					$.ajax({
+						type:"post",
+						data:{goodsid:goodsid},
+						url:"{$Think.__APPROOT__}/index/user/focushop",
+						async:true,
+						success:function(data){
+							var dataJson = eval(data);
+							if(dataJson.flag){
+								$(_this).hide();
+								$(_this).parent().parent().parent().hide();
+							}
+						},
+						error:function(data){
+							alert("服务器繁忙，请稍后！");
+						}
+					});
+			}
+			function deleteAll(){
+					$(".d_confirm").show();
+					$(".d_firm").click(function(){
+						$.ajax({
+							type:"post",
+							url:"{$Think.__APPROOT__}/index/user/focushop",
+							async:true,
+							success:function(data){
+								var dataJson = eval(data);
+								if(dataJson.flag){
+									document.location.reload();
+								}
+								
+							},
+							error:function(data){
+								alert("服务器繁忙，请稍后！");
+							}
+						});
+					});
+					$(".d_cancel").click(function(){
+						$(".d_confirm").hide();
+					});
+					
+			}
+       		$(function(){
+       			$(".menuList").click(function(){
+					if($(".concern-con").html() != undefined){
+						deleteAll();
+					}
+				});
+
+
+       		})
+       	</script>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

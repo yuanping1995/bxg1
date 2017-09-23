@@ -1,0 +1,34 @@
+{foreach name="ming" item="value" key="key"}
+<li>
+	<a href="#script" title="">
+		<div class="s">{$value.type}<span class="s_stime">{$value.time|date="Y-m-d H:i:s",###}</span></div>
+     
+		{if condition="$value.type eq '短信充值'"}
+
+		<div>短信余额：<span>{:sprintf("%.4f",$value.total)}</span>
+		{else/}
+			{if condition="$type eq 1 or $type eq 2"}
+		        <div><span></span>
+		    {else/}
+		    <div>账户余额：<span>{:sprintf("%.4f",$value.total)}</span>
+			{/if}
+		{/if}
+	{if condition="$value.typeid eq 1"}
+	
+	   <span class="s_money">+{:sprintf("%.4f",$value.money)}</span></div>
+	{else /}
+	   {if condition="$type eq 1 or $type eq 2"}
+                  {if condition="$type eq 2"}
+                   <span class="s_money">{$value.money}</span></div>
+                   
+	   {else/}
+           <span class="s_money"></span></div>
+                   {/if}
+	   {else/}
+	   <span class="s_money">-{:sprintf("%.4f",$value.money)}</span></div>
+	   {/if}
+    {/if}	
+	</a>
+</li>
+{/foreach}
+

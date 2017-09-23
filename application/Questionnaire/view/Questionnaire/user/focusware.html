@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>我的收藏</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- 不让百度转码 -->
+		<meta name="description" content="" />
+		<meta name="Keywords" content="" />
+		<link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/focus.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		
+	</head>
+
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>我的收藏</h2>
+				<div class="menuList"><i class="list-icon"></i></div>
+				<ul class="list">
+					<li>
+						<a href="/" title="首页">首页</a>
+					</li>
+					<li>
+						<a href="{:url('category/index')}" title="搜索">搜索</a>
+					</li>
+					<li>
+						<a href="{:url('cart/index')}" title="购物车">购物车</a>
+					</li>
+					<li>
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+		
+		<section class="jd-safe-mode-box">
+			<div class="jd-safe-mode-msg">
+				<span><em></em><span class="msg-safe">您正在安全购物环境中，请放心购物</span></span>
+			</div>
+		</section>
+		<section class="shop-group">
+			{assign name="flc" value="1"}
+			{foreach name="list" item="val" key="k"}
+							<div class="shop-group-item" id="sel_del{$flc}">
+					<div class="shop-title" id="sel_{$flc}">
+						<div class="item">
+							<div class="shop-title-content">
+								<span class="shop-title-icon"> <img src="{$val.0.logo}{:config('images')}"/></span>
+								<span class="shop-title-name">{$val.0.seller_name}</span>
+							</div>
+							<div class="shop-btn-com">
+								<span class="shop-title-8888"><span>商家限额</span>{:floatval($val.0.xprice)}<span>免运费</span></span>
+							</div>
+						</div>
+					</div>
+					<ul class="shp-cart-list">
+						{foreach name="val" item="v" key="t"}
+							<li id='del_{$v.goods_id}'>
+								<div class="items">
+									<div class="shp-cart-item-core">
+										<a href="{:url('index/Goods/index',['id'=>$v.goods_id])}" title="{$v.sname}">
+											<div class="cart-product-cell-1"><img src="{$v.pic}{:config('images')}" /></div>
+											<div class="cart-product-cell-2">
+												<div class="cart-product-name">{$v.sname}</div>
+												<div class="cart-product-prop"><span>价格￥</span>{$v.price}</div>
+												<div class="cart-product-cell-3">店铺地址:{$v.city}</div>
+											</div>
+										</a>
+										<div class="option-order">
+											<div class="order_left">关注人数<span>{$v.follow_count}</span></div>
+											<div class="order_right">
+												<a href="tel:{$v.mobile}"><span class="ico"></span><span class="btn-msg-in">联系卖家</span></a>
+												<a href="{:url('index/store/index',['seller_id'=>$k])}"><span class="ico"></span><span class="btn-msg-in">进入店铺</span></a>
+								<a href="javascript:void(0);" onClick="Delorder('{$v.goods_id}','{$flc}')"><span class="ico"></span><span class="btn-msg-in">取消关注</span></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						{/foreach}
+					</ul>
+				</div>
+				<div flc="{$flc++}">   </div>
+			{/foreach}
+		</section>
+		{if condition="empty($list) "}
+		<section class="shp-cart-empty">
+			<em></em><span>暂无收藏记录~</span>
+		</section>
+		{/if}
+		<section class="cart-pop">
+			<div class="ico-succ">
+				<span class="att-succ">温馨提示</span>
+				<span class="cart-succ"></span>
+			</div>
+		</section>
+		
+
+		<script type="text/javascript">
+			var isLogin = "{$Think.cookie.isLogin}";
+			
+			function Delorder(goodsid, sedel) {
+				
+//				if(isLogin == 0) {
+//					document.location = "http://login.bxgogo.com/?back={$Think.__APPURL__}";
+//					return false;
+//				}
+				var conf = confirm("您确定要取消关注该商品吗?");
+				if(!conf) {
+					return false;
+				}
+				$.ajax({
+					type: "get",
+					url: "{$Think.__APPROOT__}/index.php/index/goods/GoodsFllow",
+					data: { goods_id: goodsid },
+					success: function(data) {
+						var obj = eval(data);
+						if(obj.flag) {
+							$(".cart-pop .att-succ").html(obj.msg); //
+							$(".cart-pop").show();
+							setTimeout(function() {
+								$(".cart-pop").fadeOut(1000);
+							}, 2000); //提示层2秒后消失
+							$("#del_" + goodsid).remove();
+							if($("#sel_del" + sedel + " li").length < 1) {
+								$("#sel_del" + sedel).remove();
+							}
+							if($("#shop-group-item").length < 1) {
+								$(".shp-cart-empty").show();
+							}
+							window.location.reload();
+						} else {
+							$(".cart-pop .att-succ").html(obj.msg); //错误信息
+							$(".cart-pop").show();
+							setTimeout(function() {
+								$(".cart-pop").fadeOut(1000);
+							}, 1000); //提示层2秒后消失
+						}
+					}
+				});
+			}
+			$(function(){
+				//头部点击下拉列表
+				$('.menuList').bind('click', function() {
+					$('.h_style3 .list').slideToggle();
+				});
+				$('.h_style3 .list li').click(function() {
+					$('.h_style3 .list').slideUp();
+				});
+			})
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>

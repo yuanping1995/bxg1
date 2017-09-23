@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>我的礼品</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>我的礼品</h2>
+				<div class="menuList"><i class="list-icon"></i></div>
+				<ul class="list">
+					<li>
+						<a href="/" title="首页">首页</a>
+					</li>
+					<li>
+						<a href="{:url('category/index')}" title="搜索">搜索</a>
+					</li>
+					<li>
+						<a href="{:url('cart/index')}" title="购物车">购物车</a>
+					</li>
+					<li>
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+	
+		<section class="gift">
+			<div class="no_gift">
+				您还没有礼品~
+			</div>
+			<div class="g_list">
+				<ul>
+					<!-- <li>
+	       				<a href="/" title="">
+	       					<div class="proImg">
+	       						<img src="{$Think.__APPROOT__}/static/img/gift.jpg" alt=""/>
+	       					</div>
+	       					<div class="introInfo">
+	       						<div>百信购给您赠送了一件神秘礼物！并祝您XXXX快乐！</div>
+	       					</div>
+	       				</a>
+	       			</li>
+	       			<li>
+	       				<a href="/" title="">
+	       					<div class="proImg">
+	       						<img src="{$Think.__APPROOT__}/static/img/gift.jpg" alt=""/>
+	       					</div>
+	       					<div class="introInfo">
+	       						<div>百信购给您赠送了一件神秘礼物！并祝您XXXX快乐！</div>
+	       					</div>
+	       				</a>
+	       			</li>
+	       			<li>
+	       				<a href="/" title="">
+	       					<div class="proImg">
+	       						<img src="{$Think.__APPROOT__}/static/img/gift.jpg" alt=""/>
+	       					</div>
+	       					<div class="introInfo">
+	       						<div>百信购给您赠送了一件神秘礼物！并祝您XXXX快乐！</div>
+	       					</div>
+	       				</a>
+	       			</li> -->
+				</ul>
+			</div>
+		</section>
+		
+
+		<script type="text/javascript">
+			$(function() {
+				//头部点击下拉列表
+				$('.menuList').bind('click', function() {
+					$('.h_style3 .list').slideToggle();
+				});
+				$('.h_style3 .list li').click(function() {
+					$('.h_style3 .list').slideUp();
+				});
+			});
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

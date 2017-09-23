@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <!--<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <base href="{$Think.__APPROOT__}/" />
+    <meta name="format-detection" content="telephone=no">-->
+    <!--<meta http-equiv="Cache-Control" content="no-siteapp" />-->  <!-- 不让百度转码 -->
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta property="og:title" content="百信购商城"/>
+    <meta property="og:description" content="一站式购物体验，今日买今日达，快来体验吧"/>
+    <meta property="og:image" content="http://m.bxgogo.com/logojpg.jpg"/>
+    <meta name="description" content="{$instal['depict']}" />
+    <meta name="Keywords" content="{$instal['keyword']}" />
+    
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css"/><!--公共样式表-->
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/index.autumn.css" />
+  <title>百信购</title>
+    <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.cookie.js" ></script>
+    	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+
+    <!-- <script type="text/javascript">
+    $(function(){
+    	$('body').hide();
+    	alert("系统维护中，给您带来不便，敬请谅解！");
+    })
+    </script> -->
+</head>
+<body>
+	<div id="main-page" style="background: #ff005a;">
+		<header id="index-head" class="bxg-head bxg-index-head">
+			<span class="bxg-logo">
+				<a href="{$Think.__APPROOT__}" title="{$instal['wname']}"><img src="{$Think.__APPROOT__}/static/img/index/logo.png" alt="{$instal['wname']}"/></a>
+			</span>
+			<div class="bxg-title" id="search"><input type="text" value="" placeholder="搜索店内商品" class="bxg-input"/></div>
+			<span class="bxg-position h-position">
+				<i class="c-icon"></i>
+				<span id="city">定位城市</span>
+			</span>
+		</header>
+
+		<!--轮播图-->
+		<section class="slide-box" id="slide-box">
+			<div class="bd">
+				<ul>
+					{foreach name="slide" item="value" key="key"}
+						<li>
+							<a href="{$value.blink}" title=""><img src="{$value.bimg}{:config('images')}" alt="{$value.hname}" /></a>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+			<!--轮播图焦点-->
+			<div class="hd">
+				<ul></ul>
+			</div>
+		</section>
+		
+		<!--百信快报-->
+		<section class="bx-news clear">
+			<div class="news-title">百信<span>快报</span><!-- <i>百信快报</i> --></div>
+			<div class="news-list" id="news-list">
+				<ul>
+					{foreach name="bulle" item="v" }
+						<li>
+							<a href="#"><i>{$v.tname}</i>{$v.bname}</a>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+			<div class="rabbit"></div>
+		</section>
+		<!--百信秒杀-->
+		<section class="ms_top">
+			<div class="ms_top_a">
+			  <a href="/"></a>
+			</div>
+		</section>
+		<section class="seckill">
+			<div class="goods-bar"><span class="goods-bar6"></span></div>
+			<div class="content-border">
+				<div class="content-width">
+					<div class="seckill-no-start clear" style="display:none;">
+						<div class="seckill-tip">每晚8点到9点开启</div>
+						<div class="seckill-time">
+							<span class="time">距秒杀开始还有</span>
+							<span class="count" id="hours"></span>:
+							<span class="count" id="minutes"></span>:
+							<span class="count" id="seconds"></span>
+						</div>
+					</div>
+			
+					<div class="seckill-end clear" style="display:none;">
+						<div class="seckill-tip">每晚8点到9点开启</div>
+						<div class="seckill-time">
+							<span class="time" style="display:block;width:100%;text-align:right;">今日秒杀已结束</span>
+						</div>
+					</div>
+					<div class="seckill-start clear" style="display:none;">
+						<div class="seckill-tip">限时限量 疯狂抢购</div>
+						<div class="seckill-time">
+							<span class="time">距秒杀结束还有</span>
+							<span class="count" id="hours"></span>:
+							<span class="count" id="minutes"></span>:
+							<span class="count" id="seconds"></span>
+						</div>
+					
+					</div>
+					<div class="seckill-goods clear">
+						{foreach name="mgoods" item="value"}
+							<div>
+								<input type="hidden" name="url" data-url="{:url('index/goods/index',['id'=>$value.goods_id])}">
+								<a title="{$value.sname}" href="{:url('index/goods/index',['id'=>$value.goods_id])}">
+								 	<div class="ms-goods"></div>
+									<div class="pic"><img src="{$value.pic}{:config('images')}" alt="" />
+									<!-- <div class="cir-wait" style="display:none;"></div><div class="cir-end" style="display:none;"></div> -->
+									</div>
+									<p class="intro">{$value.sname}</p>
+									<span class="price_b">￥{$value.goods_price}</span><!-- <span class="price_yj">￥{$value.goods_price+30}</span> -->
+								</a>
+							</div>
+					   {/foreach}
+				 	</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="cheap">
+			<div class="goods-bar translateBar "><span class="goods-bar0">百信特价</span></div>
+			<div class="content-border">
+				<div class="content-width">
+					<div class="seckill-goods clear">
+					{foreach name="tgoods" item="value"}
+						<div>
+							<a href="{:url('index/goods/index',['id'=>$value.goods_id])}" title="{$value.sname}">
+								<div class="bxtj-goods"></div>
+								<div class="pic"><img src="{$value.pic}{:config('images')}" alt="" /></div>
+								<p class="intro">{$value.sname}</p>
+								<span class="price_b">￥{$value.goods_price}</span><!-- <span class="price_yj">￥{$value.goods_price+40}</span> -->
+							</a>
+						</div>
+					 {/foreach}
+					</div>	
+				</div>
+			</div>
+		</section>
+		<!-- 每日上新 -->
+		<section class="recommend" style="margin:10px 0 0;">
+			<div class="goods-bar"><span class="goods-bar7"></span></div>
+			<div class="content-border">
+				<div class="content-width">
+					<div class="recom-list">
+						<ul class="clear">
+						   {foreach name="newgoodslist" item="value"}
+							<li>
+								<a href="{:url('index/goods/index',['id'=>$value.goods_id])}" title="{$value.sname}">
+									<div class="index_pro">
+										<div class="products-kuang"><img xsrc="{$value.pic}{:config('images')}" src="/" alt="" class="wait-load" style="opacity: 1;">
+											<span class='new-goods'></span>
+										</div>
+										<div class="goods-name">{$value.sname}</div>
+										<div class="price">
+											<div class="yh">最多可收益:￥{$value.save}</div>
+											<span href="{:url('index/goods/index',['id'=>$value.goods_id])}" class="price-pro">￥{$value.goods_price}</span>
+											<div class="btns">热度{$value.sales}</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+			{foreach name="floor" item="value" } {switch name="$value.expand"} {case value="1"} {include file='index/goods_floor_1'/} {/case} {case value="2"} {include file='index/goods_floor_2'/} {/case} {case value="3"} {include file='index/goods_floor_3'/} {/case} {default /} {include file='index/goods_floor_4'/} {/switch} {/foreach}
+
+		<!--为您推荐-->
+		<section class="recommend foot-tj">
+			<div class="goods-bar"><span class="goods-bar5">为您推荐</span></div>
+			<div class="content-border">
+				<div class="content-width">
+					<div class="recom-list">
+						<ul class="clear">
+									{if condition="!empty($wx)"}
+											{foreach name="wx" item="v" key="k"}
+						<li>
+							<a href="{:url('index/Goods/index',['id'=>$v.goods_id])}" title="{$v.depict}">
+								<div class="index_pro">
+									<div class="products-kuang"><img xsrc="{$v.pic}{:config('images')}" src="/" alt="{$v.goods_sn}" class="wait-load"/></div>
+									<div class="goods-name">{$v.sname}</div>
+									<div class="price">
+										<div class="yh">最多可收益:￥{$v.save}</div>
+										<span href="{:url('index/Goods/index',['id'=>$v.goods_id])}" class="price-pro">￥{$v.goods_price}</span>
+										<div class="btns">热度{$v.sales}</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						{/foreach}
+					{/if}
+						</ul>
+						<div class="getmore"></div>
+			            <div class="search_empty">没有更多了</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{include file="public/footer_nav"/}
+
+	{include file="redbar/packet"}
+	</div>
+	<div class="shade" style="display:none;"></div>
+	<!--进入页面，广告-->
+
+
+	<section class="adv join_adv">
+		<i class="close_b"></i>
+		<img src="{$message.img}" />
+	</section>
+	<section class="adv packet_adv">
+		<i class="close_b"></i>
+		<div class="packet_bg">
+			<!-- <img src="../img/ad/packet_adbg.png" /> -->
+			<div id="tip_1">
+				<div class="tip_1"></div>
+				<div class="ad_time"></div>
+				<div style="width:70%;color:#fff;text-align:center;position:absolute;left:15%;bottom:-150px;">提示：由于手机时间延迟不同，请提前进入红包雨界面等待！</div>
+			</div>
+			
+			<div id='tip_2'>
+				<div class="tip_2"></div>
+				<div class="ad_time">
+					<div></div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="p_theme"></div>
+		<div class="p_link"><a href="{$Think.__APPROOT__}/red/index"></a></div>
+	</section>
+
+	<!--城市选择-->
+	<section id="positionCity">
+		<header style="background: #fff;">
+            <div class="h_style2 clear">
+	        	<a href="javascript:;" class="a-back"><i class="back-btn">关闭</i></a>
+		        <h2>定位城市</h2>
+            </div>
+		</header>
+		<div class="cities">
+			<div class="current-city">
+				<p>当前定位城市</p>
+				<span class="newcity">城市</span>
+			</div>
+			<div class="hot-cities"> 
+				<p>热门城市</p>
+				<span>保定</span>
+			</div>
+		</div>
+	</section>
+	<!--搜索-->
+	<section class="searchPage" id="searchPage">
+		<header style="background: #fff;">
+            <div class="h_style2 clear">
+	        	<a href="javascript:;" class="a-back"><i class="back-btn">关闭</i></a>
+		        <h2>
+		        	<div class="search-content">
+		        		<div class="item">
+							<span class="item_span" selective="1">宝贝<i class="sel_item"></i></span>
+							<ul class="item_ul">
+								<li selective="0"><span class="shop0"></span><span class="shop_txt">店铺</span></li>
+								<li selective="1"><span class="shop1"></span><span class="shop_txt">宝贝</span></li>
+							</ul>
+						</div>
+						<input type="hidden" value="1" id="search_type">
+					    <input type="text" placeholder="搜索内容" autofocus="autofocus" id="search_txt" class="search-txt"/> 
+		        	</div>
+		        </h2>
+		        <div class="menuList"><input type="button" value="搜索" class="btn-search"/></div>
+            </div>
+		</header>
+		<ul class="search_results">
+			
+		</ul>
+		
+		<div class="history">
+			<div class="history_div">
+				<p>历史搜索<i class="clear_history"></i></p>
+				
+			</div>
+		</div>
+		<div class="confirm">
+			<span class="confirm_span1">确认清除所有搜索记录吗？</span>
+<span class="confirm_span2">是</span>
+			<span class="confirm_span3">否</span>
+		</div>
+		<div class="pro-search">
+			<div class="history-search">
+				<p>热门搜索</p>
+              {foreach name="hot" item="v" key="k"}
+              		<a href="http://m.bxgogo.com/index/search/index/search_txt/{$v.keywords}/search_id/1"><span>{$v.keywords}</span></a>
+              {/foreach}
+			
+			</div>
+		</div>
+	</section>
+	<!-- 右边浮动 -->
+	<aside class="r-fixed">
+		<ul>
+			<li><a href="{:url('user/footprint')}" class="footp"></a></li>
+			<li></li>
+		</ul>
+		<script type="text/javascript">
+			var wH = $(window).height();
+			$(window).bind('scroll', offsetScrollH);
+
+			function offsetScrollH() {
+				if($(document).scrollTop() > 200) {
+					$('.r-fixed ul li:last-child').show();
+				} else {
+					$('.r-fixed ul li:last-child').hide();
+				}
+			}
+			$('.r-fixed ul li:last-child').bind("click",function(){
+
+				$('body,html').animate({
+						scrollTop: 0
+					}, 500);
+			});
+		</script>
+	</aside>
+	<div class="public-pop" style="width:40%;left:50%;margin-left:-20%;height:30px;line-height:30px;font-size:14px;text-align:center;"></div>
+	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/TouchSlide.1.1.js" ></script>
+	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/public.js"></script>
+	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/geolocation.min.js"></script>
+	
+	<script type="text/javascript">
+
+		var page = 1;
+		
+		{if condition="!empty($wxpagea)"}
+			 page = {$wxpagea};
+		{/if}
+		var pageajax=true;
+		var storage = window.localStorage;
+			//遍历搜索历史
+			
+			function result(_this){
+				if(storage.a) {
+					storage.a += "&" + $(_this).find('.search_option').text();
+					storage.url += "&" +$(_this).attr('data');
+				}else{
+					storage.a = $(_this).find('.search_option').text();
+					storage.url = $(_this).attr('data');
+				}
+				storageParse();
+				creatHtml();
+				$(".search-txt").val('');
+				location.href=$(_this).attr('data');
+			}
+			creatHtml();
+			function creatHtml() {
+				if(storage.a){
+					var words = storage.a.split("&");
+					words = words.reverse();
+					var urls = storage.url.split("&");
+					urls = urls.reverse();
+					var htmls = '';
+
+					$(words).each(function(index,item){
+						// console.log($(urls).eq(index)[0]);
+						htmls += '<a href="'+$(urls).eq(index)[0]+'"><span>'+item+'</span></a>';
+					});
+					$('.history_div').append(htmls);
+				}
+			}
+			function storageParse(){
+				console.log(storage.a);
+				var words = storage.a.split("&");
+				var urls = storage.url.split("&");
+				words = words.length > 8 ? words.slice(-8) : words;
+				urls = urls.length >8 ? urls.slice(-8) : urls;
+				var word,url;
+
+				$(words).each(function(index, item) {
+					if(index == 0) {
+						word = item;
+					} else {
+						word += "&" + item
+					}
+				});
+				$(urls).each(function(index, item) {
+					if(index == 0) {
+						url = item;
+					} else {
+						url += "&" + item
+					}
+				});
+				storage.a = word;
+				storage.url = url;
+			}
+		$(function(){
+			//进入页面，广告
+
+
+			 var begin_h = {$red.begin_h}; //开始小时
+			 var begin_m = {$red.begin_m}; //开始分钟
+			 var finish_h = {$red.finish_h}; //结束小时
+			 var finish_m = {$red.finish_m}; //结束分钟
+			 var duration = {$red.duration}; //持续时间（整数）
+			 var interval = {$red.interval};//间隔
+			var flag = false;
+			var Flag = false;
+			var secc2;
+
+			var time;
+			var stime = Date.parse(new Date());
+			
+			$.ajax({
+				type:"get",
+				url:"{$Think.__APPROOT__}/index.php/index/index/gettime",
+				async:false,
+				success:function(data){
+					if(data){
+						stime = Date.parse(new Date())-stime;
+						time = data;
+					}
+				}
+			});
+			
+			time = Number(time) - stime;
+
+			$firstdate = new Date(time);
+			$hours = $firstdate.getHours();
+			$minutes = $firstdate.getMinutes();
+			$seconds = $firstdate.getSeconds();
+			var start_h1;
+			var start_m1;
+			if(begin_m < 10){
+				//开始时间
+				start_h1 = begin_h-1;
+				start_m1 = 60-(10-begin_m);
+			}else{
+				start_h1 = begin_h;
+				start_m1 = begin_m-10;
+			}
+
+
+			if($hours>finish_h||($hours == finish_h && $minutes >= finish_m)){
+				//当服务器时间（小时大于结束小时）或者（小时等于结束小时且分钟大于等于结束分钟），返回false
+			 	// console.log(1);
+				Flag2 =false;
+			}else if($hours < begin_h || ($hours == begin_h && $minutes<begin_m)){
+				//当服务器时间（小时小于开始小时）或者（小时等于开始小时且分钟小于开始分钟），返回false
+				Flag =false;
+				// console.log(start_h2+'-'+start_m2);
+				//提前10分钟倒计时
+				if($hours == start_h1 && $minutes>=start_m1){
+					Flag = true;		
+					
+				}
+			}else{
+				//其他情况是游戏时间
+				Flag = true;		
+			}
+		
+			if(Flag){
+				$(".packet_adv").show();
+				$(".shade").show();
+				$(".join_adv").hide();
+
+				
+				//倒计时写入页面
+				function timeadv(){
+					var n_d=new Date(time);
+					var hour = n_d.getHours();
+					var minu = n_d.getMinutes();
+
+					if(hour>finish_h || (hour==finish_h&&minu>=finish_m)){
+							//当服务器时间（小时大于结束小时）或者（小时等于结束小时且分钟大于等于结束分钟）,隐藏侧边
+							$(".packet_adv").hide();
+							$(".shade").hide();
+					}else{
+						$('#tip_1 .ad_time').html('');
+						gettime();
+						function gettime(){
+							$seconds++;
+							if($seconds==60){
+								$seconds=0;
+								$minutes++;
+							}
+							if($minutes==60){
+								$minutes=1;
+								$hours++;
+							}
+						}
+						var remainder=$minutes%(duration+interval);
+						if(remainder>=duration && remainder<=(duration+interval-1)) {
+							$minn = (interval+duration-1)-remainder;
+							$secc = 59 - $seconds;
+							$("#tip_2").hide();
+							$("#tip_1").show();
+
+
+							var timeString = "00:"+($minn<10?('0'+$minn):$minn)+":"+($secc<10?('0'+$secc):$secc);
+							// alert(timeString);
+							for(index in timeString){
+								$('#tip_1 .ad_time').append("<span>"+timeString[index]+"</span>");
+							}
+							
+						}else if(remainder<duration){
+							$("#tip_2").show();
+							$("#tip_1").hide();
+						}
+						
+					}
+				}
+				timeadv();
+				var set = setInterval(timeadv, 1000);
+				
+			}else{
+				$(".packet_adv").hide();
+				if(getCookie('join')==''){
+					$('.shade').show();
+					$('.join_adv').show();
+					setCookie("join",1,1);
+				}else{
+					$('.shade').hide();
+					$('.join_adv').hide();
+				}
+				
+			}
+			$('.close_b').click(function(){
+				$(".join_adv").fadeOut(500);
+				$(".packet_adv").fadeOut(500);
+				$(".shade").fadeOut(500);
+			});
+
+
+			//进入页面，定位显示
+			getLocation();
+			function getLocation(){
+			    var geolocation = new qq.maps.Geolocation("VPTBZ-ZISWI-AU5GE-5CI5U-V7J72-IZFGT", "百信购");
+			    var options = {timeout: 8000};
+			    geolocation.getLocation(showPosition, showErr, options);//精确定位
+			}
+			function showPosition(position) {
+			    $.ajax({
+					type : "get",
+					url:"{$Think.__APPROOT__}/index/index/latLng",
+					data :position,
+					success: function(data){		
+						var obj = eval(data); 
+						if (obj.flag) {		
+						    $(".public-pop").html(obj.city).show();//错误信息
+					        setTimeout(function () {
+					            $(".public-pop").fadeOut(1000);
+					        }, 1000);//提示层2秒后消失			 
+							$('#city').html(obj.city);	
+							$('.newcity').html(obj.city);			
+						}else{
+					        $(".public-pop").html(obj.msg).show();//错误信息
+					        setTimeout(function(){
+					            $(".public-pop").fadeOut(1000);
+					        }, 1000);//提示层2秒后消失
+					        $('#city').html('城市');	
+						}
+				    }
+				});	
+			};
+			function showErr(){
+				$(".public-pop").html("定位失败").show();//错误信息
+			    setTimeout(function () {
+			        $(".public-pop").fadeOut(2000);
+			    }, 1000);//提示层2秒后消失
+			}
+			//点击定位选择城市
+			$(".h-position").bind('click',function(){
+				$("#main-page").hide();
+				$('#positionCity').show();
+				selectCity();
+			});
+			$(".h_style2 .a-back").click(function(){
+				$("#main-page").show();
+				$('#positionCity').hide();
+				$("#searchPage").hide();
+			});
+			function selectCity(){
+				var text = '';
+				for(var i = 1; i < $('#positionCity span').length; i++){
+					var _this = $('#positionCity span').get(i);
+				      _this.onclick = function(){
+						$('#city').text($(this).text());
+						$('.newcity').text($(this).text());
+						$("#main-page").show();
+						$('#positionCity').hide();
+						indexhead();
+					}
+				}
+			};
+			//点击搜索
+			$('#search').click(function(){
+				$("#main-page").hide();
+				$("#searchPage").show();
+			});
+			//搜索页点击
+			$(".item_span").click(function(){
+				$(".item_ul").toggle();
+			});
+			
+			//点击商品或店铺改变.item_span的selective值  店铺0 宝贝1
+			$(".item_ul li").click(function(){
+				var i = "<i class='sel_item'></i>";
+				$(".item_span").attr("selective",$(this).attr("selective"));
+				$(".item_span").html($(this).find(".shop_txt").html()+i);
+				$(".item_ul").hide();
+			});
+			//点击清空历史记录显示遮罩和确认框
+			$(".clear_history").click(function(){
+				$(".shade").show();
+				$(".confirm").show();
+			});
+			//点击取消隐藏遮罩和确认框
+			$(".confirm_span3").click(function(){
+				$(".shade").hide();
+				$(".confirm").hide();
+			})
+			
+			//点击确定隐藏
+			//点击确定隐藏
+			$(".confirm_span2").click(function(){
+				$(".shade").hide();
+				$(".confirm").hide();
+				$(".history_div a").remove();
+				localStorage.removeItem("a");
+				localStorage.removeItem("url");
+			})
+			$(".h_style2 .back-btn").click(function(){
+				$(".search-txt").val("")
+				$(".search_results").hide();
+			});
+			
+			
+			//点击搜索按钮，传值搜索
+			$(".btn-search").click(function(){
+				var selective=$(".item_span").attr("selective");
+				var serach_val=$(".search-txt").val();
+				if(serach_val==""){
+					$('.public-pop').html('请输入搜索信息！').show();
+					setTimeout(function(){
+						$('.public-pop').hide();
+					},2000);
+				}else{
+
+					var search_id=$(".item_span").attr("selective");
+					if(search_id==1){
+						$(".search-txt").val('');
+						location.href="{$Think.__APPROOT__}/index/search/index/search_txt/"+serach_val+'/search_id/'+selective;
+					}else{
+						alert("请选择您要搜索的店铺");
+					}
+					// $.ajax({
+					// 	type:"post",
+					// 	url:"{$Think.__APPROOT__}/index/search/index",
+					// 	async:true,
+					// 	data:{
+					// 		search_id:selective,
+					// 		search_txt:serach_val
+					// 	}
+					// });
+					// $(".search-txt").val('');
+					if(storage.a) {
+						storage.a += "&" + serach_val;
+						storage.url += "&" + "{$Think.__APPROOT__}/index/search/index/search_txt/"+serach_val+'/search_id/'+selective;
+					}else{
+						storage.a = serach_val;
+						storage.url = "{$Think.__APPROOT__}/index/search/index/search_txt/"+serach_val+'/search_id/'+selective;
+					}
+				}
+			});
+			$('.search-txt').bind('input propertychange', function() {  
+				var search_txt=$(".search-txt").val();
+				var search_id=$(".item_span").attr("selective");
+			    if(search_txt==""){
+			   		$(".search_results").hide(500);
+			    }else{
+			    	$.ajax({
+			    		type:"get",
+			    		url:"{$Think.__APPROOT__}/index/index/search",
+			    		data:{
+			    			search_txt:search_txt,
+			    			search_id:search_id
+			    		},
+			    		async:true,
+			    		dataType:"json",
+			    		success:function(data){
+			    			if(data!=''){
+			    				//var dataJson = eval(data);
+				    			var str="";
+				    			for(i=0;i<data.length;i++){
+				    				if(data[i].flag){
+				    					 str +="<li data='"+data[i].href+"' onclick='result(this)'><span class='search_option'>"+data[i].opt+"</span><span class='search_txt'><span class='search_num'></span>共"+data[i].num+"件商品</span></li>";
+                                      
+				    					 // str +="<a href='"+data[i].href+"'><li><span class='search_option'>"+data[i].opt+"</span><span class='search_txt'><span class='search_num'></span>共"+data[i].num+"件商品</span></li></a>";
+					    			}
+				    			}
+                              // console.log(str);
+				    			$(".search_results").html('').append(str);	
+			    			}else{
+			    				$(".search_results").html('').append("<li><span class='search_option'>很是抱歉，没有搜索到相关！</span></li>");
+			    			}
+			    		}
+			    	});
+			    	$(".search_results").show(500);
+			    }
+			}); 
+			
+			//控制页面头部
+			// function indexhead(){
+			// 	$(".h-search").width($('.head-content').width()-$(".h-logo").outerWidth()-$(".h-position").outerWidth()-2);
+			// }
+			// $(window).on('resize',function(){
+			// 	indexhead();
+			// })
+			// indexhead();
+            //页面头部渐变
+            $('#index-head').css("background",'rgba(255,0,0,1)');
+			var hHeight = $('#index-head').height();
+			$(window).scroll(function(){
+				var st = $(document).scrollTop();			
+				
+				if(st < hHeight){
+					$('#index-head').css("background",'rgba(255,0,0,1)');
+				}else if(st==hHeight){
+					$('#index-head').css("background",'rgba(0,0,0,.8)');
+				}else if(st <= $('.slide-box').height()){
+					var op =(st-hHeight)/$('.slide-box').height();
+					$('#index-head').css("background",'rgba(0,0,0,'+op+')');
+				}else if(st>(hHeight+$('.slide-box').height())){
+					$('#index-head').css("background",'rgba(0,0,0,.7)');
+				}
+			});
+            //轮播图
+			autoSlide("#slide-box");//只能传id名
+			autoSlide("#ad_1");
+			autoSlide("#ad_2");
+			autoSlide("#ad_3");
+			autoSlide("#ad_4");
+			//百信快报向上滚动
+			autoTopScroll('.news-list',$('.news-list').height(),$('.news-list').find('li').length);
+			function autoTopScroll(obj,height,num){
+				setInterval(function () {
+				    $(obj).find("ul:first").animate({
+				    	marginTop: -height/num
+				    },500,function(){
+				    	$(this).css({marginTop:'0'}).find('li:first').appendTo(this);
+				    });
+				}, 3000);
+			}
+			
+			countDown();
+			//百信秒杀倒计时 每晚8点开始9点结束
+			var start_kill = 20;
+			function countDown(){
+				var date = new Date();
+				var hour = date.getHours();//小时
+				var min = date.getMinutes()+1;//分钟
+				var sec = date.getSeconds()+1;//秒
+				var dMin = 60 - min;
+				var dSec = 60 - sec;
+				// 24小时制
+				if(hour < start_kill){
+					dH = start_kill - hour-1;
+					judgeAddZero(dH);
+					$(".seckill-start").hide();
+					$(".seckill-end").hide();
+					$(".seckill-no-start").show();
+
+				}else if(hour == start_kill){
+					judgeAddZero(0);
+					$(".seckill-no-start").hide();
+					$(".seckill-end").hide();
+					$(".seckill-start").show();
+				}else{
+					$(".seckill-no-start").hide();
+					$(".seckill-start").hide();
+					$(".seckill-end").show();
+				}
+
+				function judgeAddZero(dH){
+					h = dH<10 ? '0'+dH:dH;
+					m = dMin<10 ? '0'+dMin:dMin;
+					s = dSec<10 ? '0'+dSec:dSec;
+					$(".seckill-time #hours").text(h);
+					$(".seckill-time #minutes").text(m);
+					$(".seckill-time #seconds").text(s);
+				}
+
+				var t = setTimeout(countDown,1000);//循环调用实现自动倒计时
+			}			
+			//为您推荐
+			$(window).scroll(function(){
+				if($(document).scrollTop() >= $(document).height()-$(window).height()-100){
+				    getGoodsList();
+				 }//到底 
+			});
+            
+			
+			function isWeiXin(){
+				var ua = window.navigator.userAgent.toLowerCase(); 
+				if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+				return true; 
+				}else{	
+				return false; 
+				}
+			}
+			var wxpage = $.cookie('b_wxpage');
+			var urlpj = 'ajaxget';
+			if(wxpage!=null && isWeiXin())
+			{		
+				urlpj = 'ajaxBigGet';
+				
+			}else{
+				urlpj = 'ajaxget';
+			}
+			
+			getGoodsList();
+			function getGoodsList(){
+			 	if(pageajax){
+					$('.getmore').show();
+					$.ajax({
+						type : "get",
+						url:"{$Think.__APPROOT__}/index/index/"+urlpj+"/p/"+page,
+						async: false,  //同步等待结果的返回
+						success: function(data)
+						{
+							urlpj = 'ajaxget';
+							if(data){
+								$(".foot-tj .recom-list>ul").append(data);
+								page++;
+								$('.search_empty').hide();
+								pageajax=true;
+							}else{
+								$('.search_empty').show();
+								pageajax=false;
+							}
+							$('.getmore').hide();
+						}
+					}); 
+				}
+			}
+		});
+
+	</script>
+	
+	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+
+</body>
+</html>

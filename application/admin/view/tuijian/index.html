@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>推荐人查看名单</title>
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="{$Think.__APPROOT__}/static/assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="{$Think.__APPROOT__}/static/assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/assets/css/admin.css">
+    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/assets/css/app.css">
+    <script src="{$Think.__APPROOT__}/static/assets/js/echarts.min.js"></script>
+</head>
+
+<body data-type="index">
+
+    <div class="tpl-page-container tpl-page-header-fixed">
+
+        <div class="tpl-content-wrapper">
+
+
+            <div class="tpl-content-scope">
+                <div class="note note-info">
+                    <h3>查看指定用户推荐人数
+                        <span class="close" data-close="note"></span>
+                    </h3>
+                    <p> 每天的某个时间段内</p>
+                    <p><span class="label label-danger">提示:</span> Amaze UI 关注中文排版，根据用户代理调整字体，实现更好的中文排版效果。
+                    </p>
+                </div>
+            </div>
+
+          <!--  <div class="row">
+				
+                <div class="am-u-lg-3 am-u-md-6 am-u-sm-12 style" sty='default'>
+                    <div class="dashboard-stat red">
+                        <div class="visual">
+                            <i class="am-icon-comments-o"></i>
+                        </div>
+						<img  src="/static/assets/logo.jpg" width='80px'height='80px' style='float:left;margin-top:10px;'>
+                        <div class="details">
+						
+                            <div class="number">index</div>
+                            <div class="desc"> 默认主题 </div>
+                        </div>
+                        <a class="more" href="#"> 设置主题
+                    <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+                    </div>
+                </div>
+            </div>
+-->
+            <div class="row">
+                <div class="am-u-md-6 am-u-sm-12 row-mb">
+                    <div class="tpl-portlet">
+                        <div class="tpl-portlet-title">
+                            <div class="tpl-caption font-red ">
+                                <i class="am-icon-bar-chart"></i>
+                                <span id="paihang"> Tui 排行</span>
+                            </div>
+                            <div class="actions">
+                                <ul class="actions-btn meiri">
+                                    <li class="purple" sss='本周' z='b'>今天</li>
+                                    <li class="green" sss='上周' z='shang'>昨天</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tpl-scrollable">
+                            <div class="number-stats">
+                                <div class="stat-number am-fl am-u-md-6">
+                                    <div class="title am-text-right">今日最多 </div>
+                                    <div class="number am-text-right am-text-warning">{$benzhou.0.num}/人</div>
+                                </div>
+                                <div class="stat-number am-fr am-u-md-6">
+                                    <div class="title"> 在推员工 </div>
+                                    <div class="number am-text-success"> {:count($benzhou)}/人</div>
+                                </div>
+
+                            </div>
+
+                            <table class="am-table tpl-table">
+                                <thead>
+                                    <tr class="tpl-table-uppercase">
+                                        <th>人员</th>
+                                        <th>金额</th>
+                                        <th>推广人数</th>
+                                        <th>手机号</th>
+										<th>是否结算</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='nage'>
+							{foreach $benzhou as $value}
+									 <tr>
+                                        <td>
+                                            <img src="{$value.icon}" alt="" class="user-pic">
+                                            <a class="user-name" href="###">{$value.uname}</a>
+                                        </td>
+                                        <td>￥{:sprintf("%.3f",$value.jine)}</td>
+										<td>{$value.num}/{$value.youxiao}</td>
+                                        <td class="font-green bold">{$value.mobile}</td>
+										{if condition="($value.jiesuan eq '未结算')"}
+											<td class="jiesuan1" z="{$value.mobile}"  zhou="{$value.zhou}" style="color:red">{$value.jiesuan}</td>
+										{elseif condition="$value.jiesuan eq '已结算'"/}
+											<td>{$value.jiesuan}</td>
+										{else /}
+											<td>错误</td>
+										{/if}
+                                    </tr>
+									{/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="am-u-md-6 am-u-sm-12 row-mb">
+                    <div class="tpl-portlet">
+                        <div class="tpl-portlet-title">
+                            <div class="tpl-caption font-red ">
+                                <i class="am-icon-bar-chart"></i>
+                                <span id="paihang"> Tui 本日应得奖励</span>
+                            </div>
+                            <div class="actions">
+                                <ul class="actions-btn jiangli">
+                                    <li class="purple1" sss='本周' z='b'>未处理</li>
+                                   <!-- <li class="green1" sss='上周' z='shang'>奖励</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tpl-scrollable">
+                            <div class="number-stats">
+                                <div class="stat-number am-fl am-u-md-6">
+                                    <div class="title am-text-right">奖励 </div>
+                                   <!-- <div class="number am-text-right am-text-warning">{$benzhou.0.num}/人</div>-->
+                                </div>
+                                <div class="stat-number am-fr am-u-md-6">
+                                    <div class="title"> 发放 </div>
+                                    <!--  <div class="number am-text-success"> {:count($benzhou)}/人</div>-->
+                                </div>
+
+                            </div>
+
+                            <table class="am-table tpl-table">
+                                <thead>
+                                    <tr class="tpl-table-uppercase">
+                                        <th>人员</th>
+                                        <th>金额</th>
+                                        <th>推广人数</th>
+                                        <th>手机号</th>
+										<th>是否结算</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='nage'>
+							{foreach $jiangli as $value}
+									 <tr>
+                                        <td>
+                                            <img src="{$value.icon}" alt="" class="user-pic">
+                                            <a class="user-name" href="###">{$value.uname}</a>
+                                        </td>
+                                        <td>￥{$value.jine}</td>
+										<td>{$value.num}</td>
+                                        <td class="font-green bold">{$value.mobile}</td>
+										{if condition="($value.jiesuan eq '未结算')"}
+											<td class="jiesuan2" z="{$value.mobile}"  zhou="{$value.zhou}">{$value.jiesuan}</td>
+										{elseif condition="$value.jiesuan eq '已结算'"/}
+											<td>{$value.jiesuan}</td>
+										{else /}
+											<td>错误</td>
+										{/if}
+                                    </tr>
+									{/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+ <div class="am-u-md-6 am-u-sm-12 row-mb">
+                    <div class="tpl-portlet">
+                        <div class="tpl-portlet-title">
+                            <div class="tpl-caption font-red ">
+                                <i class="am-icon-bar-chart"></i>
+                                <span id="paihang"> Tui 待审核人员推荐</span>
+                            </div>
+                            <div class="actions">
+                                <ul class="actions-btn jiangli">
+                                   <!--   <li class="purple1" sss='本周' z='b'>未处理</li> -->
+                                   <!-- <li class="green1" sss='上周' z='shang'>奖励</li>-->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tpl-scrollable">
+                            <div class="number-stats">
+                                <div class="stat-number am-fl am-u-md-6">
+                                      <!-- <div class="title am-text-right">奖励 </div> -->
+                                   <!-- <div class="number am-text-right am-text-warning">{$benzhou.0.num}/人</div> -->
+                                </div>
+                                <div class="stat-number am-fr am-u-md-6">
+                                    <!--  <div class="title"> 发放 </div>  -->
+                                    <!--  <div class="number am-text-success"> {:count($benzhou)}/人</div>-->
+                                </div>
+
+                            </div>
+
+                            <table class="am-table tpl-table">
+                                <thead>
+                                    <tr class="tpl-table-uppercase">
+                                        <th>人员</th>
+                                        <th>推广时间</th>
+                                        <th>推广人</th>
+                                        <th>被推广人</th>
+										<th>状态</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='nage'>
+							{foreach $suoyou as $value}
+									 <tr>
+                                        <td>
+                                            <img src="{$value.icon}" alt="" class="user-pic">
+                                            <a class="user-name" href="###">{$value.uname}</a>
+                                        </td>
+                                        <td>{$value.jine}</td>
+										<!-- <td>{$value.num}</td> -->
+                                        <td class="font-green bold">{$value.mobile}</td>
+										<td>{$value.youxiao}</td>
+										{if condition="($value.jiesuan eq '未生效')"}
+											<td class="jiesuan3" z="{$value.mobile}"  zhou="{$value.zhou}" style="color:red">{$value.jiesuan}</td>
+										{elseif condition="$value.jiesuan eq '已生效'"/}
+											<td>{$value.jiesuan}</td>
+										{else /}
+											<td>错误</td>
+										{/if}
+                                    </tr>
+									{/foreach}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    <script src="{$Think.__APPROOT__}/static/assets/js/jquery.min.js"></script>
+    <script src="{$Think.__APPROOT__}/static/assets/js/amazeui.min.js"></script>
+    <script src="{$Think.__APPROOT__}/static/assets/js/iscroll.js"></script>
+    <script src="{$Think.__APPROOT__}/static/assets/js/app.js"></script>
+<script src="http://m.bxgogo.com/static/layer/layer.js"></script>
+<script type="text/javascript">
+
+	$('.meiri li').click(function(){
+	var $this=$(this);
+		$.ajax({
+				 type: "post",
+				 url: "/admin/index/tuijianselectgetshang/zhou/"+$this.attr('z'),
+				 success: function(data){
+							$('.actions-btn li').removeClass("blue-on");
+							$($this).addClass("blue-on");
+							$('#tuijian').html(' Red '+$($this).attr('sss')+'排行');
+							$('#nage').html('');
+							var $str ='';
+							$.each(data,function(i,v){
+								$str += '<tr><td><img src="'+v.icon+'" alt="" class="user-pic"><a class="user-name" href="###">'+v.uname+'</a></td> <td>￥'+v.jine+'</td><td>'+v.num+'/'+v.youxiao+'</td><td class="font-green bold">'+v.mobile+'</td>';
+								if(v.jiesuan=='未结算')
+								{
+									$str += '<td class="jiesuan1"   z="'+v.mobile+'"  zhou="'+v.zhou+'">'+v.jiesuan+'</td></tr>';
+								}else if(v.jiesuan=='已结算')
+								{
+									$str += '<td >'+v.jiesuan+'</td></tr>';
+								}else{
+									$str += '<td></td></tr>';
+								}
+							})
+							$('#nage').html($str);
+							
+							clickk();
+						  }
+			 });
+		});
+
+clickk();
+function clickk(){
+$('.jiesuan1').click(function(){
+							var $zz=$(this);
+								//询问框
+								layer.confirm('确定结算该工资', {
+								  btn: ['确定','关闭'] //按钮
+								}, function(){
+								
+									$.ajax({
+									 type: "post",
+									 url: "/admin/index/setgongzi/jiesuan/"+$zz.attr('z')+'/zhou/'+$zz.attr('zhou'),
+									 success: function(data){
+										layer.msg('设置成功', {icon: 1});
+										 $zz.unbind();
+										$zz.html('已结算');
+									 }
+									 });
+								  
+								});
+								})
+ $('.jiesuan2').click(function(){
+							var $zz=$(this);
+								//询问框
+								layer.confirm('确定已经支付完成？', {
+								  btn: ['确定','关闭'] //按钮
+								}, function(){
+									$.ajax({
+									 type: "post",
+									url: "/admin/index/setjiangli/jiesuan/"+$zz.attr('z')+'/zhou/'+$zz.attr('zhou'),
+									 success: function(data){
+										layer.msg('设置成功', {icon: 1});
+										 $zz.unbind();
+										$zz.html('已结算');
+									 }
+									 });
+								  
+								});
+								})
+   $('.jiesuan3').click(function(){
+							var $zz=$(this);
+								//询问框
+								layer.confirm('确定已经核实该兼职？', {
+								  btn: ['确定','关闭'] //按钮
+								}, function(){
+									$.ajax({
+									 type: "post",
+									url: "/admin/index/setjianzhi/jiesuan/"+$zz.attr('z')+'/zhou/'+$zz.attr('zhou'),
+									 success: function(data){
+										layer.msg('设置成功', {icon: 1});
+										 $zz.unbind();
+										$zz.html('已生效');
+									 }
+									 });
+								  
+								});
+								})
+}
+
+	</script>
+</body>
+
+</html>

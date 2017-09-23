@@ -1,0 +1,550 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="{$Think.__APPROOT__}/static/qew/css/style.css">
+	<script src="{$Think.__APPROOT__}/static/qew/js/jquery-1.8.3.min.js"></script>
+	<script src="{$Think.__APPROOT__}/static/qew/js/highcharts.js"></script>
+	<script src="{$Think.__APPROOT__}/static/qew/js/exporting.js"></script>
+</head>
+<style>
+	.lanrenzhijia11 .content li{height: 560px}
+</style>
+<body>
+<div id="all" STYLE="width: 100%">
+	<div id="mid1" STYLE="width: 100%">
+		<!--学部学生预警各项分部情况-->
+		<div class="gxfb" STYLE="width: 100%">
+			<div class="bing">
+
+				<!--选项卡-->
+
+				<div class="lanrenzhijia11" style="height: 1700px">
+
+					<div class="content" STYLE="width: 100%;height:1700px;">
+						<ul>
+							<li>
+								<div class="c1">
+									<!--<div class="container18">
+                                    </div>-->
+									<div class="container19">
+									</div>
+									<div class="container20">
+									</div>
+								</div>
+								<div class="c2">
+									<div class="container21">
+									</div>
+									<div class="container22">
+									</div>
+								</div>
+							</li>
+							<div style="clear: both"></div>
+							<li>
+								<div class="c1">
+									<!--<div class="container23">
+                                    </div>-->
+									<div class="container24">
+									</div>
+									<div class="container25">
+									</div>
+								</div>
+								<div class="c2">
+									<div class="container26">
+									</div>
+									<div class="container27">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="c1">
+									<!--<div class="container28">
+                                    </div>-->
+									<div class="container29">
+									</div>
+									<div class="container30">
+									</div>
+								</div>
+								<div class="c2">
+									<div class="container31">
+									</div>
+									<div class="container32">
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--选项卡结束-->
+			</div>
+
+		</div>
+		<!--学部学生预警周详情-->
+		{$spec[9]['A']}
+	</div>
+</div>
+</body>
+<!--<script src="{$Think.__APPROOT__}/static/qew/js/min.js"></script>-->
+<script>
+ 		var A;
+        $.ajax({
+            url:"http://m.bxgogo.com//admin/index/selectQuestionnaire",
+            type:"post",
+            // data:{age:age,Gender:Gender,shopping:shopping,repeat:repeat,colour:colour,follow:follow,time:time,Price:Price,infor:infor,mode:mode},
+            success:function(data){
+                console.log(data[0]['A']);
+  				A= data[0]['A'];
+            // A=  100* data[0]['A']/(data[0]['A']*1+ data[0]['B']*1+ data[0]['C']*1+ data[0]['D']*1)
+//alert(data[0]['A']);
+
+        $('.container19').highcharts({
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '年龄',
+                style: {
+                    color: '#A9A9A9',
+                    fontWeight: 'bold'}
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '百分比',
+                data: [
+                    ['18岁以下', {$spec[0]['A']}],
+                    ['18-25岁', {$spec[0]['B']}],
+                    ['26-35岁', {$spec[0]['C']}],
+                    ['35岁以上', {$spec[0]['D']}],
+
+                ]
+            }]
+        });
+
+    $(function () {
+        $('.container20').highcharts({
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '男女比例',
+                style: {
+                    color: '#A9A9A9',
+                    fontWeight: 'bold'}
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '百分比',
+                data: [
+                    ['男', {$spec[1]['A']}],
+                    ['女', {$spec[1]['B']}]
+                ]
+            }]
+        });
+    });
+    $(function () {
+        $('.container22').highcharts({
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '重复购买的商品',
+                style: {
+                    color: '#A9A9A9',
+                    fontWeight: 'bold'}
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '百分比',
+                data: [
+                    ['经常', {$spec[2]['A']}],
+                    ['一般', {$spec[2]['B']}],
+                    ['偶尔', {$spec[2]['C']}],
+                    ['几乎不网购', {$spec[2]['D']}],
+
+                ]
+            }]
+        });
+    });
+    $(function () {
+        $('.container21').highcharts({
+            credits:{
+                enabled:false // 禁用版权信息
+            },
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '重复购买的商品',
+                style: {
+                    color: '#A9A9A9',
+                    fontWeight: 'bold'}
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '百分比',
+                data: [
+                    ['服装类', {$spec[3]['A']}],
+                    ['家居', {$spec[3]['B']}],
+                    ['母婴', {$spec[3]['C']}],
+                    ['其他', {$spec[3]['D']}]
+                ]
+            }]
+        });
+    });
+    $(function () {
+                    $('.container24').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '喜欢的颜色',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['暖色调红、黄、橙', {$spec[4]['A']}],
+                                ['冷色调青、蓝、紫', {$spec[4]['B']}],
+                                ['中间色系黑、白、灰', {$spec[4]['C']}],
+                                ['其他', {$spec[4]['D']}]
+                            ]
+                        }]
+                    });
+                });
+    $(function () {
+                    $('.container25').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '对于网购您关注的是什么',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['价格', {$spec[5]['A']}],
+                                ['品质与样式', {$spec[5]['B']}],
+                                ['物流速度', {$spec[5]['C']}],
+                                ['其他', {$spec[5]['D']}]
+                            ]
+                        }]
+                    });
+                });
+    $(function () {
+                    $('.container26').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '喜欢在什么时间购物',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['白天的工作时间', {$spec[6]['A']}],
+                                ['晚上7、8点以后', {$spec[6]['B']}],
+                                ['中午时间', {$spec[6]['C']}],
+                                ['其他', {$spec[6]['D']}]
+                            ]
+                        }]
+                    });
+                });
+    $(function () {
+     $('.container27').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '能接受的价格在什么范围',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['100以内', {$spec[7]['A']}],
+                                ['100-300之间', {$spec[7]['B']}],
+                                ['300-500之间', {$spec[7]['C']}],
+                                ['500以上', {$spec[7]['D']}]
+                            ]
+                        }]
+                    });
+                });
+                $(function () {
+                    $('.container29').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '您喜欢关注哪方面的信息',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['八卦方面', {$spec[8]['A']}],
+                                ['正能量的文章', {$spec[8]['B']}],
+                                ['新闻方面', {$spec[8]['C']}],
+                                ['情感类', {$spec[8]['D']}],
+                                ['美容、服装搭配', {$spec[8]['E']}],
+                                ['健康、养生类', {$spec[8]['F']}],
+//                                ['八卦方面', {$spec[8]['A']}],
+//                                ['正能量的文章', {$spec[8]['B']}],
+//                                ['新闻方面', {$spec[8]['C']}],
+//                                ['情感类', {$spec[8]['D']}],
+//                                ['美容、服装搭配', {$spec[8]['E']}],
+//                                ['健康、养生类', {$spec[8]['F']}]
+                            ]
+                        }]
+                    });
+                });
+                $(function () {
+                    $('.container30').highcharts({
+                        credits:{
+                            enabled:false // 禁用版权信息
+                        },
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: '不喜欢网络购物的原因',
+                            style: {
+                                color: '#A9A9A9',
+                                fontWeight: 'bold'}
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    color: '#000000',
+                                    connectorColor: '#000000',
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: '百分比',
+                            data: [
+                                ['网上支付太麻烦', {$spec[9]['A']}],
+                                ['不信任网站，怕受骗', {$spec[9]['B']}],
+                                ['担心商品品质有问题', {$spec[9]['C']}],
+                                ['担心商品配送有问题', {$spec[9]['D']}],
+                                ['不了解如何购买', {$spec[9]['E']}],
+                                ['觉得售后麻烦', {$spec[9]['F']}],
+                                ['其他', {$spec[9]['G']}]
+                            ]
+                        }]
+                    });
+                });
+            },
+
+            error:function(e){
+                alert("请你填写完整！谢谢诶合作！");
+                window.clearInterval(timer);
+            }
+        });
+</script>
+
+</html>

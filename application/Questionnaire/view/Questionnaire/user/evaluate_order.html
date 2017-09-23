@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+	    <title>发表评价</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myorder.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery-migrate-1.2.1.min.js"></script>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/json.js"></script>
+
+		
+		
+	</head>
+
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>发表评价</h2>
+				<div class="publish">发布</div>
+				
+			</div>
+		</header>
+        {foreach name="picsrc" item="value"}
+		<section class="goods_p" goodsid = "{$value.goods_id}">
+			<div class="flower_p clear"> 
+				<div class="goods_img"><img src="{$value.pic}{:config('images')}"></div>
+				<div class="show_flower">
+					<span><i class="good_p"></i>好评</span>
+					<span><i class="no_mid_p"></i>中评</span>
+					<span><i class="no_bad_p"></i>差评</span>
+				</div>
+			</div>
+			
+			<div class="p_txt">
+				<textarea name="p_txt" autofocus="autofocus" form="evaluate" value="该用户没有评论！" placeholder="宝贝满足你的期待吗？说说你的使用心得，分享给想买的他们吧"></textarea>
+				<div class="img_p clear">
+					<!--图片选择对话框-->
+					<div class="div_imgfile"></div>
+					
+
+					
+					
+				</div>
+			</div>
+			
+			<div class="h_name clear">
+				<div class="sel" id="sel_n_status">
+					<span><em>√</em></span>匿名	
+				</div>
+				<div class="p_tip">你的评价能帮助其他小伙伴</div>
+			</div>
+			<form name="evaluate" id="evaluate">
+				<!--好中差评-->
+				<input type="hidden" name="flower" value="0"/>
+				
+				<!--匿名还是不匿名-->
+				<input type="hidden" name="h_name" value="1"/>
+				
+			</form>
+		</section>
+		{/foreach}
+		<section class="store_p"> 
+			<div class="s_p_title clear">
+				<i></i>
+				店铺评分
+			</div>
+			
+			<div class="p_star">
+					<ul>
+						<li class="clear">
+							<b>描述相符：</b>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<input type='hidden' name="describe" value='' form="evaluate"/>
+						</li>
+						<li class="clear">
+							<b>物流服务：</b>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<input type='hidden' name="logistics" value='' form="evaluate"/>
+						</li>
+						<li class="clear">
+							<b>服务态度：</b>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<span></span>
+							<input type='hidden' name="serve" value='' form="evaluate"/>
+						</li>
+					</ul>
+			</div>
+		</section>
+		
+		
+		
+		<section class="public-pop" style="width:70%;left:50%;margin-left:-35%;height:30px;line-height:30px;font-size:14px;"></section>
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/imgUpload.js"></script>
+		<script type="text/javascript">
+			function deleteImg(_this){
+				$(_this).parent().remove();
+			}
+			$(function(){
+
+				//好/中/差选择
+				$(".show_flower span").click(function(){
+					var index_p = $(this).index();
+					$(this).parent().parent().siblings("#evaluate").find("input[name='flower']").val(index_p);
+					if(index_p === 0){
+						$(this).find('i').addClass('good_p').removeClass('no_good_p');
+						$(this).parent().find("span").eq(1).find("i").addClass('no_mid_p').removeClass('mid_p');
+						$(this).parent().find("span").eq(2).find("i").addClass('no_bad_p').removeClass('bad_p');
+						
+					}else if(index_p === 1){
+						$(this).find('i').addClass('mid_p').removeClass('no_mid_p');
+						$(this).parent().find("span").eq(0).find("i").addClass('no_good_p').removeClass('good_p');
+						$(this).parent().find("span").eq(2).find("i").addClass('no_bad_p').removeClass('bad_p');
+					}else{
+						$(this).find('i').addClass('bad_p').removeClass('no_bad_p');
+						$(this).parent().find("span").eq(1).find("i").addClass('no_mid_p').removeClass('mid_p');
+						$(this).parent().find("span").eq(0).find("i").addClass('no_good_p').removeClass('good_p');
+					}
+				});
+				
+                //匿名
+                
+				$(".sel").click(function(){	
+					var h_name=$(this).parent().siblings("#evaluate").find('input[name="h_name"]');
+					if(h_name.val()=='1'){
+						$(this).removeClass("sel").addClass("no_sel");
+						h_name.val(0);
+					}else{
+						$(this).addClass("sel").removeClass("no_sel");
+						h_name.val(1);
+					}
+					
+				});
+                //店铺评分
+				$('.p_star ul li>span').on('touchstart',function(){
+       				$(this).addClass('star_bg');
+       				
+       			});
+       			$('.p_star ul li>span').on('touchend',function(){
+       				var num = $(this).index();
+       				$(this).parent().find('input[type="hidden"]').val(num);
+       				$(this).parent().find('span').each(function(index){
+       					if(index<num){
+       						$(this).parent().find('span').eq(index).addClass('star_bg');
+       					}else{
+       						$(this).parent().find('span').eq(index).removeClass('star_bg');
+       						
+       					}
+       					
+       				});
+       			});
+       			$(".publish").click(function(){
+       				var flower_p=[];
+       				var txt_p=[];
+       				var name_h=[];
+       				var goods_id=[];
+       				var img = {};
+                    $("input[name='flower']").each(function(){
+                    	flower_p.push($(this).val());
+                    });
+                    $("textarea[name='p_txt']").each(function(){
+                    	txt_p.push($(this).val());
+                    	var goodsid = $(this).parents('.goods_p').attr('goodsid');
+                    	var imgArr=[];
+                    	$(this).next('.img_p').find('.lookimg').each(function(){
+                    		imgArr.push($(this).find('img').attr('src'));
+                    		// console.log(imgArr);
+                    	});
+                    	img[goodsid] = imgArr;
+                    });
+                    $("input[name='h_name']").each(function(){
+                    	name_h.push($(this).val());
+                    });
+                    $("input[name='goods_id']").each(function(){
+                    	goods_id.push($(this).val());
+                    });
+       				for(var i=0; i<txt_p.length;i++){
+ 						if(txt_p[i] === ''){
+ 							txt_p[i] = '该用户没有评论';
+ 						}
+ 					}
+ 					 // console.log(img);
+       				var des_p = $('input[name="describe"]').val();
+       				var logist_p = $('input[name="logistics"]').val();
+       				var ser_p = $('input[name="serve"]').val();
+       				var file = $('input[name="imgUpload"]').val();
+
+
+
+       				if(des_p === ''){
+       					$(".public-pop").html("请给描述相符评分！").show();
+       					setTimeout(function(){
+       						$(".public-pop").hide();
+       					},2000);
+       				}else if(logist_p === ''){
+       					$(".public-pop").html("请给物流服务评分！").show();
+       					setTimeout(function(){
+       						$(".public-pop").hide();
+       					},2000);
+       				}else if(ser_p === ''){
+       					$(".public-pop").html("请给服务态度评分！").show();
+       					setTimeout(function(){
+       						$(".public-pop").hide();
+       					},2000);
+       				}else{
+	       				$.ajax({
+	       					type:"post",
+	       					data:{
+	       						evaluate:flower_p.join(','),
+	       						title:txt_p.join(','),
+	       						anonymous:name_h.join(','),
+	       						describe:des_p,
+	       						logistics:logist_p,
+	       						serve:ser_p,
+	       						file:file,
+	       						oid:"{$oid}",
+	       						goodsimg:$.toJSON(img)
+	       					},
+	       					url:"{$Think.__APPROOT__}/index/user/evaluate_order",
+	       					traditional: true,
+	       					success:function(data){
+	       						var dataJson = eval(data);
+	       						if(dataJson.flag){
+	       							$(".public-pop").html(dataJson.msg).show();
+			       					setTimeout(function(){
+			       						$(".public-pop").hide();
+			       					},2000);
+			       					window.location.href="{:url('index/user/index')}";
+	       						}else{
+	       							$(".public-pop").html(dataJson.msg).show();
+			       					setTimeout(function(){
+			       						$(".public-pop").hide();
+			       					},2000);
+	       						}
+	       					}
+	       				});
+       				}
+       	
+	       				
+       			});
+			})
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>

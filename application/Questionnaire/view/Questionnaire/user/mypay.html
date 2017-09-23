@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>账户充值</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/mypay.css" />
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>账户充值</h2>
+			</div>
+		</header>
+       	
+       	<section class="myPay">
+       		<div class="sel_payto clear">
+       			<label for="accountPay" payWay="0">
+       				<span class="circle-btn onbg"></span><input type="radio" name="sel" id="accountPay" style="display: none;"/>账户充值
+       			</label>
+       			<label for="notePay" payWay="1">
+       				<span class="circle-btn"></span><input type="radio" name="sel" id="notePay" style="display: none;"/>短信充值
+       			</label>
+       		</div>
+       		<div class="pay_k">
+       			<span>金额</span>
+       			<input type="number" placeholder="请输入充值金额" name='number' class="number"/>
+       		</div>	
+       		<div class="Next" id="next">下一步</div>
+       	</section>
+       	<script type="text/javascript">
+       		$(function(){
+       			var selPayTo = 0;
+       			$('.sel_payto label').click(function(){
+       				var selLabel=$(this).attr('payWay');
+       				selPayTo = selLabel;
+       				$(this).find('.circle-btn').addClass('onbg');
+       				$(this).siblings('label').find('.circle-btn').removeClass('onbg');
+       			});
+				function checkKit(flag){
+       				if(flag){
+       					$('.Next').addClass('next_bg');       					
+       				}else{
+       					$('.Next').removeClass('next_bg');
+       					$('.Next').bind('click',function(){
+       						location.href = 'javascript:void(0);';
+       					});
+       				}
+       			}
+				
+				$('.pay_k input[type="number"]').blur(function(){
+					$('.Next').bind('click',function(){
+						var price=parseFloat($('.number').val());
+						window.location="{$Think.__APPROOT__}/index/user/mypay/type/"+selPayTo+"/price/"+price;       						
+       				});
+				});
+				$('.pay_k input[type="number"]').bind('input propertychange', function() {  
+				    if($('.pay_k input[type="number"]').val()>0){
+				    	checkKit(true);
+				    }else{
+				    	checkKit(false);
+				    } 
+				});  
+       		});
+       	</script>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

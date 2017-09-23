@@ -1,0 +1,285 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/findspec.html">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <!--<button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delSpec","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>-->
+
+                        <!--<button class="layui-btn layui-btn-small layui-btn-normal ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/getSpec","data":"id=1&name=hao&checkbox=6,9,0&va=23"}'>
+                            <i class="layui-icon">&#x1005;</i> 禁用
+                        </button>-->
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content": ".add-subcat", "title": "添加标签","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content": ".zhuijia-subcat", "title": "追加标签","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 追加
+                        </button>
+                        
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!--追加-->
+        <div class="zhuijia-subcat" style="display: none;">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/zhuijia.html">
+        	<div class="layui-form-item">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline">
+                    <select name="lid" id="f2"  lay-filter="er" jq-verify="required" jq-error="请输入分类" lay-filter="verify">
+                        <option value=""></option>
+                        {foreach $type as $value}
+                         <option value="{$value.id}">{$value.pname}</option>
+						{/foreach}
+                    </select>
+                </div>
+            </div>
+            
+           <div class="layui-form-item">
+                <label class="layui-form-label">选择规格</label>
+                <div class="layui-input-inline">
+                    <select name="gid" id="san" lay-filter="san" jq-verify="required" jq-error="请输入分类" lay-filter="verify">
+                        <option value="">请选择分类</option>
+                    </select>
+                </div>
+            </div>
+           
+		<div class="layui-form-item ">
+                            <label class="layui-form-label">描述</label>
+                            <div class="layui-input-block">
+                                <textarea name="item" placeholder="请输入描述" class="layui-textarea"></textarea>
+                            </div>
+                            <span>注释：每行一个</span>
+       </div>
+
+            <!--<div class="layui-form-item">
+                <label class="layui-form-label">热度</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" required jq-verify="number" value="100" jq-error="标签热度必须为数字" placeholder="标签热度" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="status" title="启用" value="1" checked />
+                    <input type="radio" name="status" title="禁用" value="0" />
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="button" id="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!--添加-->
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleSpec.html">
+        	<div class="layui-form-item">
+                <label class="layui-form-label">所属分类</label>
+                <div class="layui-input-inline">
+                    <select name="type_id" id="f1" jq-verify="required" jq-error="请输入分类" lay-filter="verify">
+                        <option value=""></option>
+                        {foreach $type as $value}
+                         <option value="{$value.id}">{$value.pname}</option>
+						{/foreach}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">规格名称</label>
+               
+                <div class="layui-input-block">
+                    <input type="text" name="name" required jq-verify="required" jq-error="请输入规格" placeholder="请输入名称" autocomplete="off" class="layui-input" id="gname">
+                    
+					<span id="err" style="display: none; color: red;">规格名称已经存在</span>
+                </div>
+               
+            </div>
+           
+		<div class="layui-form-item ">
+                            <label class="layui-form-label">描述</label>
+                            <div class="layui-input-block">
+                                <textarea name="item" placeholder="请输入描述" class="layui-textarea"></textarea>
+                            </div>
+                            <span>注释：每行一个</span>
+                        </div>
+
+            <!--<div class="layui-form-item">
+                <label class="layui-form-label">热度</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" required jq-verify="number" value="100" jq-error="标签热度必须为数字" placeholder="标签热度" autocomplete="off" class="layui-input ">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="status" title="启用" value="1" checked />
+                    <input type="radio" name="status" title="禁用" value="0" />
+                </div>
+            </div>-->
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="button" id="submit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getSpec","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+            <tr>
+                <th width="30"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <th width="150">规格类型</th>
+                <th width="150">规格名称</th>
+                <th>规格项</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{# layui.each(d.list, function(index,item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{item.id}}" lay-skin="primary"></td>
+                <td>{{item.type.pname}}</td>
+                <td> <input type="text"  name="" value="{{item.name}}" id="name"  onchange="changename({{item.id}})"/></td>
+                <td> 
+                	{{# layui.each(item.miaoshu, function(index1,item1){ }}
+                	<input type="text" name="" value="{{item1.item}}" id="item" onchange="changemiaoshu(this)" sid="{{item1.id}}"/><br/><br/>
+                	 {{# }); }}
+                </td>
+                <!--<td>
+
+                   <!--<button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"auto,auto","title": "编辑{{item.name}}","type":"1","data":"id={{item.id}}&type_id={{item.type.id}}&item={{item.miaoshu}}&name={{item.name}}"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>-->
+                    <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/delSpec.html","data":"id={{ item.id}}"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>-->
+                <!--</td>-->
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+//  layui.use(['list','form']);
+	  layui.use(['form','list'], function() {
+    	var form = layui.form();
+    					form.on('select(er)', function(data) {
+							var url = "/admin/index/liandong2/id/"+data.value;
+							$.get(url, function(data, status) {
+							$('#san').html('<option value="">请选择子类</option>');
+							$.each(data, function(no, items) {
+								console.log(items);
+								$('#san').append('<option value="' + items.id + '">' + items.name + '</option>');
+							});
+							form.render();
+							});
+				});
+    });
+
+    function changename(id){
+		var name=$('#name').val();
+      $.ajax({
+      	type:"post",
+      	url:"/admin/index/ajaxspecname",
+      	data:{name:name,id:id},
+      	success:function(data){
+      		if(data){
+      			alert('修改成功');
+      		}else{
+      			alert('修改失败');
+      		}
+      	}
+      });
+	}
+	function changemiaoshu(name){
+      var id=$(name).attr('sid');
+      var name=$(name).val();
+     $.ajax({
+      	type:"post",
+      	url:"/admin/index/ajaxspecmiaoshu",
+      	data:{miaoshu:name,id:id},
+      	success:function(data){
+      		if(data){
+      			alert('修改成功');
+      		}else{
+      			alert('修改失败');
+      		}
+      	}
+      });
+	}
+
+    //判断规格是否存在
+     $('#gname').blur(function(){
+    	var gname=$(this).val();
+    	var selectd=$('#f1').val();
+    	 if(selectd==""){
+	           	   $('#err').html("请先选择分类");
+	           	   $('#err').css("display","block");
+           	   	   $('#gname').val("");
+           	   }else{
+           	   	  $.ajax({
+		             type: "post",
+		             url: "/admin/index/ajaxspec",
+		             data: {gname:gname,selectd:selectd},
+		             success:function(data){
+		             	if(data==2){
+		             	  $('#err').css("display","none");	
+		             	}else{
+		                 //显示
+		                   
+		                    $('#err').css("display","block");
+		                     $('#gname').val("");
+		                    
+		             	}
+		             }
+               });
+           	   }
+    
+});
+  
+</script>
+
+</html>

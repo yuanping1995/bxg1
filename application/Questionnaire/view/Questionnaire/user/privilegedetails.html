@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+
+        <title>特权详情</title>
+
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+        <meta name="format-detection" content="telephone=no">
+
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+
+        <meta name="description" content="" />
+
+        <meta name="Keywords" content="" />
+
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/vipprivilege.css" />
+
+	</head>
+
+	<body>
+
+		<header>
+
+			<!--头部标题-->
+
+			<div class="h_style3 clear">
+
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+
+				<h2>特权详情</h2>
+
+			</div>
+
+		</header>
+
+       	<section class="privilege">
+
+        
+
+          {switch name="privid" } 
+
+                {case value="0"}
+
+                    <div class="pri_banner">
+
+                      <img src="{$Think.__APPROOT__}/static/img/user/bg_1.jpg" />
+
+                    </div>
+
+                    <ul>
+
+                      <li>
+
+                        <i></i>
+
+                        <div>
+
+                          <span>权益名称</span>
+
+                          <span>购物优惠</span>
+
+                        </div>
+
+                      </li>
+
+                      <li>
+
+                        <i></i>
+
+                        <div>
+
+                          <span>权益介绍</span>
+
+                          <span>购物优惠2%-4%（确认收货后优惠金额立即返还到百信购账户）</span>
+
+                        </div>
+
+                      </li>
+
+                    </ul>
+
+                {/case}
+
+                {case value="1"}
+
+                    <div class="pri_banner">
+
+                      <img src="{$Think.__APPROOT__}/static/img/user/bg_2.jpg" />
+
+                    </div>
+
+                    <ul>
+
+                      <li>
+
+                        <i></i>
+
+                        <div>
+
+                          <span>权益名称</span>
+
+                          <span>商品返现</span>
+
+                        </div>
+
+                      </li>
+
+                    </ul>
+
+                {/case}
+
+                {case value="2"}
+
+                    <div class="pri_banner">
+
+                      <img src="{$Think.__APPROOT__}/static/img/user/bg_3.jpg" />
+
+                    </div>
+
+                    <ul>
+
+                      <li>
+
+                        <i></i>
+
+                        <div>
+
+                          <span>权益名称</span>
+
+                          <span>推荐会员</span>
+
+                        </div>
+
+                      </li>
+
+                      <li>
+
+                        <i></i>
+
+                        <div>
+
+                          <span>权益介绍</span>
+
+                          <span>1.推荐VIP会员，提会员费的25%即5元（立即返还到百信购账户）<br>
+
+                                2.推荐50人以上，提会员费的50%即10元（立即返还到百信购账户）<br>
+
+                                3.推荐200人以上，提会员费的75%即15元（立即返还到百信购账户）<br>
+
+                          </span>
+
+                        </div>
+
+                      </li>
+
+                    </ul>
+
+                {/case}
+
+            {/switch}
+
+       		
+
+       	</section>
+
+        <script type="text/javascript">
+
+  var _paq = _paq || [];
+
+  /*
+
+   统计
+
+  */
+
+  _paq.push(['trackPageView']);
+
+  _paq.push(['enableLinkTracking']);
+
+  (function() {
+
+    var u="http://m.bxgogo.com/";
+
+    _paq.push(['setTrackerUrl', u+'count.php']);
+
+    _paq.push(['setSiteId', '1']);
+
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+
+  })();
+
+</script>
+
+	</body>
+
+</html>
+

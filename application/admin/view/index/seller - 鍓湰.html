@@ -1,0 +1,323 @@
+{include file="/public/header"}
+<body>
+    <div class="container-fluid larry-wrapper">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <!--头部搜索-->
+                <section class="panel panel-padding">
+                    <form class="layui-form" action="/admin/index/find.html">
+                        <div class="layui-form">
+                            <div class="layui-inline">
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" name="keyword" placeholder="关键字">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button lay-submit class="layui-btn" lay-filter="search">查找</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!--列表-->
+                <section class="panel panel-padding">
+                    <div class="group-button">
+                        <!--<button class="layui-btn layui-btn-small layui-btn-danger ajax-all" data-name="checkbox" data-params='{"url": "/admin/index/delseller.html","data":"id=1&name=ni&checkbox=6,9,0&va=23"}'>
+                            <i class="iconfont">&#xe626;</i> 删除
+                        </button>-->
+                        <button class="layui-btn layui-btn-small modal-catch" data-params='{"content":".add-subcat", "title":"添加顶级分类","type":"1"}'>
+                            <i class="iconfont">&#xe649;</i> 添加
+                        </button>
+                    </div>
+                    <div id="list" class="layui-form"></div>
+
+                    <div class="text-right" id="page"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="add-subcat">
+        <form id="form1" class="layui-form layui-form-pane" action="/admin/index/handleseller.html">
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家id</label>
+                <!--<input type="text" lay-verify="required|phone|number">-->
+                <div class="layui-input-block">
+                    <input type="text" name="seller_id" required jq-verify="required|phone" jq-error="请输入商家id" placeholder="请输入商家id"  autocomplete="off" class="layui-input" id="seller_id">
+                </div>
+                <span style="color: red; display: none;" id="err">商家信息已经存在</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">合同编号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="contract" required jq-verify="required" jq-error="请输入合同编号" placeholder="请输入合同编号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sname" required jq-verify="required" jq-error="请输入商家名称" placeholder="请输入商家名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">商家手机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="mobile" required jq-verify="required|phone" jq-error="请输入商家手机" placeholder="请输入商家手机" autocomplete="off" class="layui-input">
+                </div>
+            </div>-
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家客服</label>
+                <div class="layui-input-block">
+                    <input type="text" name="service" required jq-verify="required" jq-error="请输入商家客服" placeholder="请输入商家客服" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">服务时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ftime" required jq-verify="required" jq-error="请输入服务时间" placeholder="请输入服务时间" autocomplete="off" class="layui-input">
+                </div>
+                <span>例：8：30-9：00</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">签订日期</label>
+                <div class="layui-input-block">
+                    <input type="text" name="otime" required jq-verify="required" jq-error="请输入签订日期" placeholder="请输入签订日期" autocomplete="off" class="layui-input">
+                </div>
+                <span>例：2017年3月14号</span>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">商家限额</label>
+                <div class="layui-input-block">
+                    <input type="text" name="xprice" required jq-verify="required|floatn" jq-error="请输入商家限额" placeholder="请输入商家限额" autocomplete="off" class="layui-input" id="xprice">
+                </div>
+                  <span style="color: red; display: none;" id="xiao">必须为小数</span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家运费</label>
+                <div class="layui-input-block">
+                    <input type="text" name="yprice" lay-verify="floatn" placeholder="请输入商家运费" autocomplete="off" class="layui-input" id="yprice">
+                </div>
+                     <span style="color: red; display: none;" id="shu">必须为小数</span>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">纬度</label>
+                <div class="layui-input-block">
+                    <input type="text" name="lat"  placeholder="请输入商家纬度" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">精度</label>
+                <div class="layui-input-block">
+                    <input type="text" name="lng" placeholder="请输入商家纬度" class="layui-input">
+                </div>
+            </div>
+            
+             <div class="layui-form-item">
+                <label class="layui-form-label">商家地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="city" required jq-verify="required" jq-error="请输入商家地址" placeholder="请输入商家地址" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商家logo</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" class="layui-upload-file">
+                    	 <!--jq-verify="required"-->
+                    <input type="hidden" name="logo">
+                    <input type="hidden" id="url" name="logo" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">店铺门头</label>
+                <div class="layui-input-block">
+                    <input type="file" name="file" class="layui-upload-file_chaxun">
+                    <input type="hidden" jq-error="请上传商家店铺图片" error-id="img-error">
+                    <p id="img-error" class="error"></p>
+                     <!--<input type="file" id="img" name="img1" />-->
+                     <input type="hidden" id="img" name="img" />
+                </div>
+                   
+            </div>
+       <div class="layui-form-item">
+                <label class="layui-form-label">乘车路线</label>
+                <div class="layui-input-block">
+                    <input type="text" name="gongjiao" required jq-verify="required" jq-error="请输入乘车路线" placeholder="请输入乘车路线" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" jq-submit jq-filter="submit">立即提交</button><button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script id="list-tpl" type="text/html" data-params='{"url":"/admin/index/getseller","pageid":"#page"}'>
+    <table id="example" class="layui-table lay-even">
+        <thead>
+            <tr>
+                <th width="20"><input type="checkbox" id="checkall" data-name="checkbox" lay-filter="check" lay-skin="primary"></th>
+                <td width="30">ID</td>
+                <th width="100">合同编号</th>
+                <th>商家id</th>
+                <th width="150">商家名称</th>
+                <th width="100">服务时间</th>
+                <th>签订日期</th>
+                <th width="200">店铺地址</th>
+                <th>logo</th>
+                <th>门头</th>
+                <th>限额</th>
+                <th>关注量</th>
+                <th width="200">乘车路线</th>
+                <th width="200">操作</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+            {{# layui.each(d.list, function(index, item){ }}
+            <tr>
+                <td><input type="checkbox" name="checkbox" value="{{ item.id}}" lay-skin="primary"></td>
+                <td>{{item.id}}</td>
+                <td>{{item.contract}}</td>
+                <td>{{item.seller_id}}</td>
+                <td>{{item.sname}}</td>
+                <td>{{item.ftime}}</td>
+                <td>{{item.otime}}</td>
+                <td>{{item.city}}</td>
+                <td><img src="{{ item.logo}}" width="40" height="40"></td>
+                <td><img src="{{ item.img}}" width="40" height="40"></td>
+                <td>{{ item.xprice}}</td> 
+                <td>{{ item.guanzhu}}</td> 
+                <td>{{ item.gongjiao}}</td>              
+                <td>
+                    <button class="layui-btn layui-btn-mini modal-catch" data-params='{"content": ".add-subcat","area":"900,1000","title":"编辑{{ item.sname}}","data":"id={{item.id}}&contract={{item.contract}}&seller_id={{item.seller_id}}&sname={{item.sname}}&mobile={{item.mobile}}&service={{item.service}}&ftime={{item.ftime}}&otime={{item.otime}}&sort={{item.sort}}&rate={{item.rate}}&xprice={{item.xprice}}&yprice={{item.yprice}}&lat={{item.lat}}&lng={{item.lng}}&city={{item.city}}&logo={{ item.logo}}&img={{item.img}}&total={{ item.total}}&gongjiao={{item.gongjiao}}","type":"1"}'>
+                        <i class="iconfont">&#xe653;</i>编辑
+                    </button>
+                    <button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/repass.html","data":"id={{ item.id}}&seller_id={{item.seller_id}}"}'>
+                        <i class="iconfont">&#xe626;</i>重置密码
+                    </button>
+                     <!--<button class="layui-btn layui-btn-mini layui-btn-danger ajax" data-params='{"url": "/admin/index/delseller.html","data":"id={{ item.id}}"}'>
+                        <i class="iconfont">&#xe626;</i>删除
+                    </button>-->
+                </td>
+            </tr>
+            {{# }); }}
+        </tbody>
+
+    </table>
+</script>
+<script src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+    layui.use(['list','form'],function(){
+    	    layui.upload({
+			url: "/Admin/Upload/seller_logo",
+			elem: '.layui-upload-file_chaxun',
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#img').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+
+		});
+		
+		
+		 layui.upload({
+			url: "/Admin/Upload/seller_Facade",
+			elem: '.layui-upload-file',
+			before: function(input) {
+				box = $(input).parent('form').parent('div').parent('.layui-input-block');
+				if(box.next('div').length > 0) {
+					box.next('div').html('<div class="imgbox"><p>上传中...</p></div>');
+				} else {
+					box.after('<div class="layui-input-block"><div class="imgbox"><p>上传中...</p></div></div>');
+				}
+			},
+			success: function(res) {
+				if(res.status == 200) {
+					box.next('div').find('div.imgbox').html('<img src="' + res.url + '" alt="..." class="img-thumbnail">');
+					$('#url').val(res.url);
+					form.check(box.find('input[type=hidden]'));
+					alert(1);
+				} else {
+					box.next('div').find('p').html('上传失败...')
+				}
+			}
+
+		});
+		
+    });
+    $('#seller_id').blur(function(){
+    	$seller_id=$(this).val();
+
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxseller",
+             data: {seller_id:$seller_id},
+             success:function(data){
+             	if(data==2){
+                 $('#err').css("display","none");	
+             	}else{
+                 $('#err').css("display","block");	
+             	}
+             }
+          });
+             
+    });
+    $('#yprice').blur(function(){
+    	$yprice=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxseller1",
+             data: {price:$yprice},
+             success:function(data){
+             	if(data==2){
+                 $('#shu').css("display","block");	
+             	}else{
+                 $('#shu').css("display","none");	
+             	}
+             }
+          });
+             
+    });
+    $('#xprice').blur(function(){
+    	$yprice=$(this).val();
+    	  $.ajax({
+             type: "post",
+             url: "/admin/index/ajaxseller1",
+             data: {price:$yprice},
+             success:function(data){
+             	if(data==2){
+                 $('#xiao').css("display","block");	
+             	}else{
+                 $('#xiao').css("display","none");	
+             	}
+             }
+          });
+             
+    });
+   
+    function strRepeat(str, count) {
+        var ret = "";
+        for (var i = 0; i < count; i++) {
+            ret += str;
+        }
+        return ret;
+    }
+
+
+</script>
+
+</html>

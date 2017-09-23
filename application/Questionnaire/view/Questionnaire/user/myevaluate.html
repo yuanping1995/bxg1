@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>我的评价</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	    
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>我的评价</h2>
+				<div class="menuList"><i class="list-icon"></i></div>
+				<ul class="list">
+					<li>
+						<a href="/" title="首页">首页</a>
+					</li>
+					<li>
+						<a href="{:url('category/index')}" title="搜索">搜索</a>
+					</li>
+					<li>
+						<a href="{:url('cart/index')}" title="购物车">购物车</a>
+					</li>
+					<li>
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+		
+       	<section class="evaluate">
+          {if condition="empty($myevaluate)"}
+       		<div>
+       			<div class="no_e">
+	       			您还没有评价~
+	       		</div>
+       		</div>
+          {else/}
+       		<div>
+       			<ul>
+            {foreach name="myevaluate" key='key' item='value'}
+       				<li>
+       					<button>···</button>
+       					<div class="e_list">
+       						<ul>
+       							<li>不想匿名了</li>
+       							<li>删除评价</li> 
+       						</ul>
+       					</div>
+                <input type="hidden" name="comment_id" value="{$value.id}">
+       					<a href="javascript:void(0);">
+       						<div class="avatar">
+       							<img src="{$value.ico}{:config('images')}" alt=""/><span>{$value.uname}</span>
+       						</div>
+       						<div class="date">
+       							{$value.x_time|date="Y-m-d H:i:s",###}
+       						</div>
+       						<div class="e_content">
+       							{$value.title}
+       						</div>
+                  <div class="e_pic">
+                  {if condition="is_array($value['img'])"}
+                   {foreach name="$value['img']" key="k" item="v"}
+                    <img src="{:ltrim($v,'.')}">
+                   {/foreach}
+                   {else/}
+                   <img src="{:ltrim($value['img'],'.')}">
+                   {/if}
+                  </div>
+       						<a href="{:url('goods/index',['id'=>$value.goods_id])}">
+       							<div class="pro_info">
+	       							<div class="proImg">
+			       						<img src="{$value.pic}{:config('images')}" alt=""/>
+			       					</div>
+			       					<div class="introInfo">
+			       						<div>{$value.sname}</div>
+			       						<span>￥{$value.price}</span>
+			       					</div>
+	       						</div>
+       						</a>
+       						<div class="e_foot">
+       							浏览 0 次&nbsp;&nbsp;&nbsp;&nbsp;点赞 0 次&nbsp;&nbsp;&nbsp;&nbsp;评论 0 次
+       						</div>
+       						
+       					</a>
+       				</li>
+              {/foreach}
+       			</ul>
+       		</div>
+          {/if}
+       	</section>
+        <section class="public-pop" style="width:70%;left:50%;margin-left:-35%;height:30px;line-height:30px;font-size:14px;"></section>
+       	<script type="text/javascript">
+       		$(function(){
+                //头部点击下拉列表
+				$('.menuList').bind('click', function() {
+					$('.h_style3 .list').slideToggle();
+				});
+				$('.h_style3 .list li').click(function() {
+					$('.h_style3 .list').slideUp();
+				});
+       			var name = $('.avatar span').html();
+       			var nameHide = name.substr(0,1)+"**"+name.substr(name.length-1,1);
+       			$('.avatar span').html(nameHide);
+       			
+       			$('button').click(function(){
+       				$(this).next().show();
+       				$(".shade").show();
+       				$(this).next().find('li').click(function(){
+       					var num = $(this).index();
+       					switch(num)
+       					{
+       						case 0:
+       							$(this).parent().parent().parent().find('.avatar span').html(name);
+       							break;
+       						case 1:
+       						//删除评论
+                    var id=$(this).parent().parent().siblings("input[name='comment_id']").val();
+       							$.ajax({
+       								type:"get",
+       								data:{
+                         id:id
+                      },
+       								url:"{$Think.__APPROOT__}/index/user/delevaluate",
+       								success:function(data){
+       									var dataJson = eval(data);
+                          if(dataJson.flag){
+                            $(".public-pop").html(dataJson.msg).show();
+                              setTimeout(function(){
+                              $(".public-pop").hide();
+                            },2000);
+                          }else{
+                            $(".public-pop").html(dataJson.msg).show();
+                            setTimeout(function(){
+                              $(".public-pop").hide();
+                            },2000);
+                          }
+         								}
+       							});
+       							break;
+       					}
+       					$(this).parent().parent().hide();
+       					$('.shade').hide();
+       				});
+       			});
+       			$('.shade').click(function(){
+       				$('.e_list').hide();
+       				$(this).hide();
+       			});
+       		})
+       	</script>
+        <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+   统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

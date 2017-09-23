@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>评价详情</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>评价详情</h2>
+				<div class="menuList"><i class="list-icon"></i></div>
+				<ul class="list">
+					<li>
+						<a href="/" title="首页">首页</a>
+					</li>
+					<li>
+						<a href="{:url('search/index')}" title="搜索">搜索</a>
+					</li>
+					<li>
+						<a href="{:url('shop/index')}" title="购物车">购物车</a>
+					</li>
+					<li>
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+		
+       	<section class="e_detail">
+       	{foreach name="evaluatedetail" item='value'}
+       		<div>
+       			<div class="avatar">
+	       			<img src="{$value.ico}{:config('images')}" alt=""/><span>{$value.uname}</span>
+	       		</div>
+	       		<div class="e_date">
+	       			{$value.x_time|date="Y-m-d H:i:s",###}
+	       		</div>
+	       		<div class="e_content">
+	       			{$value.title}
+	       		</div>
+	       		<a href="{:url('goods/index',['id'=>$value.goods_id])}">
+	       			<div class="type">{$value.spec_key_name}</div>
+	       			<div class="pro_info">
+		       			<div class="proImg">
+				       		<img src="{$value.pic}{:config('images')}" alt=""/>
+				       	</div>
+				       	<div class="introInfo">
+				       		<div>{$value.sname}</div>
+				       		<span>￥{$value.price}</span>
+				       	</div>
+		       		</div>
+	       		</a>
+	       		<div class="e_foot">
+	       			浏览 0 次&nbsp;&nbsp;&nbsp;&nbsp;点赞 0 次&nbsp;&nbsp;&nbsp;&nbsp;评论 0 次
+	       		</div>	
+       		</div>
+       		{/foreach}
+       	</section>
+       	<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+       	
+      <!--  	<section class="e_other">
+       		<div class="e_o_title">全部评论</div>
+       		{if condition="empty($allcomment)"}
+       		<div class="no_e">
+       			沙发还空着，快来抢吧~
+       		</div>
+       		{else/}
+       		<div class="e_o_list">
+       			<ul>
+       			{foreach name="allcomment" item="value"}
+       				<li>
+       					<div class="avatar clear">
+			       			<img src="{$value.ico}" alt=""/><span>{$value.uname}</span>
+			       			<span class="e_o_date">{$value.x_time|date="Y-m-d  H:i:s",###}</span>
+			       		</div>
+			       		<div class="e_o_cont">
+							{$value.title}
+			       		</div>
+       				</li>
+       			{/foreach}
+       			</ul>
+       		</div>
+       		{/if}
+       	</section> -->
+	</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+        <title>更多服务</title>
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no">
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+        <meta name="description" content="" />
+        <meta name="Keywords" content="" />
+        <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+        <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/moretool.css" />
+       	<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	    
+	</head>
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>更多服务</h2>
+				<div class="menuList"><i class="list-icon"></i></div>
+				<ul class="list">
+					<li>
+						<a href="/" title="首页">首页</a>
+					</li>
+					<li>
+						<a href="{:url('search/index')}" title="搜索">搜索</a>
+					</li>
+					<li>
+						<a href="{:url('shop/index')}" title="购物车">购物车</a>
+					</li>
+					<li>
+						<a href="{:url('user/index')}" title="购物车">我的百信</a>
+					</li>
+				</ul>
+			</div>
+		</header>
+       	<section class="serve_theme">
+       		<ul class="clear">
+       			<li class="theme_on">功能服务</li>
+       			<li>特色导购</li>
+       		</ul>
+       	</section>
+       	<section class="serve_list">
+       		<ul class="clear">
+       			<li>
+       				<div>功能服务</div>
+              <style>
+                i{background: url({$Think.__APPROOT__}/static/img/moreTool.png)no-repeat;background-size:64rem;}
+              </style>
+       				<ul class="clear">
+       					<li><a href="{:url('user/callcenter')}"><i class="s_1"></i>客服中心</a></li>
+       					<li><a href="{:url('user/vipprivilege')}"><i class="s_6"></i>会员特权</a></li>
+       					<li><a href="{:url('user/agreement')}"><i class="s_7"></i>协议及声明</a></li>
+       					<li><a href="{:url('user/insurance')}"><i class="s_8"></i>账户保险</a></li>
+       					<li><a href="{:url('user/mobilepay')}"><i class="s_9"></i>手机充值</a></li>
+       					<li><a href="{:url('user/feedback')}"><i class="s_12"></i>建议及投诉</a></li>
+       					<li><a href="{:url('user/focusware')}"><i class="s_13"></i>收藏的宝贝</a></li>
+       					<li><a href="{:url('user/myevaluate')}"><i class="s_14"></i>我的评价</a></li>
+       					<li><a href="{:url('user/focushop')}"><i class="s_15"></i>关注的店铺</a></li>
+       					<li><a href="{:url('user/moreservice')}"><i class="s_16"></i>更多服务</a></li>
+       				</ul>
+       			</li>
+       			<li>
+       				<div>特色导购</div>
+       				<ul class="clear">
+       					<li><a href="{:url('user/usersurvey')}"><i class="s_2"></i>用户调查</a></li>
+       					<li><a href="{:url('user/cooperation')}"><i class="s_3"></i>我要合作</a></li>
+       					<li><a href="{:url('user/enter')}"><i class="s_4"></i>商家入驻</a></li>
+       					<li><a href="{:url('user/friend')}"><i class="s_5"></i>开通好友关系</a></li>
+       					<li><a href="{:url('user/mygift')}"><i class="s_10"></i>我的礼品</a></li>
+       					<li><a href="{:url('user/vipcard')}"><i class="s_11"></i>会员卡</a></li>	
+       				</ul>
+       			</li>
+       		</ul>
+       	</section>
+
+       	<script type="text/javascript">
+       		$(function(){
+	            $(window).on('orientationchange',function(){
+	              location.reload();
+	            });
+	            //头部点击下拉列表
+				$('.menuList').bind('click', function() {
+					$('.h_style3 .list').slideToggle();
+				});
+				$('.h_style3 .list li').click(function() {
+					$('.h_style3 .list').slideUp();
+				});
+       			$('.serve_theme ul li').bind('click',function(){
+       				$(this).addClass('theme_on').siblings('li').removeClass('theme_on');
+       				if($(this).index() == 0){
+       					$('.serve_list>ul').animate({
+	       					'marginLeft':0
+	       				});
+       				}else{
+       					$('.serve_list>ul').animate({
+	       					'marginLeft':-$('.serve_list>ul>li').outerWidth()+'px'
+	       				});
+       				}
+       				
+       			});
+       		})
+       	</script>
+        <script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+   统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+</html>

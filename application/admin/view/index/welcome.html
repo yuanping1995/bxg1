@@ -1,0 +1,235 @@
+{include file="/public/header"}
+
+<body>
+    <div class="container-fluid larry-wrapper">
+        <!--顶部统计数据预览 -->
+        <div class="row">
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-blue"> <i class="iconfont">&#xe672;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="{:url('index/user')}" data-parent="true" data-title="用户列表"><i class="iconfont " data-icon='&#xe672;'></i>
+                            <h1>{$user_sum}</h1>
+                        </a>
+
+                        <a href="javascript:;" data-url="{:url('index/user')}" data-parent="true" data-title="用户总量"> <i class="iconfont " data-icon='&#xe672;'></i><span>用户总量</span></a>
+
+                    </div>
+                </section>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-commred"> <i class="iconfont">&#xe674;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="{:url('index/seller')}" data-parent="true" data-title="商家列表"> <i class="iconfont " data-icon='&#xe674;'></i>
+                            <h1>{$seller_sum}</h1>
+                        </a>
+
+                        <a href="javascript:;" data-url="{:url('index/seller')}" data-parent="true" data-title="商家总量"> <i class="iconfont " data-icon='&#xe674;'></i><span>商家总量</span></a>
+
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-dark-green"> <i class="iconfont">&#xe6bc;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="{:url('index/goods')}" data-parent="true" data-title="商品列表"> <i class="iconfont " data-icon='&#xe6bc;'></i>
+                            <h1>{$goods_sum}</h1>
+                        </a>
+                        <a href="javascript:;" data-url="{:url('index/goods')}" data-parent="true" data-title="商品总数"> <i class="iconfont " data-icon='&#xe6bc;'></i><span>商品总数</span></a>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-yellow-green"> <i class="iconfont">&#xe649;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon='&#xe649;'></i>
+                            <h1>{$count_day}</h1>
+                        </a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日新增"> <i class="iconfont " data-icon='&#xe649;'></i><span>昨日增长用户</span></a>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-orange"> <i class="iconfont">&#xe638;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="VIP总数"> <i class="iconfont " data-icon='&#xe638;'></i>
+                            <h1>{$count_vip}</h1>
+                        </a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="VIP总数"> <i class="iconfont " data-icon='&#xe638;'></i><span>VIP总数</span></a>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-yellow"> <i class="iconfont">&#xe669;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日评论"> <i class="iconfont " data-icon='&#xe669;'></i>
+                            <h1>{$goods_count}</h1>
+                        </a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日评论"> <i class="iconfont " data-icon='&#xe669;'></i><span>昨日新增商品</span></a>
+                    </div>
+                </section>
+            </div>
+
+
+              <div class="col-xs-6 col-sm-4 col-md-2">
+                <section class="panel">
+                    <div class="symbol bgcolor-yellow"> <i class="iconfont">&#xe669;</i>
+                    </div>
+                    <div class="value tab-menu">
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日评论"> <i class="iconfont " data-icon='&#xe669;'></i>
+                            <h1>{$seller_count}</h1>
+                        </a>
+                        <a href="javascript:;" data-url="user-info.html" data-parent="true" data-title="今日评论"> <i class="iconfont " data-icon='&#xe669;'></i><span>昨日上传商家量</span></a>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <section class="panel">
+                    <div class="panel-heading">
+                        <span><a>商家订单排行榜</a></span>|<span><a>用户订单排行榜</a></span>
+                        <a href="javascript:;" class="pull-right panel-toggle"><i class="iconfont">&#xe604;</i></a>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="layui-table">
+                        <thead>
+                                <tr>
+                                <td>商家ID</td>
+                                <td>商家名称</td>
+                                <td>订单总量
+                                <a href="{:url('index/welcome','id=1')}" class="pull-right panel-toggle"><i class="iconfont">&#xe603;</i></a></td>
+                                <td>订单总价格
+<a href="{:url('index/welcome','id=2')}" class="pull-right panel-toggle"><i class="iconfont">&#xe603;</i></a>
+                                </td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            {foreach name="order" item="val"}
+                            <tr>
+                                 <td>{$val['seller_id']}</td>
+                                 <td>{$val['sname']}</td>
+                                {foreach name="$val.dingdan" item="v"}
+                                 <td>{$v['tongji']}</td>
+                                 {/foreach}
+                                 {foreach name="$val.zonge" item="v"}
+                                 <td>{:number_format($v['zonghe'],2)}</td>
+                                 {/foreach}
+                             </tr>
+                            {/foreach}
+                            </tbody>
+                           
+                        </table>
+                    </div>
+                </section>
+                <section class="panel log">
+                    <div class="panel-heading">
+                        更新日志
+                        <a href="javascript:;" class="pull-right panel-toggle"><i class="iconfont">&#xe604;</i></a>
+                    </div>
+                    <div class="panel-body">
+
+                        <h2>jQadmin后台模板v1.3.3 2017-03-22 </h2>
+                        <ul>
+                            <li> 修复表单提交关闭不了窗口的BUG</li>
+                            <li> 修正菜单选项卡不能关闭BUG</li>
+                            <li> 修正菜单右键弹出菜单bug</li>
+                            <li> 修复首页的统计链接</li>
+                            <li> 添加看云使用手册</li>
+                        </ul>
+                        <p>更多帮助文档请移步到 <a href="http://www.kancloud.cn/jqcool/jqadmin" target="_blank" class="layui-btn layui-btn-small">使用手册</a></p>
+                    </div>
+                </section>
+            </div>
+
+
+            <div class="col-xs-12 col-md-6">
+
+
+
+                <section class="panel">
+                    <div class="panel-heading">
+                        员工订单统计
+                        <a href="javascript:;" class="pull-right panel-toggle"><i class="iconfont">&#xe604;</i></a>
+                    </div>
+                    <div class="panel-body">
+                        <table class="layui-table" lay-even>
+                            <colgroup>
+                                <col>
+                                <col width="100">
+                                <col width="120">
+                                <col width="80">
+                                <col width="150">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>用户ID</th>
+                                    <th>用户名称</th>
+                                    <th>订单总量</th>
+                                    <th>订单总价格</th>
+                                </tr>
+                            </thead>
+                            <tbody class="layui-form">
+                               
+                                   {foreach name="yorder" item="value"}
+                                    <tr>
+                                   <td>{$value['uid']}</td>
+                                   <td>{$value['uname']}</td>
+                                    {foreach name="$value.dingdan" item="v"}
+                                 <td>{$v['tongji']}</td>
+                                 {/foreach}
+                                 {foreach name="$value.zonghe" item="v"}
+                                 <td>{:number_format($v['zonghe'],2)}</td>
+                                 {/foreach}
+                                 </tr>
+                                   {/foreach}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="panel">
+                    <div class="panel-heading">
+                        数据统计
+                        <a href="javascript:;" class="pull-right panel-toggle"><i class="iconfont">&#xe604;</i></a>
+                    </div>
+                    <div class="panel-body">
+                        <div class="echarts" id="echarts"></div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="testcatch" style="display: none;">
+        <p>这是一个捕获弹窗</p>
+    </div>
+</body>
+<script type="text/javascript" src="{$Think.__APPROOT__}/static/admin/js/layui/layui.js"></script>
+{include file="/public/version"}
+<script>
+    layui.use(['main', 'echart']);
+</script>
+
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <title>兑换奖品</title>
+	    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 不让百度转码 -->
+	    <meta name="description" content="" />
+	    <meta name="Keywords" content="" />
+	    <link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+	    <link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png"/>
+	    <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+	   <!-- <link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/myset.css" />-->
+	    <script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js" ></script>
+	</head>
+	<style type="text/css">
+		body{background: #f1f1f1;}
+		header{background: #f00;}
+		.changeuser{margin-top:50px;}
+		.changeuser{
+			width: 100%;
+			background: #fff;
+			height:8vh;
+		}
+		.changeuser .user{
+			width: 90%;
+			margin: 0 auto;
+		}
+		.changeuser .user .changeicon{
+			width: 7vh;
+			height: 7vh;
+			border-radius: 50%;
+			border:1px solid #CFCFCF;
+			float: left;
+			margin-top:.2rem;
+			background:url("../../../static/img/avatar.jpg") no-repeat;
+			background-size: 7vh;
+		}
+		.changeuser .user .changename{
+			float: left;
+			margin-top:1.5rem;
+			margin-left: 1.5rem;
+			font-size: 1.5rem;
+		}
+		.changeList{
+			background: #fff;
+			margin-top: 20px;
+		}
+		.changeList .hr{
+			margin-top: 0.3vh;
+			width: 100%;
+			
+		}
+		.changeList span{
+			line-height:3rem;
+			font-size: 1.2rem;
+		}
+		.changeList p{
+			text-align: right;
+			margin-right: 1rem;
+		}
+		.changeList span:first-child{
+			color:orange;
+		} 
+		.changeList span:last-child{
+			color:#777777;
+		}
+		.changeList ul{
+			width: 95%;
+			height: 14vh;
+			/*border:1px solid yellowgreen;*/
+			margin: 0 auto;
+		}
+		.changeList ul li{
+			width:45%;
+			height: 12vh;
+			float: left;
+			border:1px solid #CFCFCF;
+			margin: 2vw;
+			border-radius: 8px;
+		}
+		.changeList ul li img{
+			width:100%;
+			height: 12vh;
+			border-radius: 8px;
+		}
+		.changeList ul li .bj{
+			width:43%;
+			height: 12vh;
+			border-radius: 8px;
+			margin-top: -12.5vh;
+			background: rgba(0,0,0,.5);
+			display: none;
+			font-size: 1.4rem;
+			position: absolute;
+			text-align: center;
+			
+		}
+		.changeList ul li div div{
+			margin: 2vh auto;
+			color:#fff;
+		}
+		.pay{
+			width: 90%;
+			height: 6vh;
+			background: orangered;
+			margin: 0 auto;
+			margin-top: 30px;
+			border-radius: 8px;
+			text-align: center;
+		}
+		
+		.pay span{
+			font-size: 1.6rem;
+			line-height:6vh ;
+			color: #fff;
+		}
+		.changerule{
+			width: 100%;
+			margin-top: 20px;
+		}
+		.changerule .rule,.activity{
+			width: 95%;
+			margin: 0 auto;
+		}
+		.changerule .rule span{
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+		.changerule .rule p{
+			text-indent: 2em;
+			line-height: 1.5rem;
+			color:#666666;
+		}
+		.changerule .activity p{
+			line-height: 1.5rem;
+			color:#666666;
+		}
+		
+		.select{
+			border:1px solid orangered !important;
+		}
+	</style>
+	<body>
+		<header>
+			<!--头部标题-->
+            <div class="h_style3 clear">
+        	    <a href="http://m.bxgogo.com" class="a-back"><i class="back-btn">返回首页</i></a>
+	    		<h2>兑换奖品</h2>
+    	   	</div>
+		</header>
+<!-- 		<section class="changeuser">
+       		<div class="user">
+       			<div>
+       		 <img class="changeicon" src="{$user['icon']}">
+       			</div>
+       			<div class="changename">
+       				{$user['uname']}
+       			</div>
+       		</div>
+       	</section> -->
+       	<section class="changeList">
+       		<span>&nbsp;&nbsp;&nbsp;推荐用户专享</span>
+       		<ul class="first">
+       			<li class="left" min='10' max='10' m='0' s="美年大健康体检套餐" i='1'><img src="{$Think.__APPROOT__}/static/img/change/1.jpg"/><div class="bj"><div>美年大健康体检套餐<br/>【推荐10人免费兑换】</div></div></li>
+       		    <li class="right" min='10' max='20' m='10' s="北国先天下电影票" i='2'><img src="{$Think.__APPROOT__}/static/img/change/2.jpg"/><div class="bj"><div>北国先天下电影票<br/>【推荐20人免费兑换】</div></div></li>
+       		</ul>
+       		<ul class="second">
+       			<li style="display: none;"></li>
+       			<li style="display: none;"></li>
+       			<li class="left" min='10' max='20' m='20' s="绿溪谷夜场票（仅限保定郊县户口）" i='3'><img src="{$Think.__APPROOT__}/static/img/change/3.jpg"/><div class="bj">
+       				<div>绿溪谷夜场票<br/>
+       				 （仅限保定郊县户口）<br/>【推荐20人免费兑换】</div>
+       		        </div></li>
+       		    <li class="right" min='10' max='40' m='50'  s="绿溪谷通票" i='4'><img src="{$Think.__APPROOT__}/static/img/change/4.jpg"/><div class="bj"><div>绿溪谷通票<br/>【推荐40人免费兑换】</div></div></li>
+       		</ul>
+       		<div class="hr"></div>
+       		<p>
+       			<span>推荐够指定人数才能兑换礼品哦</span>
+       		</p>
+       	</section>
+       	<section class="changepay">
+       		<div class="pay">
+       			<span> 确认兑换 </span>
+       		</div>
+       	</section>
+       	<section class="changerule">
+       		<div class="rule">
+       			<span> 兑换规则 ：</span>
+       			<p>1、推荐10人注册会员并关注订阅号可免费领取一份价值170元美年大健康体检套餐（人体成分分析、DR胸部正位摄片、骨密度检测）</p>
+       			<p>2、推荐10人注册会员并关注订阅号可10元领取电影票一张，推荐20人可免费领取一张（电影票仅限北国先天下）</p>
+       			<p>3、推荐10人注册会员并关注订阅号可20元领取价值60元绿溪谷夜场票一张，推荐20人可以免费领取一张（仅限保定周边郊县）</p>
+       			<p>4、推荐10人注册会员并关注订阅号可50元领取价值138元绿溪谷通票一张，推荐40人可免费领取一张</p>
+       		</div>
+       		<br/>
+       		<div class="activity">
+       			<p>活动时间：2017.8.1-2017.10.1</p>
+       			<p>客服电话：0312-5952956</p>
+       			<p>活动最终解释权归河北舵宇兴坤电子商务有限公司</p>
+       		</div>
+       	</section>
+	</body>
+
+<script src="{$Think.__APPROOT__}/static/layer/mobile/layer.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		$(".changeList ul li").click(function(){
+			$(".changeList ul li").removeClass("select");
+			$(this).addClass("select");
+			$(".changeList ul li div").css("display","none");
+			$(this).find("div").css("display","block");
+		})
+          $(".pay").click(function(){
+          	var $num = {$count};
+          	if($(".changeList ul").find('.select').attr('min') != undefined)
+          	{
+          			var $min = $(".changeList ul").find('.select').attr('min');
+		          	var $max = $(".changeList ul").find('.select').attr('max');
+		          	var $mony = $(".changeList ul").find('.select').attr('m');
+		          	var $value = $(".changeList ul").find('.select').attr('s');
+					var $u = $(".changeList ul").find('.select').attr('i');
+					$(".changeList ul").find('.select').attr('min');
+					if($num < $min)
+					{
+						//alert("需要"+$(".changeList ul").find('.select').attr('min')+"你有"+$num);
+						
+					   layer.open({
+		    content: '您暂时未满足'+$value+'的兑换要求'
+			    ,skin: 'msg'
+			    ,time: 2 
+			  });
+					}else if($num < $max){
+						
+						//alert("你有"+$num+"需要补充"+$mony);
+						layer.open({
+					    content: '您正在兑换'+$value+'。<br/>您已经满足推荐'+$min+'人补充'+$mony+'元领取资格<br/>未满足推荐'+$max+'人免费领取资格<br/>现在领取需要补充付款'+$mony+'元'
+					    ,btn: [$mony+'元兑换', '取消']
+					    ,yes: function(index){
+					      window.location.href="/index/user/ajaxduihuan/click/"+$u;
+					    }
+					  });
+					}else{
+		
+					  layer.open({
+					    content: '您确定要兑换'+$value+'吗？'
+					    ,btn: ['免费兑换', '取消']
+					    ,yes: function(index){
+					       window.location.href="/index/user/ajaxduihuan/click/"+$u;
+					    }
+					  });
+						
+					}
+          	}else{
+          		
+			 layer.open({
+		    content: '请先选择要兑换的项目'
+			    ,skin: 'msg'
+			    ,time: 2 
+			  });
+			
+          	}
+          
+		}) 
+		
+    })
+
+</script>
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</html>

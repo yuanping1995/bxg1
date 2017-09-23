@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>添加支付方式</title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- 不让百度转码 -->
+		<meta name="description" content="" />
+		<meta name="Keywords" content="" />
+		<link rel="icon" href="http://m.bxgogo.com/favicon.ico" type="image/x-icon" />
+		<link rel="apple-touch-icon-precomposed" href="http://m.bxgogo.com/apple-touch-icon.png" />
+		
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/public.css" />
+		<link rel="stylesheet" href="{$Think.__APPROOT__}/static/css/mykiting.css" />
+		
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/jquery.min.js"></script>
+		
+	</head>
+
+	<body>
+		<header>
+			<!--头部标题-->
+			<div class="h_style3 clear">
+				<a href="javascript:;" onclick="history.back(-1);" class="a-back"><i class="back-btn">返回</i></a>
+				<h2>添加支付方式</h2>
+				<div class="menuList"><a href="/"><i class="why-icon"></i></a></div>
+			</div>
+		</header>
+		
+		<section class="addWay">
+			<ul>
+				<li><span>支付方式</span>
+					<select id="selWay">
+						<option value="1" class="i_alipay">支付宝</option>
+						<option value="2" class="i_wechat">微信</option>
+						<option value="0" class="i_bank">银行卡</option>
+					</select>
+				</li>
+				<li><span>账号</span><input type="text" placeholder="请输入账号或银行卡号" /></li>
+			</ul>
+
+		</section>
+		
+		<section class="addBtn">
+			<div class="Next" id="next">下一步</div>
+			<div class="next_shade">下一步</div>
+		</section>
+		<div class="public-pop" style="width:50%;margin-left:-25%;height:30px;line-height:30px;font-size:12px;"></div>
+
+		<script type="text/javascript" src="{$Think.__APPROOT__}/static/js/public.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				var payWaytxt = '';
+				var wayNum = '';
+				$('.next_shade').show();
+				$('.addWay input[type="text"]').bind('input propertychange', function() {
+					if($('.addWay input[type="text"]').val() != '') {
+						$('.next_shade').hide();
+						$('.Next').addClass('next_bg');
+						payWaytxt = $('.addWay select').val();
+						wayNum = $('.addWay input').val();//账号
+					} else {
+						$('.Next').removeClass('next_bg');
+						$('.next_shade').show();
+					}
+				});
+				//添加新的支付方式
+				$('.Next').on('click', function() {
+					var payWay = $('.addWay select option:checked').attr('class');//图片
+					var selWay = $('.addWay select option:checked').val();//类型
+					var cont = '';
+					//判断用户账号是否已存在
+					if(selWay == '0'){
+						//判断是不是19位银行卡
+							if(!/^\d{19}$/g.test(wayNum)){
+								$('.public-pop').show().html('请输入19位银行卡号！');
+								setTimeout(function() {
+									$('.public-pop').hide()
+								}, 1000);
+							}else{
+								checkExist(selWay,wayNum);
+							}
+					}else{
+						checkExist(selWay,wayNum);
+					}
+					
+				});
+
+				//判断账号是不是已添加
+				function checkExist(selWay,wayNum) {
+					$.ajax({
+						type: "get",
+						//将支付方式名和账号传给后台
+						data:{ type: selWay, data:wayNum },
+						url: "{$Think.__APPROOT__}/index/user/checkkitway",
+						success: function(data) {
+							// alert(payWaytxt);
+							var dataJson = eval(data);
+							// 返回true,说明已有该账号
+							if(dataJson.flag) {
+								$('.public-pop').html(dataJson.msg).show();
+								setTimeout(function() {
+									$('.public-pop').hide();
+								}, 1000);
+							} else {
+								checktype(selWay,wayNum);
+							}
+						},error:function(data){
+							console.log(data);
+							alert("数据没传给后台");
+						}
+					});
+				}
+				// 如果是银行卡则获取到银行卡所属银行
+				function checktype(selWay,wayNum){
+					if(selWay == '0'){
+						var wayNumBin = wayNum.substr(0, 6);
+						var bankname = '';
+						// 如果是19位银行卡，则获取银行卡所属银行
+						$.getJSON('{$Think.__APPROOT__}/static/js/bankdata.json',function(data){
+							var dataJson = eval(data);
+							$.each(dataJson,function(index,val){
+								if(dataJson[index].bin === wayNumBin){
+
+									bankname = dataJson[index].bankName;
+								}
+							});
+							if(bankname){
+									window.location="{$Think.__APPROOT__}/index/user/checkbank/type/"+selWay+"/data/"+wayNum+"/crname/"+bankname;
+							}else{
+								$('.public-pop').html("此银行卡不是银联卡").show();
+								setTimeout(function() {
+									$('.public-pop').hide();
+								}, 1000);
+							}
+						});
+					}else if(selWay == '1'){
+						window.location="{$Think.__APPROOT__}/index/user/checkbank/type/"+selWay+"/data/"+wayNum+"/crname/支付宝";
+					}else{
+						window.location="{$Think.__APPROOT__}/index/user/checkbank/type/"+selWay+"/data/"+wayNum+"/crname/微信";
+					}
+				}
+				
+			})
+		</script>
+		<script type="text/javascript">
+  var _paq = _paq || [];
+  /*
+	 统计
+  */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="http://m.bxgogo.com/";
+    _paq.push(['setTrackerUrl', u+'count.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/static/js/tongji.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+	</body>
+
+</html>
