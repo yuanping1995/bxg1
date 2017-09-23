@@ -1,0 +1,26 @@
+{
+    "name": "yuan/tree",
+    "description": "tree data 测试",
+   "keywords": [
+    "tree",
+    "测试",
+    "tree-data"
+  ],
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "yuanping",
+            "email": "1019979673@qq.com"
+        }
+    ],
+    "require": {
+        
+        "php": ">=5.4"
+    },
+     "license": "MIT",
+     "autoload": {
+            "psr-4": {
+                "Tree\\": "src/"
+            }
+        }
+}
